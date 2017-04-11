@@ -1,0 +1,109 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.poaMonthly.title">POA</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label class="control-label" translate="metroquitoApp.poaMonthly.administrativeUnit">administrativeUnit</label>
+
+                                <ui-select ng-model="vm.administrativeUnit"
+                                           id="field_administrativeUnit" name="administrativeUnit">
+                                    <ui-select-match allow-clear
+                                                     placeholder="{{ 'entity.action.select' | translate }}">
+                                        {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="administrativeUnit.id as administrativeUnit in vm.administrativeUnitList">
+                                        <div ng-bind-html="administrativeUnit.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poaMonthly.month"
+                                           for="field_month">month</label>
+                                    <div class="input-group">
+                                        <input id="field_month" type="text" readonly class="form-control" name="month"
+                                               uib-datepicker-popup="MMMM" datepicker-options="vm.monthOption" ng-model="vm.month"
+                                               is-open="vm.datePickerOpenStatus.month" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.openCalendar('month')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                            ng-click="vm.searchByFilters()" id="searchBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.poaMonthly.adminUnitList">
+            Activities List
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th><span translate="metroquitoApp.poaMonthly.no">No.</span></th>
+                        <th><span translate="metroquitoApp.poaMonthly.administrativeUnit">administrativeUnit</span></th>
+                        <th><span translate="metroquitoApp.poaMonthly.activity">Activity</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="result in vm.resultList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{result.administrativeUnitName}}</td>
+                        <td>{{result.code}} - {{result.description}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination ng-show="vm.totalItems > 0" class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

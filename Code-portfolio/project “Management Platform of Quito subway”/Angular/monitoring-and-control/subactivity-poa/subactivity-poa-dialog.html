@@ -1,0 +1,311 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.subactivityPoa.id" id="mySubactivityPoaLabel" translate="metroquitoApp.subactivityPoa.home.createLabel">Create or edit a Subactivity Poa</h4>
+        <h4 class="modal-title" ng-if="vm.subactivityPoa.id" id="mySubactivityPoaLabelEdit" translate="metroquitoApp.subactivityPoa.home.createOrEditLabel">Create or edit a Subactivity Poa</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.subactivityPoa.activityPoa">Activity</label>
+                <ui-select ng-model="vm.subactivityPoa.activityPoaId" ng-change="vm.changeActivity($select.selected)"
+                           required id="field_activityPoa" name="activityPoa">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.description}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="activityPoa.id as activityPoa in vm.activitypoas">
+                        <div ng-bind-html="activityPoa.description | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <div ng-show="editForm.activityPoa.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.activityPoa.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.subactivityPoa.subactivityPoa">Subactivity</label>
+                <ui-select ng-model="vm.subactivityPoa.subactivityPoaId" ng-change="vm.changeSubactivity($select)"
+                           ng-disabled="!vm.subactivitypoas.length"
+                           id="field_subactivityPoa" name="subactivityPoa">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.description}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="subactivityPoa.id as subactivityPoa in vm.subactivitypoas | filter : vm.subactivityFilter">
+                        <div ng-bind-html="subactivityPoa.description | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.description" for="field_descriptionAct">Description</label>
+                <input type="text" class="form-control" name="description" id="field_descriptionAct"
+                       ng-model="vm.subactivityPoa.description"
+                       required ng-maxlength="300" maxlength="300" />
+                <div ng-show="editForm.description.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.description.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="300">
+                        This field cannot be longer than 300 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.startDate" for="field_startDate">Start Date</label>
+                <div class="input-group">
+                    <input id="field_startDate" type="text" class="form-control" name="startDate" uib-datepicker-popup="{{vm.dateformat}}"
+                        ng-model="vm.subactivityPoa.startDate" is-open="vm.datePickerOpenStatus.startDate"
+                        required readonly datepicker-options="vm.startDateOption"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div ng-show="editForm.startDate.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.startDate.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.finalDate" for="field_finalDate">Final Date</label>
+                <div class="input-group">
+                    <input id="field_finalDate" type="text" class="form-control" name="finalDate" uib-datepicker-popup="{{vm.dateformat}}"
+                        ng-model="vm.subactivityPoa.finalDate" is-open="vm.datePickerOpenStatus.finalDate"
+                        required readonly datepicker-options="vm.finalDateOption"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('finalDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div ng-show="editForm.finalDate.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.finalDate.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.plannedGoal" for="field_plannedGoal">Planned Goal</label>
+                <input type="number" class="form-control" name="plannedGoal" id="field_plannedGoal"
+                       ng-model="vm.subactivityPoa.plannedGoal" ng-pattern="vm.patternNumbersCharc"
+                       required
+                       min="0" max="100" step="1" ng-pattern="vm.patternNumbers"/>
+                <div ng-show="editForm.plannedGoal.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.plannedGoal.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.plannedGoal.$error.number" translate="entity.validation.number">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.plannedGoal.$error.max" translate="entity.validation.max"
+                       translate-value-max="100">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.plannedGoal.$error.min" translate="entity.validation.min"
+                       translate-value-min="0">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.plannedGoal.$error.pattern" translate="entity.validation.intNumberPattern"
+                       translate-value-pattern="[0-9]+">
+                        This field should follow pattern "[0-9]+".
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.indicator" for="field_indicator">Indicator</label>
+                <textarea type="text" class="form-control" name="indicator" id="field_indicator"
+                       ng-model="vm.subactivityPoa.indicator" rows="3"
+                       ng-maxlength="300" maxlength="300" required/>
+                <div ng-show="editForm.indicator.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.indicator.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.indicator.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="300">
+                        This field cannot be longer than 300 characters.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.verificationMeans" for="field_verificationMeans">Verification Means</label>
+                <textarea type="text" class="form-control" name="verificationMeans" id="field_verificationMeans"
+                       ng-model="vm.subactivityPoa.verificationMeans" rows="3"
+                       ng-maxlength="300" maxlength="300" required />
+                <div ng-show="editForm.verificationMeans.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.verificationMeans.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.verificationMeans.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="300">
+                        This field cannot be longer than 300 characters.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.budget" for="field_budget">Budget</label>
+                <input type="text" class="form-control" name="budget" id="field_budget" required
+                       ng-blur="vm.blur()"
+                       ng-model="vm.subactivityPoa.budget"  />
+
+                <div ng-show="editForm.budget.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.budget.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.budget.$error.number" translate="entity.validation.number">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.budget.$error.pattern" translate="entity.validation.decimalNumberPattern"
+                       translate-value-pattern="[0-9]+">
+                        This field should follow pattern "[0-9]+".
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.budget.$error.max" translate="entity.validation.max"
+                       translate-value-max="99999999.99">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.budget.$error.min" translate="entity.validation.min"
+                       translate-value-min="0">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.subactivityPoa.priority">Priority</label>
+                <ui-select ng-model="vm.subactivityPoa.priorityId"
+                    required id="field_priority" name="priority">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="priority.id as priority in vm.priorities">
+                        <div ng-bind-html="priority.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <div ng-show="editForm.priority.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.priority.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group" ng-if="vm.showStations">
+                <label translate="metroquitoApp.subactivityPoa.station">Station</label>
+                <ui-select ng-model="vm.subactivityPoa.stationId"
+                           id="field_station" name="station">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="station.id as station in vm.stations">
+                        <div ng-bind-html="station.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+
+                <div ng-show="editForm.processStation.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.processStation.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group" ng-if="!vm.showStations">
+                <label class="control-label" translate="metroquitoApp.subactivityPoa.process" for="field_process">Process</label>
+                <input type="text" class="form-control" name="process" id="field_process"
+                       ng-model="vm.subactivityPoa.process"
+                       ng-maxlength="300" maxlength="300" />
+                <div ng-show="editForm.process.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.process.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="300">
+                        This field cannot be longer than 100 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-default col-md-12">
+                <div class="panel-heading" translate="metroquitoApp.subactivityPoa.responsibleList">
+                    Responsible List
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <p class="help-block"
+                           ng-show="vm.subactivityPoa.users.length == 0" translate="metroquitoApp.subactivityPoa.responsibleValidation" >
+                            You must select at least 1 responsible
+                        </p>
+
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="text-center" ng-if="vm.users.length > 0">
+                                        <input type="checkbox" name="selectAll" id="field_selectAll" ng-change="vm.selectAllEvent()"
+                                               ng-model="vm.selectAll" />
+                                    </div>
+                                </th>
+                                <th> <span translate="metroquitoApp.subactivityPoa.responsibleNames">Names</span> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in vm.users track by user.id">
+                                <td>
+                                    <div class="text-center">
+                                        <input type="checkbox" name="selectUser" id="field_selectAdminUnit" ng-change="vm.selectResponsible(user)"
+                                               ng-model="user.select" />
+                                    </div>
+                                </td>
+                                <td>{{user.fullName}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.subactivityPoa.users.length == 0 || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

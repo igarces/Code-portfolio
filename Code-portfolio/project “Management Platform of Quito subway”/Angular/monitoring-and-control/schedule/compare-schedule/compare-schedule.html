@@ -1,0 +1,231 @@
+<div class="container-fluid">
+    <div class="row">
+        <h2 translate="metroquitoApp.schedule.compare.title">Status</h2>
+        <jhi-alert></jhi-alert>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <label class="control-label" translate="metroquitoApp.schedule.compare.scheduleO" for="field_role"></label>
+            <select class="form-control"  id="field_role" name="role" ng-model="vm.scheduleO.id" ng-disabled="vm.disabled"
+                    ng-options="schedule.id as schedule.name for schedule in vm.schedules | filter : { id : '!' + vm.scheduleD.id}"
+                    ng-change="vm.compare()">
+                <option value="">{{vm.defaultOption}}</option>
+            </select>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <label class="control-label" translate="metroquitoApp.schedule.compare.scheduleD" for="field_module">Login</label>
+            <select class="form-control" ng-disabled="vm.scheduleO.id == '' || vm.scheduleO.id == null || vm.disabled" id="field_module" name="module"
+                     ng-model="vm.scheduleD.id" ng-options="schedule.id as schedule.name for schedule in vm.schedules | filter : { id : '!' + vm.scheduleO.id}"
+                      ng-change="vm.compare()">
+                <option value="">{{vm.defaultOption}}</option>
+            </select>
+        </div>
+    </div>
+    <hr style="margin-bottom: 0" ng-show="vm.show"/>
+    <div class="row" ng-show="vm.show">
+        <div class="col-xs-12 no-padding-left">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.pv != null">PVo = {{vm.scheduleDataInfoO.pv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.pv == null">PVo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.pv != null">PVd = {{vm.scheduleDataInfoD.pv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.pv == null">PVd = 0.00</h2>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.ev != null">EVo = {{vm.scheduleDataInfoO.ev | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.ev == null">EVo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.ev != null">EVd = {{vm.scheduleDataInfoD.ev | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.ev == null">EVd = 0.00</h2>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.ac != null">ACo = {{vm.scheduleDataInfoO.ac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.ac == null">ACo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.ac != null">ACd = {{vm.scheduleDataInfoD.ac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.ac == null">ACd = 0.00</h2>
+                            </div>
+                        </div>
+
+                        <hr style="margin: 0 0 5px 0" />
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.sv != null">SVo = {{vm.scheduleDataInfoO.sv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.sv == null">SVo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.sv != null">SVd = {{vm.scheduleDataInfoD.sv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.sv == null">SVd = 0.00</h2>
+
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.percentSv != null">%SVo = {{vm.scheduleDataInfoO.percentSv | number:2 | numberFormat}}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.percentSv == null">%SVo = 0.00%</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.percentSv != null">%SVd = {{vm.scheduleDataInfoD.percentSv | number:2 | numberFormat}}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.percentSv == null">%SVd = 0.00%</h2>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfoO.spi != null">SPIo = {{vm.scheduleDataInfoO.spi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfoO.spi == null">SPIo = 0.00</h2>
+
+                                <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfoD.spi != null">SPId = {{vm.scheduleDataInfoD.spi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfoD.spi == null">SPId = 0.00</h2>
+
+                            </div>
+                        </div>
+
+                        <hr style="margin: 0 0 5px 0" />
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.cv != null">CVo = {{vm.scheduleDataInfoO.cv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.cv == null">CVo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.cv != null">CVd = {{vm.scheduleDataInfoD.cv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.cv == null">CVd = 0.00</h2>
+
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.percentCv != null">%CVo = {{vm.scheduleDataInfoO.percentCv | number:2 | numberFormat}}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.ev == null">%CVo = 0.00%</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.percentCv != null">%CVd = {{vm.scheduleDataInfoD.percentCv | number:2 | numberFormat}}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.ev == null">%CVd = 0.00%</h2>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.cpi != null">CPIo = {{vm.scheduleDataInfoO.cpi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.cpi == null">CPIo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.cpi != null">CPId = {{vm.scheduleDataInfoD.cpi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.cpi == null">CPId = 0.00</h2>
+                            </div>
+                        </div>
+
+                        <hr style="margin: 0 0 5px 0" />
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.tcpi != null">TCPIo = {{vm.scheduleDataInfoO.tcpi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.tcpi == null">TCPIo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.tcpi != null">TCPId = {{vm.scheduleDataInfoD.tcpi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.tcpi == null">TCPId = 0.00</h2>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.eac != null">EACo = {{vm.scheduleDataInfoO.eac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.eac == null">EACo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.eac != null">EACd = {{vm.scheduleDataInfoD.eac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.eac == null">EACd = 0.00</h2>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.bac != null">BACo = {{vm.scheduleDataInfoO.bac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoO.bac == null">BACo = 0.00</h2>
+
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.bac != null">BACd = {{vm.scheduleDataInfoD.bac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfoD.bac == null">BACd = 0.00</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row"  ng-show="vm.show">
+        <div class="col-xs-12 no-padding-left">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="">Leyenda</div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Valor planeado (PV): </h4>
+                                <label class="control-label italic" translate="">Indica el valor de tiempo que teníamos planificado en un momento dado del proyecto.</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Valor ganado (EV):  </h4>
+                                <label class="control-label italic" translate="">Representa el trabajo realizado en un momento dado.</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Costo actual (AC):  </h4>
+                                <label class="control-label italic" translate="">Indica el coste que utilizado a un momento dado para realizar el trabajo realizado</label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Varianza del calendario (SV):  </h4>
+                                <label class="control-label italic" translate="">SV>0 Adelanto con respesto a la planificación</label><br>
+                                <label class="control-label italic" translate="">SV<0 Retraso con respesto a la planificación</label><br>
+                                <label class="control-label italic" translate="">SV=0 En tiempo</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Varianza del costes (CV): </h4>
+                                <label class="control-label italic" translate="">CV>0 Por debajo del presupuesto</label><br/>
+                                <label class="control-label italic" translate="">CV<0 Por encima del presupuesto</label><br/>
+                                <label class="control-label italic" translate="">CV=0 En presupuesto</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Indice de desempeño del calendario (SPI):   </h4>
+                                <label class="control-label italic" translate="">SPI >1 El proyecto va en tiempo mejor de lo planeado</label><br/>
+                                <label class="control-label italic" translate="">SPI<1 El proyecto tiene un retraso conforme a lo planeado</label><br/>
+                                <label class="control-label italic" translate="">SPI = 1 El proyecto va en tiempo tal y como se planeó </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Indice de desempeño de costo (CPI): </h4>
+                                <label class="control-label italic" translate=""> CPI >1 El proyecto está costando menos de lo presupuestado</label><br/>
+                                <label class="control-label italic" translate=""> CPI<1 El proyecto está costando más de lo presupuestado</label><br/>
+                                <label class="control-label italic" translate=""> CPI = 1 El proyecto está costando igual a lo presupuestado</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Presupuesto al completarse (BAC):  </h4>
+                                <label class="control-label italic" translate="">La suma de todos los valores establecidos para el trabajo que se realizará en un proyecto. </label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Estimado al completarse (EAC): </h4>
+                                <label class="control-label italic" translate=""> Es el estimado del costo total del proyecto, a medida que avanza el tiempo. </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
+                    <span class="icon-button"><img src="content/images/icono-salida.png" class="img-responsive"></span>&nbsp;<span
+                    translate="entity.action.back">Exit</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

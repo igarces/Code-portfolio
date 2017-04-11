@@ -1,0 +1,118 @@
+<div>
+    <h2 translate="metroquitoApp.poaAudits.home.title">Poa Audits</h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="global.messages.search.title">Parameters to conform the report</div>
+        <div class="panel-body">
+            <form name="myForm" novalidate>
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.poaAudits.dateFrom"
+                                       for="field_fromDate">From</label>
+                                <div class="input-group">
+                                    <input id="field_fromDate" readonly type="text" class="form-control"
+                                           name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                           ng-model="vm.fromDate" is-open="vm.datePickerOpenStatus.fromDate"
+                                           datepicker-options="vm.fromDateOption"/>
+                                    <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default"
+                                                       ng-click="vm.openCalendar('fromDate')"><i
+                                                   class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.poaAudits.dateTo"
+                                       for="field_toDate">To</label>
+                                <div class="input-group">
+                                    <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                           uib-datepicker-popup="{{vm.dateformat}}"
+                                           ng-model="vm.toDate" is-open="vm.datePickerOpenStatus.toDate"
+                                           datepicker-options="vm.toDateOption"/>
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="vm.openCalendar('toDate')"><i
+                                                class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 no-padding-left">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger"  ng-click="vm.searchByFilters()" id="generateBtn">
+                                    <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.generate">
+                                            Generate
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                    <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger"  ng-click="vm.cancel()" id="cancelBtn">
+                                    <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="dateHour"><span translate="metroquitoApp.poaAudits.dateHour">Date Hour</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th><span translate="metroquitoApp.poaAudits.user">User</span></th>
+                    <th><span translate="metroquitoApp.poaAudits.administrativeUnit">Administrative Unit</span></th>
+                    <th jh-sort-by="ip"><span translate="metroquitoApp.poaAudits.ip">Ip</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="action"><span translate="metroquitoApp.poaAudits.action">Action</span> <span class="glyphicon glyphicon-sort"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="poaAudits in vm.poaAudits track by poaAudits.id">
+                    <td>{{poaAudits.dateHour | date: vm.dateHourFormat}}</td>
+                    <td>
+                        {{poaAudits.userName}} {{poaAudits.userLastName}}
+                    </td>
+                    <td>
+                        {{poaAudits.adminUnitName}}
+                    </td>
+                    <td>{{poaAudits.ip}}</td>
+                    <td>{{poaAudits.action}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination ng-if="vm.totalItems > 0" class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>
+<br>
+<div class="row">
+    <button ng-click="vm.cancel()"
+            class="btn btn-danger pull-right">
+        <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
+<br>

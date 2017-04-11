@@ -1,0 +1,56 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.schedule.changes.title">Changes</h2>
+        <jhi-alert></jhi-alert>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.schedule.changes.panelState">
+                Task List
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                            <th><span translate="metroquitoApp.schedule.changes.no">Level</span></th>
+                            <th><span translate="metroquitoApp.schedule.changes.activity">Activity</span></th>
+                            <th><span translate="metroquitoApp.schedule.changes.state">State</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ch in vm.changes">
+                                <td>{{ch.uid}}</td>
+                                <td>{{ch.name}}</td>
+                                <td>{{ch.state}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center" style="width: 100%" ng-show="vm.data.length == 0">
+                    <p class="help-block"  translate="global.messages.search.noResult">
+                        No existe información a mostrar.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
+                    <span class="icon-button"><img src="content/images/icono-salida.png" class="img-responsive"></span>&nbsp;<span
+                    translate="entity.action.back">Exit</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

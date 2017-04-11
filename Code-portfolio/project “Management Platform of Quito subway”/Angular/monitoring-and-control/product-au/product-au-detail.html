@@ -1,0 +1,50 @@
+
+<div>
+    <h2><span translate="metroquitoApp.productAU.detail.title">Product AU</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.productAU.product">product</label>
+            <span>{{vm.productAU.product}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.productAU.poa">POA</label>
+            <span>{{vm.productAU.year}}-{{vm.productAU.poaType}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.productAU.administrativeUnitList">
+                administrative Unit List
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th> <span translate="metroquitoApp.productAU.administrativeUnit">administrativeUnit</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="adminUnit in vm.productAU.administrativeUnits track by adminUnit.id">
+                            <td>{{adminUnit.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ui-sref="product-au"
+                class="btn btn-danger pull-right">
+            <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+
+    <br>
+</div>

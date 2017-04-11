@@ -1,0 +1,100 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="mySubactivityMonitoringLabel" translate="metroquitoApp.subactivityMonitoring.home.createOrEditLabel">Create or edit a Subactivity Monitoring</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.subactivityMonitoring.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.subactivityMonitoring.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.year" for="field_year">Year</label>
+            <input type="number" class="form-control" name="year" id="field_year"
+                    ng-model="vm.subactivityMonitoring.year"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.month" for="field_month">Month</label>
+            <input type="number" class="form-control" name="month" id="field_month"
+                    ng-model="vm.subactivityMonitoring.month"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.week" for="field_week">Week</label>
+            <input type="number" class="form-control" name="week" id="field_week"
+                    ng-model="vm.subactivityMonitoring.week"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.planningPercent" for="field_planningPercent">Planning Percent</label>
+            <input type="number" class="form-control" name="planningPercent" id="field_planningPercent"
+                    ng-model="vm.subactivityMonitoring.planningPercent"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.realPercent" for="field_realPercent">Real Percent</label>
+            <input type="number" class="form-control" name="realPercent" id="field_realPercent"
+                    ng-model="vm.subactivityMonitoring.realPercent"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.accumulatedPercent" for="field_accumulatedPercent">Accumulated Percent</label>
+            <input type="number" class="form-control" name="accumulatedPercent" id="field_accumulatedPercent"
+                    ng-model="vm.subactivityMonitoring.accumulatedPercent"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.startDate" for="field_startDate">Start Date</label>
+                <div class="input-group">
+                    <input id="field_startDate" type="text" class="form-control" name="startDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.subactivityMonitoring.startDate" is-open="vm.datePickerOpenStatus.startDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.finalDate" for="field_finalDate">Final Date</label>
+                <div class="input-group">
+                    <input id="field_finalDate" type="text" class="form-control" name="finalDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.subactivityMonitoring.finalDate" is-open="vm.datePickerOpenStatus.finalDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('finalDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.subactivityMonitoring.observations" for="field_observations">Observations</label>
+            <input type="text" class="form-control" name="observations" id="field_observations"
+                    ng-model="vm.subactivityMonitoring.observations"
+                    ng-maxlength="300" />
+            <div ng-show="editForm.observations.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.observations.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="300">
+                    This field cannot be longer than 300 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label translate="metroquitoApp.subactivityMonitoring.subactivityPoa" for="field_subactivityPoa">Subactivity Poa</label>
+            <select class="form-control" id="field_subactivityPoa" name="subactivityPoa" ng-model="vm.subactivityMonitoring.subactivityPoaId" ng-options="subactivityPoa.id as subactivityPoa.id for subactivityPoa in vm.subactivitypoas"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,117 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.headingSubheading.id" id="myHeadingSubheadingLabel" translate="metroquitoApp.headingSubheading.home.createLabel">Create a Heading Subheading</h4>
+        <h4 class="modal-title" ng-if="vm.headingSubheading.id" id="myHeadingSubheadingLabelEdit" translate="metroquitoApp.headingSubheading.home.createOrEditLabel">Edit a Heading Subheading</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.headingSubheading.code" for="field_code">Code</label>
+                <input type="text" class="form-control" name="code" id="field_code"
+                       ng-model="vm.headingSubheading.code"
+                       ng-disabled="vm.readOnlyCode"
+                       required maxlength="{{vm.codeLength}}" ng-minlength="{{vm.codeLength}}"
+                       ng-pattern="vm.patternNumbers" />
+                <div ng-show="editForm.code.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.code.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.code.$error.pattern" translate="entity.validation.numberPattern" >
+                        This field should follow pattern "[0-9]+".
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.code.$error.maxlength" translate="entity.validation.maxlength"
+                       translate-value-max="{{vm.codeLength}}">
+                        This field cannot be longer than 10 characters.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.code.$error.minlength" translate="entity.validation.minlength"
+                       translate-value-min="{{vm.codeLength}}">
+                        This field cannot be longer than 10 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.headingSubheading.description" for="field_descriptionHeading">Description</label>
+                <textarea class="form-control" name="description" id="field_descriptionHeading"
+                       ng-model="vm.headingSubheading.description" rows="2"
+                       required maxlength="250" ng-maxlength="250" />
+                <div ng-show="editForm.description.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.description.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="250">
+                        This field cannot be longer than 100 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="heading" id="field_heading" ng-change="vm.headingTypeChange()"
+                               ng-model="vm.headingSubheading.heading" />
+                        <span translate="metroquitoApp.headingSubheading.heading">heading</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="!vm.headingSubheading.heading">
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.headingSubheading.associatedHeading">Associated Heading</label>
+                <ui-select ng-model="vm.headingSubheading.associatedHeadingId" ng-change="vm.changeAssociated($select)"
+                     required id="field_associatedHeading" name="associatedHeading">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.description}}
+                    </ui-select-match>
+                    <ui-select-choices refresh="vm.headingFilter($select)"
+                        repeat="heading.id as heading in vm.headingsubheadings">
+                        <div ng-bind-html="heading.description | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <div ng-show="editForm.associatedHeading.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.associatedHeading.$error.required"
+                       translate="entity.validation.required">
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.headingSubheading.clarifications" for="field_clarifications">Clarifications</label>
+                <textarea class="form-control" name="clarifications" id="field_clarifications"
+                       ng-model="vm.headingSubheading.clarifications"
+                       maxlength="800" ng-maxlength="800" rows="6" />
+                <div ng-show="editForm.clarifications.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.clarifications.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="800">
+                        This field cannot be longer than 800 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

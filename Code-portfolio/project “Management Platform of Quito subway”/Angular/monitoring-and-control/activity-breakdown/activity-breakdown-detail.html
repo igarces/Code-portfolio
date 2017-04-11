@@ -1,0 +1,34 @@
+
+<div>
+    <h2><span translate="metroquitoApp.activityBreakdown.detail.title">Activity Breakdown</span> {{vm.activityBreakdown.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="metroquitoApp.activityBreakdown.year">Year</span></dt>
+        <dd>
+            <span>{{vm.activityBreakdown.year}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.activityBreakdown.month">Month</span></dt>
+        <dd>
+            <span>{{vm.activityBreakdown.month}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.activityBreakdown.planningPercent">Planning Percent</span></dt>
+        <dd>
+            <span>{{vm.activityBreakdown.planningPercent}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.activityBreakdown.activityPoa">Activity Poa</span></dt>
+        <dd>
+            <a ui-sref="activity-poa-detail({id:vm.activityBreakdown.activityPoaId})">{{vm.activityBreakdown.activityPoaId}}</a>
+        </dd>
+        <dt><span translate="metroquitoApp.activityBreakdown.subactivity">Subactivity</span></dt>
+        <dd>
+            <a ui-sref="subactivity-detail({id:vm.activityBreakdown.subactivityId})">{{vm.activityBreakdown.subactivityId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

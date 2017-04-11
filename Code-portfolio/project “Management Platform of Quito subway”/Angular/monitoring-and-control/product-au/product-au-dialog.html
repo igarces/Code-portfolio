@@ -1,0 +1,106 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.productAU.id" id="myProductAULabel" translate="metroquitoApp.productAU.home.createLabel">Create or edit a Product AU</h4>
+        <h4 class="modal-title" ng-if="vm.productAU.id" id="myProductAULabelEdit" translate="metroquitoApp.productAU.home.createOrEditLabel">Create or edit a Product AU</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.productAU.product" for="field_product">Product</label>
+                <textarea type="text" class="form-control" name="product" id="field_product"
+                       ng-model="vm.productAU.product" rows="2"
+                       required ng-maxlength="200" maxlength="200" />
+                <div ng-show="editForm.product.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.product.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.product.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="200">
+                        This field cannot be longer than 200 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.productAU.poa">Poa</label>
+                <ui-select ng-model="vm.productAU.poaId" required
+                           id="field_poa" name="poa">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.year}}-{{$select.selected.poaTypeName}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="poa.id as poa in vm.poas">
+                        <span ng-bind-html="poa.year | highlight: $select.search"></span>
+                        -
+                        <span ng-bind-html="poa.poaTypeName | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+                <div ng-show="editForm.poa.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.poa.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.administrativeunits.length > 0">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.productAU.administrativeUnitList">
+                    administrative Unit List
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <p class="help-block"
+                           ng-show="vm.productAU.administrativeUnits.length == 0" translate="metroquitoApp.productAU.administrativeUnitValidation" >
+                           You must select at least 1 administrative unit
+                        </p>
+
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="text-center" ng-if="vm.administrativeunits.length > 0">
+                                        <input type="checkbox" name="selectAll" id="field_selectAll" ng-change="vm.selectAllEvent()"
+                                                   ng-model="vm.selectAll" />
+                                    </div>
+                                </th>
+                                <th> <span translate="metroquitoApp.productAU.administrativeUnit">administrativeUnit</span> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="adminUnit in vm.administrativeunits track by adminUnit.id">
+                                <td>
+                                    <div class="text-center">
+                                        <input type="checkbox" name="selectAll" id="field_selectAdminUnit" ng-change="vm.selectAdminUnit(adminUnit)"
+                                               ng-model="adminUnit.select" />
+                                    </div>
+                                </td>
+                                <td>{{adminUnit.name}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.productAU.administrativeUnits.length == 0 || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

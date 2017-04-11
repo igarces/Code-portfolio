@@ -1,0 +1,156 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.schedule.home.title">Schedules</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.schedule.home.dateFrom"
+                                           for="field_fromDate">From</label>
+                                    <div class="input-group">
+                                        <input id="field_fromDate" readonly type="text" class="form-control"
+                                               name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.fromDate" is-open="vm.datePickerOpenStatus.fromDate"
+                                               datepicker-options="vm.fromDateOption"/>
+                                        <span class="input-group-btn">
+                                                   <button type="button" class="btn btn-default"
+                                                           ng-click="vm.openCalendar('fromDate')"><i
+                                                       class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.schedule.home.dateTo"
+                                           for="field_toDate">To</label>
+                                    <div class="input-group">
+                                        <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                               uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.toDate" is-open="vm.datePickerOpenStatus.toDate"
+                                               datepicker-options="vm.toDateOption"/>
+                                        <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"
+                                                            ng-click="vm.openCalendar('toDate')"><i
+                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                            ng-click="vm.searchByFilters()" id="searchBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right">
+                <button class="btn btn-danger" ui-sref="schedule.new">
+                    <metroquito-icon icon="adicionar"/>
+                    &nbsp;
+                    <span translate="metroquitoApp.schedule.home.createLabel">Add</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.schedule.home.list">
+            Schedules List
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="createDateSchedule"><span translate="metroquitoApp.schedule.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th><span translate="metroquitoApp.schedule.time">Time</span></th>
+                        <th><span translate="metroquitoApp.schedule.name">Name</span> </th>
+                        <th><span translate="metroquitoApp.schedule.user">User</span> </th>
+                        <th><span translate="metroquitoApp.schedule.state">State</span> </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="schedule in vm.schedules track by schedule.id">
+                            <td>{{schedule.createDateSchedule | date:'dd/MM/yyyy'}}</td>
+                            <td>{{schedule.createDateTimeSchedule | date:'HH:mm'}}</td>
+                            <td>{{schedule.name}}</td>
+                            <td>{{schedule.userFullName}}</td>
+                            <td>{{schedule.active}}</td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+
+                                    <button ui-sref="schedule-changes({id:schedule.id})"  ng-disabled="vm.lastSchedule.id == schedule.id"
+                                            class="btn btn-danger btn-sm"
+                                            uib-tooltip="{{'entity.tooltips.compare' | translate}}">
+                                        <metroquito-icon icon="func/Nomencladores"/>
+                                    </button>
+
+                                    <button ng-click="vm.downloadFile(schedule.id)"
+                                            class="btn btn-danger btn-sm"
+                                            uib-tooltip="{{'entity.tooltips.download' | translate}}">
+                                        <metroquito-icon icon="exportar"/>
+                                    </button>
+
+                                    <button ui-sref="schedule-detail({id:schedule.id})"
+                                            class="btn btn-danger btn-sm"
+                                            uib-tooltip="{{'entity.tooltips.ver' | translate}}">
+                                        <metroquito-icon icon="func/cronograma-proyecto"/>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination ng-show="vm.totalItems > 0" class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

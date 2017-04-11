@@ -1,0 +1,217 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.poa.home.title">Poas</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label translate="metroquitoApp.poa.poaType">Poa Type</label>
+                                <ui-select ng-model="vm.poaType"
+                                           id="field_poaType" name="poaType">
+                                    <ui-select-match allow-clear
+                                                     placeholder="{{ 'entity.action.select' | translate }}">
+                                        {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="poaType.id as poaType in vm.poatypes">
+                                        <div ng-bind-html="poaType.name | highlight: $select.search.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label translate="metroquitoApp.poa.poaState">Poa State</label>
+
+                                <ui-select ng-model="vm.poaState"
+                                           id="field_poaState" name="poaState">
+                                    <ui-select-match allow-clear
+                                                     placeholder="{{ 'entity.action.select' | translate }}">
+                                        {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="poaState.id as poaState in vm.poastates ">
+                                        <div ng-bind-html="poaState.name | highlight: $select.search.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poa.year"
+                                           for="field_year">year</label>
+                                    <div class="input-group">
+                                        <input id="field_year" type="text" readonly class="form-control" name="year"
+                                               uib-datepicker-popup="yyyy" datepicker-options="vm.yearOption" ng-model="vm.year"
+                                               is-open="vm.datePickerOpenStatus.year" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.openCalendar('year')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poa.project"
+                                           for="field_project">project</label>
+                                    <input type="text" class="form-control" name="project"
+                                           id="field_project"
+                                           ng-model="vm.project" maxlength="250"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poa.dependence"
+                                           for="field_dependence">dependence</label>
+                                    <input type="text" class="form-control" name="dependence"
+                                           id="field_dependence"
+                                           ng-model="vm.dependence" maxlength="250"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poa.program"
+                                           for="field_program">program</label>
+                                    <input type="text" class="form-control" name="program"
+                                           id="field_program"
+                                           ng-model="vm.program" maxlength="250"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poa.indicator"
+                                           for="field_indicator">indicator</label>
+                                    <input type="text" class="form-control" name="indicator"
+                                           id="field_indicator"
+                                           ng-model="vm.indicator" maxlength="250"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.poa.goal"
+                                           for="field_goal">goal</label>
+                                    <input type="text" class="form-control" name="dependence"
+                                           id="field_goal"
+                                           ng-model="vm.goalProject" maxlength="250"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                            ng-click="vm.searchByFilters()" id="searchBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right">
+                <button class="btn btn-danger" ui-sref="poa.new">
+                    <metroquito-icon icon="adicionar"/>
+                    &nbsp;
+                    <span translate="metroquitoApp.poa.home.createButton">Add</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.poa.searchList">
+            POAs List
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="dependence"><span translate="metroquitoApp.poa.dependence">Dependence</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="program"><span translate="metroquitoApp.poa.program">Program</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="project"><span translate="metroquitoApp.poa.project">Project</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="indicator"><span translate="metroquitoApp.poa.indicator">Indicator</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th><span translate="metroquitoApp.poa.poaTypeYear">Type-Year</span></th>
+                        <th jh-sort-by="poaStateId" style="min-width: 80px;"><span translate="metroquitoApp.poa.poaState">State</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="poa in vm.poas track by poa.id">
+                        <td>{{poa.dependence}}</td>
+                        <td>{{poa.program}}</td>
+                        <td>{{poa.project}}</td>
+                        <td>{{poa.indicator}}</td>
+                        <td>{{poa.poaTypeName}}-{{poa.year}}</td>
+                        <td>{{poa.poaStateName}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button ui-sref="poa-detail({id:poa.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.ver' | translate}}">
+                                    <metroquito-icon icon="ver"/>
+                                </button>
+
+                                <button ui-sref="poa.edit({id:poa.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.modificar' | translate}}">
+                                    <metroquito-icon icon="modificar"/>
+                                </button>
+
+                                <button ui-sref="poa.delete({id:poa.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.Eliminar' | translate}}">
+                                    <metroquito-icon icon="eliminar"/>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination ng-show="vm.totalItems > 0" class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

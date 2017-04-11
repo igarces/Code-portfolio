@@ -1,0 +1,54 @@
+
+<div>
+    <h2><span translate="metroquitoApp.subactivityMonitoring.detail.title">Subactivity Monitoring</span> {{vm.subactivityMonitoring.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="metroquitoApp.subactivityMonitoring.year">Year</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.year}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.month">Month</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.month}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.week">Week</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.week}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.planningPercent">Planning Percent</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.planningPercent}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.realPercent">Real Percent</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.realPercent}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.accumulatedPercent">Accumulated Percent</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.accumulatedPercent}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.startDate">Start Date</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.startDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.finalDate">Final Date</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.finalDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.observations">Observations</span></dt>
+        <dd>
+            <span>{{vm.subactivityMonitoring.observations}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.subactivityMonitoring.subactivityPoa">Subactivity Poa</span></dt>
+        <dd>
+            <a ui-sref="subactivity-poa-detail({id:vm.subactivityMonitoring.subactivityPoaId})">{{vm.subactivityMonitoring.subactivityPoaId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

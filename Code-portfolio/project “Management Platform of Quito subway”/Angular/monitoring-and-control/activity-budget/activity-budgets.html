@@ -1,0 +1,121 @@
+<div>
+    <h2 translate="metroquitoApp.activityBudget.home.products">Products</h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+        <div class="panel-body">
+            <form name="myForm" novalidate>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label"
+                                       translate="metroquitoApp.activityBudget.administrativeUnit"
+                                       for="field_administrativeUnit">administrativeUnit</label>
+
+                                <ui-select ng-model="vm.administrativeUnitId"
+                                           id="field_administrativeUnit" name="administrativeUnit">
+                                    <ui-select-match allow-clear
+                                                     placeholder="{{ 'entity.action.select' | translate }}">
+                                        {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="administrativeUnit.id as administrativeUnit in vm.administrativeUnitList">
+                                        <div ng-bind-html="administrativeUnit.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label"
+                                       translate="metroquitoApp.activityBudget.product"
+                                       for="field_product">Product</label>
+
+                                <ui-select ng-model="vm.productId"
+                                           id="field_product" name="product">
+                                    <ui-select-match allow-clear
+                                                     placeholder="{{ 'entity.action.select' | translate }}">
+                                        {{$select.selected.product}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="product.id as product in vm.productList | filter : vm.productFilter">
+                                        <div ng-bind-html="product.product | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 no-padding-left">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                        ng-click="vm.searchByFilters()" id="searchBtn">
+                                    <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                    <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                    <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th><span translate="metroquitoApp.activityBudget.administrativeUnit">Administrative unit</span></th>
+                    <th><span translate="metroquitoApp.activityBudget.product">Product</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="activityBudget in vm.productBudgetsList">
+                    <td>{{activityBudget.adminUnit.name}}</td>
+                    <td>{{activityBudget.product.product}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button ng-if="activityBudget.poaState == vm.poaStateRevisedId"
+                                    ui-sref="activity-budget.adjust({productId:activityBudget.product.id, adminUnitId: activityBudget.adminUnit.id})"
+                                    class="btn btn-danger btn-sm"
+                                    uib-tooltip="{{'entity.tooltips.adjustBudget' | translate}}">
+                                <span class="icon-button"><img src="content/images/func/Justificación-de-uso-de-financiamiento.png" class="img-responsive"></span>
+                            </button>
+                            <button
+                                ui-sref="activity-budget.update({productId:activityBudget.product.id, adminUnitId: activityBudget.adminUnit.id})"
+                                    class="btn btn-danger btn-sm"
+                                    uib-tooltip="{{'entity.tooltips.updateBudget' | translate}}">
+                                <span class="icon-button"><img src="content/images/func/conciliacion-de-saldos.png" class="img-responsive"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

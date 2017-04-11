@@ -1,0 +1,209 @@
+<div class="container-fluid">
+    <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="row">
+        <h2 translate="metroquitoApp.subactivityPoa.home.monitoring">SubActivity Update state</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityPoa.home.activityData">Activity Data</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.product">Product</label>
+                        <span>{{vm.activityPoa.productName}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.activity">Activity</label>
+                        <span>{{vm.activityPoa.description}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.plannedGoal">Planned Goal</label>
+                        <span>{{vm.activityPoa.plannedGoal}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.startDate">Start Date</label>
+                        <span>{{vm.activityPoa.startDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.finalDate">Final Date</label>
+                        <span>{{vm.activityPoa.finalDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.responsible">responsible</label>
+                        <span ng-repeat="user in vm.activityPoa.users track by user.id">
+                            {{user.fullName}}<span ng-if="$index+1 < vm.activityPoa.users.length ">,</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.subactivityPoa.home.subactivityData">subActivity Data</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.activityPoa">Activity</label>
+                        <span>{{vm.subactivityPoa.activity}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.subactivityPoa">SubActivity</label>
+                        <span ng-if="vm.subactivityPoa.subactivityPoaId">{{vm.subactivityPoa.subactivity}}</span>
+                        <span ng-if="!vm.subactivityPoa.subactivityPoaId">-</span>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.subactivityPoa">SubActivity</label>
+                        <span>{{vm.subactivityPoa.description}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.startDate">Start Date</label>
+                        <span>{{vm.subactivityPoa.startDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.finalDate">Final Date</label>
+                        <span>{{vm.subactivityPoa.finalDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.responsible">responsible</label>
+                        <span ng-repeat="user in vm.subactivityPoa.users track by user.id">
+                            {{user.fullName}}<span ng-if="$index+1 < vm.subactivityPoa.users.length ">,</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.plannedGoal">Planned Goal</label>
+                        <span>{{vm.subactivityPoa.plannedGoal}}</span>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.subactivityPoa.priority">Priority</label>
+                        <span>{{vm.subactivityPoa.priority}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.subactivityPoa.home.monthBreakdown">monthBreakdown</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped" >
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.subactivityPoa.months">Months</span></th>
+                            <th><span translate="metroquitoApp.subactivityPoa.plannedPercent">Planned Percent</span></th>
+                            <th><span translate="metroquitoApp.subactivityPoa.realPercent">Real Percent</span></th>
+                            <th><span translate="metroquitoApp.subactivityPoa.realStartDate">Real Star tDate</span></th>
+                            <th><span translate="metroquitoApp.subactivityPoa.realFinalDate">Real Final Date</span></th>
+                            <th><span translate="metroquitoApp.subactivityPoa.observation">Observation</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="monitoring in vm.monitoringList">
+                              <td>
+                                    {{vm.monthNames[monitoring.month]}}
+                                </td>
+                                <td>
+                                    <span>{{monitoring.planningPercent | number:'2'}}%</span>
+                                </td>
+                                <td>
+                                    <span ng-if="monitoring.showData">{{monitoring.realPercent | number:'2'}}%</span>
+
+                                    <input type="text" class="form-control" name="realPercent" id="field_realPercent"
+                                           required ng-if="!monitoring.showData"
+                                           ng-model="monitoring.realPercent" ng-change="vm.changePercent(monitoring)"
+                                           ng-blur="vm.blur(monitoring)"/>
+
+                                    <div ng-if="editForm.realPercent.$invalid && !monitoring.showData">
+                                        <p class="help-block"
+                                           ng-show="editForm.realPercent.$error.required" translate="entity.validation.required">
+                                            This field is required.
+                                        </p>
+                                        <p class="help-block"
+                                           ng-show="editForm.realPercent.$error.number" translate="entity.validation.number">
+                                        </p>
+                                        <p class="help-block"
+                                           ng-show="editForm.realPercent.$error.pattern" translate="entity.validation.intNumberPattern"
+                                           translate-value-pattern="[0-9]+">
+                                            This field should follow pattern "[0-9]+".
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group" ng-if="!monitoring.disabled && !monitoring.showData">
+                                        <input id="field_startDate" type="text" class="form-control" name="startDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="monitoring.startDate" is-open="vm.datePickerOpenStatus.startDate"
+                                               required readonly datepicker-options="vm.startDateOption"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                    <span ng-if="monitoring.showData">{{monitoring.startDate | date: vm.dateformat}}</span>
+                                </td>
+                                <td>
+                                    <div class="input-group" ng-if="!monitoring.disabled && !monitoring.showData">
+                                        <input id="field_finalDate" type="text" class="form-control" name="finalDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="monitoring.finalDate" is-open="vm.datePickerOpenStatus.finalDate"
+                                               required readonly datepicker-options="vm.finalDateOption"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.openCalendar('finalDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+
+                                    <span ng-if="monitoring.showData">{{monitoring.finalDate | date: vm.dateformat}}</span>
+                                </td>
+                                <td style="min-width: 400px;">
+                                    <input type="text" class="form-control" name="observation" id="field_observation"
+
+                                           ng-if="!monitoring.disabled && !monitoring.showData"
+                                           ng-model="monitoring.observations"
+                                           required ng-maxlength="100" maxlength="100" />
+
+                                    <span ng-if="monitoring.showData">{{monitoring.observations}}</span>
+                                </td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Total:</td>
+                            <td>
+                                100 %
+                            </td>
+                            <td>
+                                {{vm.totalSum}} %
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+
+    <div class="row pull-right">
+        <button ng-disabled="vm.totalSum > 100 || editForm.realPercent.$invalid" class="btn btn-danger"  ng-if="vm.showAcceptButton" ng-click="vm.save()">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</div>
+
+</br>

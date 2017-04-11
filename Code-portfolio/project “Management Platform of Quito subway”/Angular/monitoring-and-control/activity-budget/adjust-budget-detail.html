@@ -1,0 +1,105 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.activityBudget.adjustBudget">Adjust Budget</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityBudget.detail.activityDetails">ActivityPoa Heading Subheadings List</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label translate="metroquitoApp.activityBudget.detail.description">Description</label>
+                        <span>{{vm.activityPoa.description}}</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label translate="metroquitoApp.activityBudget.detail.product">Product Name</label>
+                        <span>{{vm.activityPoa.productName}}</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label translate="metroquitoApp.activityBudget.detail.plannedGoal">Planned Goal</label>
+                        <span>{{vm.activityPoa.plannedGoal | number: '2'}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label translate="metroquitoApp.activityBudget.detail.administrativeUnitName">Administrative Unit Name</label>
+                        <span>{{vm.activityPoa.administrativeUnitName}}</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label translate="metroquitoApp.activityBudget.detail.startDate">Start Date</label>
+                        <span>{{vm.activityPoa.startDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label translate="metroquitoApp.activityBudget.detail.finalDate">Final Date</label>
+                        <span>{{vm.activityPoa.finalDate | date:vm.dateformat}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-heading" translate="metroquitoApp.activityBudget.detail.headingSubheadingsList">ActivityPoa Heading Subheadings List</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 180px;"><span translate="metroquitoApp.activityBudget.heading">Heading</span></th>
+                                <th><span translate="metroquitoApp.activityBudget.resourceMDMQ">Resource MDMQ</span></th>
+                                <th><span translate="metroquitoApp.activityBudget.ownFunds">Own Funds</span></th>
+                                <th><span translate="metroquitoApp.activityBudget.totalBudget">Total Budget</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="activityPoaHeading in vm.activityPoaHeadingSubheadings">
+                                <td>
+                                    <ui-select ng-model="activityPoaHeading.headingSubheadingId" id="field_headingSubheading"
+                                               ng-change="vm.checkCode(activityPoaHeading.headingSubheadingId)" name="headingSubheading">
+                                        <ui-select-match allow-clear placeholder="{{ 'entity.action.select' | translate }}">
+                                            {{$select.selected.code}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="headingSubheading.id as headingSubheading in vm.headingsubheadings">
+                                            <span ng-bind-html="headingSubheading.code | highlight: $select.search"></span>
+                                            <small ng-bind-html="headingSubheading.description | highlight: $select.search"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td>
+                                    <input-number input-name="resourceMDMQ" input-value="activityPoaHeading.resourceMDMQ"
+                                                  max="99999999.99" change="vm.plusTotal(activityPoaHeading)"/>
+                                </td>
+                                <td>
+                                    <input-number input-name="ownFunds" input-value="activityPoaHeading.ownFunds"
+                                                  max="99999999.99" change="vm.plusTotal(activityPoaHeading)"/>
+                                </td>
+                                <td class="text-right">
+                                    {{vm.plusTotal(activityPoaHeading)}}
+                                    {{vm.plusTotalResult}}
+                                </td>
+                            </tr>
+                            <tr ng-if="vm.activityPoaHeadingSubheadings.length == 0" class="text-center">
+                                <td colspan="8">
+                                    <span translate="global.messages.search.noResult">
+                                       No Result
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pull-right">
+        <button class="btn btn-danger" ng-disabled="vm.headingSubheadings.length == 0" ng-click="vm.save()">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</div>

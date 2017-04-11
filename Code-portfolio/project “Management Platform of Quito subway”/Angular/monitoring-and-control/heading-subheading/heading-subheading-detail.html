@@ -1,0 +1,40 @@
+
+<div>
+    <h2><span translate="metroquitoApp.headingSubheading.detail.title">Heading Subheading</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.headingSubheading.code">code</label>
+            <span>{{vm.headingSubheading.code}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.headingSubheading.description">description</label>
+            <span>{{vm.headingSubheading.description}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.headingSubheading.heading">heading</label>
+            <span ng-if="vm.headingSubheading.heading">Si</span>
+            <span ng-if="!vm.headingSubheading.heading">No</span>
+        </div>
+    </div>
+
+    <div class="row" ng-if="!vm.headingSubheading.heading">
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.headingSubheading.associatedHeading">associatedHeading</label>
+            <span>{{vm.headingSubheading.associatedHeadingDescription}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.headingSubheading.clarifications">clarifications</label>
+            <span>{{vm.headingSubheading.clarifications}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ui-sref="heading-subheading"
+                class="btn btn-danger pull-right">
+            <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+</div>

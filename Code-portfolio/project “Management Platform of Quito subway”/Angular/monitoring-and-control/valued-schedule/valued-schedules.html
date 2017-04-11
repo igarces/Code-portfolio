@@ -1,0 +1,164 @@
+<div>
+    <h2 translate="metroquitoApp.valuedSchedule.home.title">Valued Schedules</h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+        <div class="panel-body">
+            <form name="myForm" novalidate>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.valuedSchedule.dateFrom"
+                                       for="field_fromDate">From</label>
+                                <div class="input-group">
+                                    <input id="field_fromDate" readonly type="text" class="form-control"
+                                           name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                           ng-model="vm.fromDate" is-open="vm.datePickerOpenStatus.fromDate"
+                                           datepicker-options="vm.fromDateOption"/>
+                                    <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default"
+                                                       ng-click="vm.openCalendar('fromDate')"><i
+                                                   class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.valuedSchedule.dateTo"
+                                       for="field_toDate">To</label>
+                                <div class="input-group">
+                                    <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                           uib-datepicker-popup="{{vm.dateformat}}"
+                                           ng-model="vm.toDate" is-open="vm.datePickerOpenStatus.toDate"
+                                           datepicker-options="vm.toDateOption"/>
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="vm.openCalendar('toDate')"><i
+                                                class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 no-padding-left">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                        ng-click="vm.searchByFilters()" id="searchBtn">
+                                    <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                    <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                    <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right">
+                <button class="btn btn-danger" ui-sref="valued-schedule.new">
+                    <metroquito-icon icon="importar"/>
+                    &nbsp;
+                    <span translate="metroquitoApp.valuedSchedule.home.importLabel">Import</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.valuedSchedule.searchList">
+            Activities List
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="registrationDate"><span translate="metroquitoApp.valuedSchedule.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th><span translate="metroquitoApp.valuedSchedule.hour">Hour</span></th>
+                        <th jh-sort-by="name"><span translate="metroquitoApp.valuedSchedule.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th><span translate="metroquitoApp.valuedSchedule.user">User</span></th>
+                        <th jh-sort-by="state"><span translate="metroquitoApp.valuedSchedule.state">State</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="valuedSchedule in vm.valuedSchedules track by valuedSchedule.id">
+                        <td>{{valuedSchedule.registrationDate | date: vm.dateformat}}</td>
+                        <td>{{valuedSchedule.registrationDate | date: vm.hourFormat}}</td>
+                        <td>{{valuedSchedule.name}}</td>
+                        <td>
+                            {{valuedSchedule.userName}}
+                        </td>
+                        <td>
+                            <span ng-if="valuedSchedule.state" translate="metroquitoApp.valuedSchedule.active">Active</span>
+                            <span ng-if="!valuedSchedule.state" translate="metroquitoApp.valuedSchedule.inactive">Inactive</span>
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button ui-sref="valued-schedule.compare({id:valuedSchedule.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.compare' | translate}}">
+                                    <span class="icon-button"><img src="content/images/func/Nomencladores.png" class="img-responsive"></span>
+                                </button>
+
+                                <button ng-click="vm.exportSchedule(valuedSchedule.id)"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.export' | translate}}">
+                                    <span class="icon-button"><img src="content/images/exportar.png" class="img-responsive"></span>
+                                </button>
+
+                                <button ui-sref="valued-schedule.financial-execution({id:valuedSchedule.id})"
+                                        ng-if="valuedSchedule.state == 1"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.registerExecution' | translate}}">
+                                    <span class="icon-button"><img src="content/images/func/conciliacion-de-saldos.png" class="img-responsive"></span>
+                                </button>
+
+                                <button ng-click="vm.exportFinancialExecution(valuedSchedule.id)"
+                                        ng-if="valuedSchedule.state == 1"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.export' | translate}}">
+                                    <span class="icon-button"><img src="content/images/exportar.png" class="img-responsive"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination ng-if="vm.totalItems > 0" class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+
+        </div>
+    </div>
+</div>

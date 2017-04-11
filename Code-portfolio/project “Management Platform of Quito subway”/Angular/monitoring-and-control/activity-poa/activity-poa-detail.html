@@ -1,0 +1,127 @@
+
+<div>
+    <h2><span translate="metroquitoApp.activityPoa.detail.title">Activity Poa</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.product">Product</label>
+            <span>{{vm.activityPoa.productName}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.description">Description</label>
+            <span>{{vm.activityPoa.description}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.plannedGoal">Planned Goal</label>
+            <span>{{vm.activityPoa.plannedGoal | number: '2'}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.startDate">Start Date</label>
+            <span>{{vm.activityPoa.startDate | date:vm.dateformat}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.finalDate">Final Date</label>
+            <span>{{vm.activityPoa.finalDate | date:vm.dateformat}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.costCenter">Cost Center</label>
+            <span>{{vm.activityPoa.costCenterName}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.priority">Priority</label>
+            <span>{{vm.activityPoa.priorityName}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.drag">Drag</label>
+            <span ng-if="vm.activityPoa.drag">Sí</span>
+            <span ng-if="!vm.activityPoa.drag">No</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.activityPoa.multiannual">multiannual</label>
+            <span ng-if="vm.activityPoa.multiannual">Sí</span>
+            <span ng-if="!vm.activityPoa.multiannual">No</span>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8 form-group">
+            <label translate="metroquitoApp.activityPoa.observations">Observations</label>
+            <span>{{vm.activityPoa.observations}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 form-group">
+            <label translate="metroquitoApp.activityPoa.budgetaryDetail">Budgetary Detail</label>
+            <span>{{vm.activityPoa.budgetaryDetail}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default col-md-8">
+            <div class="panel-heading" translate="metroquitoApp.activityPoa.headingsSubheadings">
+                activityPoa headings List
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.activityPoa.heading">Heading Subheading</span></th>
+                            <th><span  class="text-center" translate="metroquitoApp.activityPoa.referentialAmount">Amount</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="heading in vm.activityPoa.activityPoaHeadingSubheadings">
+                            <td>{{heading.headingSubheadingCode +' - '+ heading.headingSubheadingDesc}}</td>
+                            <td class="text-right">{{heading.amount}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default col-md-8">
+            <div class="panel-heading" translate="metroquitoApp.activityPoa.responsibleList">
+                activityPoa users List
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.activityPoa.responsibleNames">Names</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in vm.activityPoa.users track by user.id">
+                            <td>{{user.fullName}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ui-sref="activity-poa"
+                class="btn btn-danger pull-right">
+            <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+</div>
+
+</br>

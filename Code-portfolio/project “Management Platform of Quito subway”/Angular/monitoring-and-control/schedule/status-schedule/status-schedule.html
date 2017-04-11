@@ -1,0 +1,210 @@
+<div class="container-fluid">
+    <div class="row">
+        <h2 translate="metroquitoApp.schedule.status.title">Status</h2>
+        <jhi-alert></jhi-alert>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="pull-right">
+
+                <div class="btn-group flex-btn-group-container">
+                    <div class="flex-btn-group-container" style="align-items: center;cursor: pointer;" ui-sref="chart-station">
+                        <img src="content/images/seleccionar.png" class="img-responsive">
+                        <span translate="metroquitoApp.schedule.status.station" style="font-weight: bold;padding: 10px 10px;">Consultar estado por estación</span>
+                    </div>
+
+                    <div class="flex-btn-group-container" style="align-items: center;cursor: pointer;" ui-sref="chart-spi-cpi">
+                        <img src="content/images/seleccionar.png" class="img-responsive">
+                        <span translate="metroquitoApp.schedule.status.graficSPI" style="font-weight: bold;padding: 10px 10px;">Consultar gráfica SPI vs CPI</span>
+                    </div>
+                    <div class="flex-btn-group-container" style="align-items: center;cursor: pointer;" ui-sref="chart-s">
+                        <img src="content/images/seleccionar.png" class="img-responsive">
+                        <span translate="metroquitoApp.schedule.status.graficS" style="font-weight: bold;padding: 10px 10px;">Consultar gráfica S</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr style="margin-bottom: 0" />
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.pv != null">PV = {{vm.scheduleDataInfo.pv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.pv == null">PV = 0.00</h2>
+                                <label class="control-label" translate="">Valor planeado</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ev != null">EV = {{vm.scheduleDataInfo.ev | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ev == null">EV = 0.00</h2>
+                                <label class="control-label" translate="">Valor ganado</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ac != null">AC = {{vm.scheduleDataInfo.ac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ac == null">AC = 0.00</h2>
+                                <label class="control-label" translate="">Costo actual</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.sv != null">SV = {{vm.scheduleDataInfo.sv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.sv == null">SV = 0.00</h2>
+                                <label class="control-label" translate="">Varianza del calendario=EV-PV</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.percentSv != null">%SV = {{vm.scheduleDataInfo.percentSv | number:2 | numberFormat }}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.percentSv == null">%SV = 0.00%</h2>
+                                <label class="control-label" translate="">Porcentaje de Varianza del calendario</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <a ui-sref="chart-spi">
+                                    <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfo.spi != null">SPI = {{vm.scheduleDataInfo.spi | number:2 | numberFormat }}</h2>
+                                    <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfo.spi == null">SPI = 0.00</h2>
+                                </a>
+                                    <label class="control-label" translate="">Indice de desempeño del calendario=EV/PV</label>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cv != null">CV = {{vm.scheduleDataInfo.cv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cv == null">CV = 0.00</h2>
+                                <label class="control-label" translate="">Varianza de costo=EV-AC</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.percentCv != null">%CV = {{vm.scheduleDataInfo.percentCv | number:2 | numberFormat }}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ev == null">%CV = 0.00%</h2>
+                                <label class="control-label" translate="">Porcentaje de Varianza de costo</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <a ui-sref="chart-cpi">
+                                    <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cpi != null">CPI = {{vm.scheduleDataInfo.cpi | number:2 | numberFormat }}</h2>
+                                    <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cpi == null">CPI = 0.00</h2>
+                                </a>
+                                <label class="control-label" translate="">Indice de desempeño de costo=EV/AC</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.tcpi != null">TCPI = {{vm.scheduleDataInfo.tcpi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.tcpi == null">TCPI = 0.00</h2>
+                                <label class="control-label" translate="">Indice de desempeño para completar</label>
+                                <label class="control-label" translate="">(BAC-EV)/(BAC-AC)</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.eac != null">EAC = {{vm.scheduleDataInfo.eac | number:2 | numberFormat }}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.eac == null">EAC = 0.00</h2>
+                                <label class="control-label" translate="">Estimado al completarse AC+(BAC-EV)</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.bac != null">BAC = {{vm.scheduleDataInfo.bac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.bac == null">BAC = 0.00</h2>
+                                <label class="control-label" translate="">Presupuesto al completarse</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="">Leyenda</div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Valor planeado (PV): </h4>
+                                <label class="control-label italic" translate="">Indica el valor de tiempo que teníamos planificado en un momento dado del proyecto.</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Valor ganado (EV):  </h4>
+                                <label class="control-label italic" translate="">Representa el trabajo realizado en un momento dado.</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Costo actual (AC):  </h4>
+                                <label class="control-label italic" translate="">Indica el coste que utilizado a un momento dado para realizar el trabajo realizado</label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Varianza del calendario (SV):  </h4>
+                                <label class="control-label italic" translate="">SV>0 Adelanto con respesto a la planificación</label><br>
+                                <label class="control-label italic" translate="">SV<0 Retraso con respesto a la planificación</label><br>
+                                <label class="control-label italic" translate="">SV=0 En tiempo</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Varianza del costes (CV): </h4>
+                                <label class="control-label italic" translate="">CV>0 Por debajo del presupuesto</label><br/>
+                                <label class="control-label italic" translate="">CV<0 Por encima del presupuesto</label><br/>
+                                <label class="control-label italic" translate="">CV=0 En presupuesto</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Indice de desempeño del calendario (SPI):   </h4>
+                                <label class="control-label italic" translate="">SPI >1 El proyecto va en tiempo mejor de lo planeado</label><br/>
+                                <label class="control-label italic" translate="">SPI<1 El proyecto tiene un retraso conforme a lo planeado</label><br/>
+                                <label class="control-label italic" translate="">SPI = 1 El proyecto va en tiempo tal y como se planeó </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Indice de desempeño de costo (CPI): </h4>
+                                <label class="control-label italic" translate=""> CPI >1 El proyecto está costando menos de lo presupuestado</label><br/>
+                                <label class="control-label italic" translate=""> CPI<1 El proyecto está costando más de lo presupuestado</label><br/>
+                                <label class="control-label italic" translate=""> CPI = 1 El proyecto está costando igual a lo presupuestado</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Presupuesto al completarse (BAC):  </h4>
+                                <label class="control-label italic" translate="">La suma de todos los valores establecidos para el trabajo que se realizará en un proyecto. </label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h4 style="margin-top: 0">Estimado al completarse (EAC): </h4>
+                                <label class="control-label italic" translate=""> Es el estimado del costo total del proyecto, a medida que avanza el tiempo. </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
+                    <span class="icon-button"><img src="content/images/icono-salida.png" class="img-responsive"></span>&nbsp;<span
+                    translate="entity.action.back">Exit</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

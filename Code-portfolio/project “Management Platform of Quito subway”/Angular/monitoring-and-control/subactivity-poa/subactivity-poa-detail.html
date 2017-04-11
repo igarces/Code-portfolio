@@ -1,0 +1,100 @@
+
+<div>
+    <h2><span translate="metroquitoApp.subactivityPoa.detail.title">Subactivity Poa</span> </h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.activityPoa">Activity</label>
+            <span>{{vm.subactivityPoa.activity}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.subactivityPoa">SubActivity</label>
+            <span ng-if="vm.subactivityPoa.subactivityPoaId">{{vm.subactivityPoa.subactivity}}</span>
+            <span ng-if="!vm.subactivityPoa.subactivityPoaId">-</span>
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.subactivityPoa">SubActivity</label>
+            <span>{{vm.subactivityPoa.description}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.startDate">Start Date</label>
+            <span>{{vm.subactivityPoa.startDate | date:vm.dateformat}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.finalDate">Final Date</label>
+            <span>{{vm.subactivityPoa.finalDate | date:vm.dateformat}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.plannedGoal">Planned Goal</label>
+            <span>{{vm.subactivityPoa.plannedGoal}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.indicator">indicator</label>
+            <span>{{vm.subactivityPoa.indicator}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.verificationMeans">verificationMeans</label>
+            <span>{{vm.subactivityPoa.verificationMeans}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.budget">Budget</label>
+            <span>${{vm.subactivityPoa.budget | number: '2'}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.subactivityPoa.priority">priority</label>
+            <span>{{vm.subactivityPoa.priority}}</span>
+        </div>
+        <div class="col-md-4 form-group" ng-if="vm.subactivityPoa.station">
+            <label translate="metroquitoApp.subactivityPoa.station">station</label>
+            <span>{{vm.subactivityPoa.station}}</span>
+        </div>
+        <div class="col-md-4 form-group" ng-if="vm.subactivityPoa.process">
+            <label translate="metroquitoApp.subactivityPoa.process">process</label>
+            <span>{{vm.subactivityPoa.process}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default col-md-12">
+            <div class="panel-heading" translate="metroquitoApp.subactivityPoa.responsibleList">
+                activityPoa users List
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th> <span translate="metroquitoApp.subactivityPoa.responsibleNames">Names</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in vm.subactivityPoa.users track by user.id">
+                            <td>{{user.fullName}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ui-sref="subactivity-poa"
+                class="btn btn-danger pull-right">
+            <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+    <br>
+</div>

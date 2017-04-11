@@ -1,0 +1,67 @@
+
+<div>
+    <h2><span translate="metroquitoApp.valuedSchedule.home.compare">Valued Schedule</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.valuedSchedule.comparisonResults">
+            Comparison results
+        </div>
+        <div class="panel-body">
+
+            <div ng-if="!vm.comparison.comparison">
+                <p class="text-center" translate="metroquitoApp.valuedSchedule.noComparison"> No data for comparison </p>
+            </div>
+
+            <div ng-if="vm.comparison.comparison">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label" translate="metroquitoApp.valuedSchedule.deletedComponents">Deleted components</label>
+
+                        <p ng-if="!vm.comparison.deletedList.length" translate="global.messages.search.noResult">
+                            No data for comparison
+                        </p>
+
+                       <div ng-if="vm.comparison.deletedList.length">
+                           <dl>
+                               <dd ng-repeat="component in vm.comparison.deletedList">
+                                   - {{component.code}} {{component.componentName}}
+                               </dd>
+                           </dl>
+                       </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label" translate="metroquitoApp.valuedSchedule.addedComponents">Added components</label>
+
+                        <p ng-if="!vm.comparison.addedList.length" translate="global.messages.search.noResult">
+                            No data for comparison
+                        </p>
+
+                        <div ng-if="vm.comparison.addedList.length">
+                            <dl>
+                                <dd ng-repeat="component in vm.comparison.addedList">
+                                    - {{component.code}} {{component.componentName}}
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ui-sref="valued-schedule"
+                class="btn btn-danger pull-right">
+            <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+
+    <br>
+</div>

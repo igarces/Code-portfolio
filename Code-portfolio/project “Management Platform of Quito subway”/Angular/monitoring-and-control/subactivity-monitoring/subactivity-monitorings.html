@@ -1,0 +1,80 @@
+<div>
+    <h2 translate="metroquitoApp.subactivityMonitoring.home.title">Subactivity Monitorings</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="subactivity-monitoring.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="metroquitoApp.subactivityMonitoring.home.createLabel">
+                        Create new Subactivity Monitoring
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="year"><span translate="metroquitoApp.subactivityMonitoring.year">Year</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="month"><span translate="metroquitoApp.subactivityMonitoring.month">Month</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="week"><span translate="metroquitoApp.subactivityMonitoring.week">Week</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="planningPercent"><span translate="metroquitoApp.subactivityMonitoring.planningPercent">Planning Percent</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="realPercent"><span translate="metroquitoApp.subactivityMonitoring.realPercent">Real Percent</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="accumulatedPercent"><span translate="metroquitoApp.subactivityMonitoring.accumulatedPercent">Accumulated Percent</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="startDate"><span translate="metroquitoApp.subactivityMonitoring.startDate">Start Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="finalDate"><span translate="metroquitoApp.subactivityMonitoring.finalDate">Final Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="observations"><span translate="metroquitoApp.subactivityMonitoring.observations">Observations</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="subactivityPoaId"><span translate="metroquitoApp.subactivityMonitoring.subactivityPoa">Subactivity Poa</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subactivityMonitoring in vm.subactivityMonitorings track by subactivityMonitoring.id">
+                    <td><a ui-sref="subactivity-monitoring-detail({id:subactivityMonitoring.id})">{{subactivityMonitoring.id}}</a></td>
+                    <td>{{subactivityMonitoring.year}}</td>
+                    <td>{{subactivityMonitoring.month}}</td>
+                    <td>{{subactivityMonitoring.week}}</td>
+                    <td>{{subactivityMonitoring.planningPercent}}</td>
+                    <td>{{subactivityMonitoring.realPercent}}</td>
+                    <td>{{subactivityMonitoring.accumulatedPercent}}</td>
+                        <td>{{subactivityMonitoring.startDate | date:'mediumDate'}}</td>
+                        <td>{{subactivityMonitoring.finalDate | date:'mediumDate'}}</td>
+                    <td>{{subactivityMonitoring.observations}}</td>
+                    <td>
+                        <a ui-sref="subactivity-poa-detail({id:subactivityMonitoring.subactivityPoaId})">{{subactivityMonitoring.subactivityPoaId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="subactivity-monitoring-detail({id:subactivityMonitoring.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="subactivity-monitoring.edit({id:subactivityMonitoring.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="subactivity-monitoring.delete({id:subactivityMonitoring.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

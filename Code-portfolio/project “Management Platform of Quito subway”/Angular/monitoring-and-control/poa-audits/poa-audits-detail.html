@@ -1,0 +1,30 @@
+
+<div>
+    <h2><span translate="metroquitoApp.poaAudits.detail.title">Poa Audits</span> {{vm.poaAudits.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="metroquitoApp.poaAudits.dateHour">Date Hour</span></dt>
+        <dd>
+            <span>{{vm.poaAudits.dateHour | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.poaAudits.ip">Ip</span></dt>
+        <dd>
+            <span>{{vm.poaAudits.ip}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.poaAudits.action">Action</span></dt>
+        <dd>
+            <span>{{vm.poaAudits.action}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.poaAudits.user">User</span></dt>
+        <dd>
+            {{vm.poaAudits.userId}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

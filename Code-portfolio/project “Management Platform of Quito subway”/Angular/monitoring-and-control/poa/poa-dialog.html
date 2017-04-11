@@ -1,0 +1,232 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPoaLabel" ng-if="!vm.poa.id" translate="metroquitoApp.poa.home.createLabel">Create or edit a Poa</h4>
+        <h4 class="modal-title" id="myPoaLabelEdit" ng-if="vm.poa.id" translate="metroquitoApp.poa.home.createOrEditLabel">Create or edit a Poa</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label"
+                       translate="metroquitoApp.poa.year"
+                       for="field_year">year</label>
+                <div class="input-group">
+                    <input id="field_year" type="text" readonly class="form-control" name="year"
+                           uib-datepicker-popup="yyyy" datepicker-options="vm.yearOption" ng-model="vm.poaYear"
+                           is-open="vm.datePickerOpenStatus.year" required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('year')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div ng-show="editForm.year.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.year.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.dependence" for="field_dependence">Dependence</label>
+                <textarea type="text" class="form-control" name="dependence" id="field_dependence"
+                       ng-model="vm.poa.dependence" rows="3"
+                       required ng-maxlength="250" maxlength="250" />
+                <div ng-show="editForm.dependence.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.dependence.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.dependence.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="250">
+                        This field cannot be longer than 250 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.program" for="field_program">Program</label>
+                <textarea type="text" class="form-control" name="program" id="field_program"
+                       ng-model="vm.poa.program" rows="3"
+                       required ng-maxlength="250"  maxlength="250"/>
+                <div ng-show="editForm.program.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.program.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.program.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="250">
+                        This field cannot be longer than 250 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.project" for="field_project">Project</label>
+                <textarea type="text" class="form-control" name="project" id="field_project"
+                          ng-model="vm.poa.project" rows="3"
+                          required ng-maxlength="250"  maxlength="250"/>
+                <div ng-show="editForm.project.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.project.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.project.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="250">
+                        This field cannot be longer than 250 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.indicator" for="field_indicator">Indicator</label>
+                <textarea type="text" class="form-control" name="indicator" id="field_indicator"
+                       ng-model="vm.poa.indicator" rows="3"
+                       required ng-maxlength="250" maxlength="250"/>
+                <div ng-show="editForm.indicator.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.indicator.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.indicator.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="250">
+                        This field cannot be longer than 250 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.projectGoal" for="field_projectGoal">Project Goal</label>
+                <textarea type="text" class="form-control" name="projectGoal" id="field_projectGoal"
+                       ng-model="vm.poa.projectGoal" rows="3"
+                       required ng-maxlength="250" maxlength="250"/>
+                <div ng-show="editForm.projectGoal.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.projectGoal.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.projectGoal.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="250">
+                        This field cannot be longer than 250 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.poa.poaType">Poa Type</label>
+                <ui-select ng-model="vm.poa.poaTypeId" required
+                           id="field_poaType" name="poaType">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="poaType.id as poaType in vm.poatypes">
+                        <div ng-bind-html="poaType.name | highlight: $select.search.name"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <div ng-show="editForm.poaType.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.poaType.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.startDay" for="field_startDay">Start Day</label>
+                <input type="number" class="form-control" name="startDay" id="field_startDay"
+                       required ng-model="vm.poa.startDay" min="1" max="31" step="1" ng-pattern="vm.patternNumbers" />
+
+                <div ng-show="editForm.startDay.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.startDay.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.startDay.$error.number" translate="entity.validation.number">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.startDay.$error.max" translate="entity.validation.max"
+                       translate-value-max="31">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.startDay.$error.min" translate="entity.validation.min"
+                       translate-value-min="1">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.startDay.$error.pattern" translate="entity.validation.intNumberPattern"
+                       translate-value-pattern="[0-9]+">
+                        This field should follow pattern "[0-9]+".
+                    </p>
+                </div>
+                <div ng-show="vm.poa.startDay != null && vm.poa.finalDay != null && vm.poa.startDay <= vm.poa.finalDay">
+                    <p class="help-block" translate="metroquitoApp.poa.invalidDaysRange">
+                        The starting day must be greater than the final day.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.poa.finalDay" for="field_finalDay">Final Day</label>
+                <input type="number" class="form-control" name="finalDay" id="field_finalDay"
+                       required ng-model="vm.poa.finalDay" min="1" max="31" />
+
+                <div ng-show="editForm.finalDay.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.finalDay.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                        ng-show="editForm.finalDay.$error.number" translate="entity.validation.number">
+                    </p>
+                    <p class="help-block"
+                        ng-show="editForm.finalDay.$error.max" translate="entity.validation.max"
+                        translate-value-max="31">
+                    </p>
+                    <p class="help-block"
+                        ng-show="editForm.finalDay.$error.min" translate="entity.validation.min"
+                        translate-value-min="1">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label translate="metroquitoApp.poa.poaState">Poa State</label>
+
+                <ui-select ng-model="vm.poa.poaStateId" required
+                           id="field_poaState" name="poaState">
+                    <ui-select-match allow-clear
+                                     placeholder="{{ 'entity.action.select' | translate }}">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="poaState.id as poaState in vm.poastates ">
+                        <div ng-bind-html="poaState.name | highlight: $select.search.name"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <div ng-show="editForm.poaState.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.poaState.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+          <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving || vm.poa.startDay <= vm.poa.finalDay" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

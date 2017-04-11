@@ -1,0 +1,97 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myValuedScheduleLabel" translate="metroquitoApp.valuedSchedule.home.importLabel">Import a Valued Schedule</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.valuedSchedule.name" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="field_name"
+                       ng-model="vm.valuedSchedule.name"
+                       required ng-maxlength="200" maxlength="200" />
+                <div ng-show="editForm.name.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.name.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.name.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="200">
+                        This field cannot be longer than 200 characters.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group" ngf-drop ngf-change="vm.setFile($file, vm.valuedSchedule)" >
+                <label class="control-label" translate="metroquitoApp.valuedSchedule.file" for="field_file">File</label>
+                <div>
+                    <div ng-if="vm.valuedSchedule.file" class="help-block clearfix">
+                        <a ng-click="vm.openFile(vm.valuedSchedule.fileContentType, vm.valuedSchedule.file)">
+                            <img src="content/images/excel2.png" class="img-responsive"
+                                 ng-if="vm.valuedSchedule.fileContentType == 'csv'"/>
+                        </a>
+                        <br>
+                        <span class="pull-left"> {{vm.valuedSchedule.fileContentType}}, {{vm.byteSize(vm.valuedSchedule.file)}}</span>
+                        <button ng-click="vm.valuedSchedule.file=null;vm.valuedSchedule.fileContentType=null;"
+                                class="btn btn-default btn-xs pull-right">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                    <button type="file" ngf-select class="btn btn-default btn-block" accept=".csv" ngf-pattern="'.csv'" ngf-max-size="10MB"
+                            ngf-change="vm.setFile($file, vm.valuedSchedule)" translate="entity.action.addblob">
+                        Add blob
+                    </button>
+                </div>
+                <input type="hidden" class="form-control" name="file" id="field_file"
+                       ng-model="vm.valuedSchedule.file" required />
+                <input type="hidden" class="form-control" name="fileContentType" id="field_fileContentType"
+                       ng-model="vm.valuedSchedule.fileContentType" />
+
+                <div ng-show="editForm.file.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.file.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+                <div>
+                    <p class="help-block"
+                       translate="global.messages.info.fileSizecsv">
+                        the permitted size is up to 10 MB.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label class="control-label" translate="metroquitoApp.valuedSchedule.observation" for="field_observation">Observation</label>
+                <textarea type="text" class="form-control" name="observation" id="field_observation"
+                       ng-model="vm.valuedSchedule.observation" rows="5"
+                       ng-maxlength="800" maxlength="800" />
+                <div ng-show="editForm.observation.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.observation.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="800">
+                        This field cannot be longer than 800 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

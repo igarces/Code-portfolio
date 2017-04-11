@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <h2 translate="metroquitoApp.headingSubheading.home.title">Heading Subheadings</h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+        <div class="panel-body">
+            <form name="myForm" novalidate>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label"
+                                       translate="metroquitoApp.headingSubheading.code"
+                                       for="field_code">Code</label>
+                                <input type="text" class="form-control" name="code"
+                                       id="field_code"
+                                       ng-model="vm.code" maxlength="10"
+                                       ng-pattern="vm.patternNumbers"/>
+
+                                <div ng-show="myForm.code.$invalid">
+                                    <p class="help-block"
+                                       ng-show="myForm.code.$error.pattern" translate="entity.validation.numberPattern" >
+                                        This field should follow pattern "[0-9]+".
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label"
+                                       translate="metroquitoApp.headingSubheading.heading"
+                                       for="field_heading">heading</label>
+
+                                <ui-select ng-model="vm.heading"
+                                           id="field_heading" name="heading">
+                                    <ui-select-match allow-clear
+                                                     placeholder="{{ 'entity.action.select' | translate }}">
+                                        {{$select.selected.description}}
+                                    </ui-select-match>
+                                    <ui-select-choices refresh="vm.headingFilter($select)"
+                                        repeat="heading.id as heading in vm.headingList">
+                                        <div ng-bind-html="heading.description | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <!--<div class="col-md-4">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label"-->
+                                       <!--translate="metroquitoApp.headingSubheading.subheading"-->
+                                       <!--for="field_subheading">subheading</label>-->
+                                <!--<ui-select ng-model="vm.subheading"-->
+                                           <!--id="field_subheading" name="subheading">-->
+                                    <!--<ui-select-match allow-clear-->
+                                                     <!--placeholder="{{ 'entity.action.select' | translate }}">-->
+                                        <!--{{$select.selected.description}}-->
+                                    <!--</ui-select-match>-->
+                                    <!--<ui-select-choices-->
+                                        <!--repeat="heading.id as heading in vm.headingList | filter : vm.subheadingFilter" >-->
+                                        <!--<div ng-bind-html="heading.description | highlight: $select.search"></div>-->
+                                    <!--</ui-select-choices>-->
+                                <!--</ui-select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 no-padding-left">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                        ng-click="vm.searchByFilters()" id="searchBtn">
+                                    <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                    <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                    <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right">
+                <button class="btn btn-danger" ui-sref="heading-subheading.new">
+                    <metroquito-icon icon="adicionar"/>
+                    &nbsp;
+                    <span translate="metroquitoApp.headingSubheading.home.createLabel">Add</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </br>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.headingSubheading.searchList">
+            Headings Subheadings List
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="code" style="min-width: 80px;"><span translate="metroquitoApp.headingSubheading.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="description"><span translate="metroquitoApp.headingSubheading.descriptionHeadingSubheading">Description</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="headingSubheading in vm.headingSubheadings track by headingSubheading.id">
+                        <td>{{headingSubheading.code}}</td>
+                        <td>{{headingSubheading.description}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button ui-sref="heading-subheading-detail({id:headingSubheading.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.ver' | translate}}">
+                                    <metroquito-icon icon="ver"/>
+                                </button>
+
+                                <button ui-sref="heading-subheading.edit({id:headingSubheading.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.modificar' | translate}}">
+                                    <metroquito-icon icon="modificar"/>
+                                </button>
+
+                                <button ui-sref="heading-subheading.delete({id:headingSubheading.id})"
+                                        class="btn btn-danger btn-sm"
+                                        uib-tooltip="{{'entity.tooltips.Eliminar' | translate}}">
+                                    <metroquito-icon icon="eliminar"/>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination ng-show="vm.totalItems > 0"
+                                class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.costCenter.id" id="myCostCenterLabel" translate="metroquitoApp.costCenter.home.createLabel">Create or edit a Cost Center</h4>
+        <h4 class="modal-title" ng-if="vm.costCenter.id" id="myCostCenterLabelEdit" translate="metroquitoApp.costCenter.home.createOrEditLabel">Create or edit a Cost Center</h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.costCenter.code" for="field_code">Code</label>
+                <input type="text" class="form-control" name="code" id="field_code"
+                       ng-model="vm.costCenter.code"
+                       ng-pattern="vm.patternNumbers"
+                       required maxlength="2" />
+                <div ng-show="editForm.code.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.code.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.code.$error.pattern" translate="entity.validation.numberPattern" >
+                        This field should follow pattern "[0-9]+".
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.costCenter.description" for="field_costCenterDescription">Description</label>
+                <input type="text" class="form-control" name="description" id="field_costCenterDescription"
+                       ng-model="vm.costCenter.description"
+                       ng-pattern="vm.patternWords"
+                       required maxlength="100" />
+                <div ng-show="editForm.description.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.description.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.description.$error.pattern" translate="entity.validation.letterSpacesPattern">
+                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="active" id="field_active"
+                               ng-model="vm.costCenter.active" />
+                        <span translate="metroquitoApp.costCenter.active">Active</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

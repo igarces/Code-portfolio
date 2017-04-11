@@ -1,0 +1,256 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.schedule.detail.title">Task</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="col-xs-12 no-padding-left">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.schedule.status.title">Panel</div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.pv != null">PV = {{vm.scheduleDataInfo.pv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.pv == null">PV = 0.00</h2>
+                                <label class="control-label" translate="">Valor planeado</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ev != null">EV = {{vm.scheduleDataInfo.ev | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ev == null">EV = 0.00</h2>
+                                <label class="control-label" translate="">Valor ganado</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ac != null">AC = {{vm.scheduleDataInfo.ac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ac == null">AC = 0.00</h2>
+                                <label class="control-label" translate="">Costo actual</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.sv != null">SV = {{vm.scheduleDataInfo.sv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.sv == null">SV = 0.00</h2>
+                                <label class="control-label" translate="">Varianza del calendario=EV-PV</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.percentSv != null">%SV = {{vm.scheduleDataInfo.percentSv | number:2 | numberFormat}}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.percentSv == null">%SV = 0.00%</h2>
+                                <label class="control-label" translate="">Porcentaje de Varianza del calendario</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <a ui-sref="chart-spi">
+                                    <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfo.spi != null">SPI = {{vm.scheduleDataInfo.spi | number:2 | numberFormat}}</h2>
+                                    <h2 style="margin-top: 0"ng-show="vm.scheduleDataInfo.spi == null">SPI = 0.00</h2>
+                                </a>
+                                <label class="control-label" translate="">Indice de desempeño del calendario=EV/PV</label>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cv != null">CV = {{vm.scheduleDataInfo.cv | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cv == null">CV = 0.00</h2>
+                                <label class="control-label" translate="">Varianza de costo=EV-AC</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.percentCv != null">%CV = {{vm.scheduleDataInfo.percentCv | number:2 | numberFormat}}%</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.ev == null">%CV = 0.00%</h2>
+                                <label class="control-label" translate="">Porcentaje de Varianza de costo</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <a ui-sref="chart-cpi">
+                                    <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cpi != null">CPI = {{vm.scheduleDataInfo.cpi | number:2 | numberFormat}}</h2>
+                                    <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.cpi == null">CPI = 0.00</h2>
+                                </a>
+                                <label class="control-label" translate="">Indice de desempeño de costo=EV/AC</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.tcpi != null">TCPI = {{vm.scheduleDataInfo.tcpi | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.tcpi == null">TCPI = 0.00</h2>
+                                <label class="control-label" translate="">Indice de desempeño para completar</label>
+                                <label class="control-label" translate="">(BAC-EV)/(BAC-AC)</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.eac != null">EAC = {{vm.scheduleDataInfo.eac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.eac == null">EAC = 0.00</h2>
+                                <label class="control-label" translate="">Estimado al completarse AC+(BAC-EV)</label>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.bac != null">BAC = {{vm.scheduleDataInfo.bac | number:2 | numberFormat}}</h2>
+                                <h2 style="margin-top: 0" ng-show="vm.scheduleDataInfo.bac == null">BAC = 0.00</h2>
+                                <label class="control-label" translate="">Presupuesto al completarse</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr style="margin-bottom: 0" />
+
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.schedule.detail.panelState">Panel</div>
+            <div class="panel-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.schedule.detail.planFase2">plan Fase2</label>
+                            <span>{{vm.taskParent.percentComplete}}%</span>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.schedule.detail.planPlmq">plan plmq</label>
+                            <span>{{vm.taskParent.percentComplete + vm.percentValue}}%</span>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.schedule.detail.startDate">start date</label>
+                            <span>{{vm.taskParent.start | date:'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.schedule.detail.realFase2">real fase2</label>
+                            <span>{{vm.taskParent.percentComplete}}%</span>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.schedule.detail.realPlmq">real plmq</label>
+                            <span>{{vm.taskParent.percentComplete + vm.percentValue}}%</span>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-3 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.schedule.detail.finishDate">finish date</label>
+                            <span>{{vm.taskParent.finish | date:'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.schedule.detail.list">
+                Schedules List
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                            <th jh-sort-by="level">
+                                <span translate="metroquitoApp.schedule.detail.level">Level</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th><span translate="metroquitoApp.schedule.detail.activity">Activity</span></th>
+                            <th><span translate="metroquitoApp.schedule.detail.duration">Duration</span> </th>
+                            <th><span translate="metroquitoApp.schedule.detail.startDate">Start Date</span> </th>
+                            <th><span translate="metroquitoApp.schedule.detail.finishDate">Finish Date</span> </th>
+                            <th><span translate="metroquitoApp.schedule.detail.percent">% complete</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="task in vm.tasks track by task.id">
+                                <td>{{task.level}}</td>
+                                <td>{{task.name}}</td>
+                                <td>{{task.duration}}</td>
+                                <td>{{task.start | date:'dd/MM/yyyy'}}</td>
+                                <td>{{task.finish | date:'dd/MM/yyyy'}}</td>
+                                <td>{{task.percentComplete}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-left">
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
+                    <span class="icon-button"><img src="content/images/icono-salida.png" class="img-responsive"></span>&nbsp;<span
+                    translate="entity.action.back">Exit</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
+
+<div>
+    <h2><span translate="metroquitoApp.schedule.detail.title">Schedule</span> {{vm.schedule.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="metroquitoApp.schedule.name">Name</span></dt>
+        <dd>
+            <span>{{vm.schedule.name}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.baseLine">Base Line</span></dt>
+        <dd>
+            <span>{{vm.schedule.baseLine}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.dateDeclaredBase">Date Declared Base</span></dt>
+        <dd>
+            <span>{{vm.schedule.dateDeclaredBase | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.observation">Observation</span></dt>
+        <dd>
+            <span>{{vm.schedule.observation}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.fileScheduleName">File Schedule Name</span></dt>
+        <dd>
+            <span>{{vm.schedule.fileScheduleName}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.fileSchedulePath">File Schedule Path</span></dt>
+        <dd>
+            <span>{{vm.schedule.fileSchedulePath}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.fileSchedule">File Schedule</span></dt>
+        <dd>
+            <div ng-if="vm.schedule.fileSchedule">
+                <a ng-click="vm.openFile(vm.schedule.fileScheduleContentType, vm.schedule.fileSchedule)" translate="entity.action.open">open</a>
+                {{vm.schedule.fileScheduleContentType}}, {{vm.byteSize(vm.schedule.fileSchedule)}}
+            </div>
+        </dd>
+        <dt><span translate="metroquitoApp.schedule.fileScheduleData">File Schedule Data</span></dt>
+        <dd>
+            <div ng-if="vm.schedule.fileScheduleData">
+                <a ng-click="vm.openFile(vm.schedule.fileScheduleDataContentType, vm.schedule.fileScheduleData)" translate="entity.action.open">open</a>
+                {{vm.schedule.fileScheduleDataContentType}}, {{vm.byteSize(vm.schedule.fileScheduleData)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
+-->

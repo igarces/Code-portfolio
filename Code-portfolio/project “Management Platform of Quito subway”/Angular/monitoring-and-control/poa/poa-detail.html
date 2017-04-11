@@ -1,0 +1,62 @@
+
+<div>
+    <h2><span translate="metroquitoApp.poa.detail.title">Poa</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.year">Year</label>
+            <span>{{vm.poa.year}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.dependence">Dependence</label>
+            <span>{{vm.poa.dependence}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.program">Program</label>
+            <span>{{vm.poa.program}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.project">Project</label>
+            <span>{{vm.poa.project}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.indicator">Indicator</label>
+            <span>{{vm.poa.indicator}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.projectGoal">Project Goal</label>
+            <span>{{vm.poa.projectGoal}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.poaType">Poa Type</label>
+            <span>{{vm.poa.poaTypeName}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.startDay">Start Day</label>
+            <span>{{vm.poa.startDay}}</span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.finalDay">Final Day</label>
+            <span>{{vm.poa.finalDay}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label translate="metroquitoApp.poa.poaState">Poa State</label>
+            <span>{{vm.poa.poaStateName}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ui-sref="poa"
+                class="btn btn-danger pull-right">
+            <metroquito-icon icon="salir"/>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+</div>

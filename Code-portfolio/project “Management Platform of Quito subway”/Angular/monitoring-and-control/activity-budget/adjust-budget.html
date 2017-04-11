@@ -1,0 +1,78 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.activityBudget.adjustBudget">Adjust Budget</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityBudget.productData">Product Data</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label translate="metroquitoApp.activityBudget.administrativeUnit">administrative Unit</label>
+                        <span>{{vm.generalData[0].adminUnitName}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label translate="metroquitoApp.activityBudget.product">Product</label>
+                        <span>{{vm.generalData[0].productName}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityBudget.activityList">Activity List</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                            <tr>
+                                <th><span translate="metroquitoApp.activityBudget.activity_detail">Activity_Detail</span></th>
+                                <th><span translate="metroquitoApp.activityBudget.priority_multiannual_drag">Priority_Multiannual_Drag</span></th>
+                                <th><span translate="metroquitoApp.activityBudget.observations">Observations</span></th>
+                                <th><span translate="metroquitoApp.activityBudget.referentialAmountColumn">Referential Amount_IVA_Total</span></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="activity in vm.activityList">
+                            <td>{{activity.description}}/{{activity.budgetaryDetail}}</td>
+                            <td>
+                                {{activity.priorityName}}/<span ng-if="activity.multiannual">Sí</span><span ng-if="!activity.multiannual">No</span>/<span ng-if="activity.drag">Sí</span><span ng-if="!activity.drag">No</span>
+                            </td>
+                            <td>{{activity.observations}}</td>
+                            <td class="text-right">
+                                {{activity.activityPoaBudget | number: '2'}}/{{activity.activityPoaIva | number: '2'}}/{{activity.activityPoaTotal | number: '2'}}
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button ng-click="vm.ajustDetail(activity.id)"
+                                            class="btn btn-danger btn-sm"
+                                            uib-tooltip="{{'entity.tooltips.adjustBudget' | translate}}">
+                                        <span class="icon-button"><img src="content/images/func/Justificación-de-uso-de-financiamiento.png" class="img-responsive"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!vm.activityList.length" class="text-center">
+                            <td colspan="8">
+                                <span translate="global.messages.search.noResult">
+                                   No Result
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pull-right">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.back">Exit</span>
+        </button>
+    </div>
+</div>

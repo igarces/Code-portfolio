@@ -1,0 +1,113 @@
+
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.activityBudget.updateBudget">Update Budget</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityBudget.productData">Product Data</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label translate="metroquitoApp.activityBudget.administrativeUnit">administrative Unit</label>
+                        <span>{{vm.generalData.adminUnit.name}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label translate="metroquitoApp.activityBudget.product">Product</label>
+                        <span>{{vm.generalData.product.product}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityBudget.activityList">Activity List</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.activityBudget.activity_detail">Activity_Detail</span></th>
+                            <th><span translate="metroquitoApp.activityBudget.priority_multiannual_drag">Priority_Multiannual_Drag</span></th>
+                            <th class="text-center"><span translate="metroquitoApp.activityBudget.headings">Heading</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="activity in vm.activityList">
+                            <td>{{activity.description}}/{{activity.budgetaryDetail}}</td>
+                            <td>
+                                {{activity.priorityName}}/<span ng-if="activity.multiannual">Sí</span><span ng-if="!activity.multiannual">No</span>/<span ng-if="activity.drag">Sí</span><span ng-if="!activity.drag">No</span>
+                            </td>
+                            <td>
+                                <table class="jh-table table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th><span translate="metroquitoApp.activityBudget.heading">Heading</span></th>
+                                            <th class="text-right"><span translate="metroquitoApp.activityBudget.resourceMDMQ">Resource MDMQ</span></th>
+                                            <th class="text-right"><span translate="metroquitoApp.activityBudget.ownFunds">Own Funds</span></th>
+                                            <th class="text-right"><span translate="metroquitoApp.activityBudget.totalBudget">Total Budget</span></th>
+                                            <th class="text-right"><span translate="metroquitoApp.activityBudget.budgetSpent">Budget Spent</span></th>
+                                            <th><span translate="metroquitoApp.activityBudget.budgetToSpent">Budget Spent</span></th>
+                                            <th class="text-right"><span translate="metroquitoApp.activityBudget.remainingBudget">Remaining Budget</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="heading in activity.activityPoaHeadingSubheadings">
+                                            <td>{{heading.headingSubheadingCode}}-{{heading.headingSubheadingDesc}}</td>
+                                            <td class="text-right">
+                                                {{heading.resourceMDMQ | number: '2' }}
+                                            </td>
+                                            <td class="text-right">
+                                                {{heading.ownFunds | number: '2' }}
+                                            </td>
+                                            <td class="text-right">
+                                                {{heading.resourceMDMQ + heading.ownFunds | number: '2' }}
+                                            </td>
+                                            <td class="text-right">
+                                                {{heading.budgetSpent | number: '2' }}
+                                            </td>
+                                            <td>
+                                                <input class="text-right form-control" type="text" name="budgetSpent" ng-model="heading.budgetToSpent" ng-blur="vm.assingSpent(heading)"
+                                                              step="0.01" max="heading.resourceMDMQ + heading.ownFunds - heading.budgetSpent"/>
+                                            </td>
+                                            <td class="text-right">
+                                                {{heading.resourceMDMQ + heading.ownFunds - heading.budgetSpent | number: '2' }}
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="!activity.activityPoaHeadingSubheadings.length" class="text-center">
+                                            <td colspan="9"><span translate="global.messages.search.noResult">No Result</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr ng-if="!vm.activityList.length" class="text-center">
+                            <td colspan="9">
+                                <span translate="global.messages.search.noResult">
+                                   No Result
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pull-right">
+        <button class="btn btn-danger" ng-disabled="vm.activityList.length == 0" ng-click="vm.save()">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</div>
+<br>

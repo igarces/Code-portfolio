@@ -1,0 +1,211 @@
+
+<div>
+    <h2><span translate="metroquitoApp.valuedSchedule.home.financialExecution">Financial Execution</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="global.messages.search.title">Search Criteria</div>
+        <div class="panel-body">
+            <form name="myForm" novalidate>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="control-label" translate="metroquitoApp.valuedSchedule.month">Month</label>
+
+                            <ui-select required ng-model="vm.month" id="field_month" name="month"
+                                       ng-change="vm.changeMonth($select.selected)">
+                                <ui-select-match allow-clear
+                                                 placeholder="{{ 'entity.action.select' | translate }}">
+                                    {{$select.selected.month}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="month.month as month in vm.monthList">
+                                    <div ng-bind-html="month.month | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <div ng-show="myForm.month.$invalid">
+                                <p class="help-block"
+                                   ng-show="myForm.month.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.valuedSchedule.dateFrom"
+                                       for="field_fromDate">From</label>
+
+                                <input id="field_fromDate" readonly type="text" class="form-control"
+                                       name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                       ng-model="vm.fromDate" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.valuedSchedule.dateTo"
+                                       for="field_toDate">To</label>
+
+                                <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                       uib-datepicker-popup="{{vm.dateformat}}"
+                                       ng-model="vm.toDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 no-padding-left">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                        ng-click="vm.searchByFilters()" id="searchBtn">
+                                    <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                    <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                    <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-if="vm.showAcceptButton">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-2">
+                    <label translate="metroquitoApp.valuedSchedule.totalPlannedAmount"></label>
+                    <br>
+                    {{vm.totalPlannedAmount | number: '2'}}
+                </div>
+                <div class="col-md-2">
+                    <label translate="metroquitoApp.valuedSchedule.totalExecutedAmount"></label>
+                    <br>
+                    {{vm.totalExecutedAmount | number: '2'}}
+                </div>
+                <div class="col-md-2">
+                    <label translate="metroquitoApp.valuedSchedule.totalAccumulatedPercent"></label>
+                    <br>
+                    {{vm.totalPercent | number: '2'}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.valuedSchedule.financialExecutionList">
+            List
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span translate="metroquitoApp.valuedSchedule.code">Code</span></th>
+                        <th><span translate="metroquitoApp.valuedSchedule.description">Description</span></th>
+                        <th class="text-center"><span translate="metroquitoApp.valuedSchedule.totalAmount">Total Amount</span></th>
+                        <th class="text-center"><span translate="metroquitoApp.valuedSchedule.accumulatedAmount">Accumulated Amount</span></th>
+                        <th class="text-center"><span translate="metroquitoApp.valuedSchedule.executedPercent">Executed Percent</span></th>
+                        <th class="text-center"><span translate="metroquitoApp.valuedSchedule.monthPlanned">Month Planned</span></th>
+                        <th class="text-center"><span translate="metroquitoApp.valuedSchedule.actualExecution">ActualExecution</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="component in vm.componentList">
+                        <td>{{component.scheduleComponentCode}}</td>
+                        <td>
+                            <span ng-if="component.long > 1" ng-repeat="i in vm.getArrayNumber(component.long) track by $index">
+                                &nbsp;</span>
+                            {{component.scheduleComponentDescription}}
+                        </td>
+                        <td class="text-right">{{component.totalAmount | number: '2'}}</td>
+                        <td class="text-right">{{component.executedAccumulatedAmount  + component.actualExecution | number: '2'}}</td>
+                        <td class="text-right">
+                            <span ng-if="component.totalAmount > 0">
+                                {{(component.executedAccumulatedAmount  + component.actualExecution) * 100 / component.totalAmount | number: '2'}}%
+                            </span>
+                        </td>
+                        <td class="text-right">{{component.amount | number: '2'}}</td>
+                        <td>
+                            <input-number input-name="actualExecution" input-value="component.actualExecution"
+                                          change="vm.plusTotals(false)"
+                                          step="0.01" max="99999999.99"/>
+                        </td>
+                    </tr>
+                    <tr ng-if="vm.componentList.length > 0">
+                        <td></td>
+                        <td></td>
+                        <td class="text-right">
+                            <label translate="metroquitoApp.valuedSchedule.total"></label>
+                            <br>
+                            {{vm.totalAmount | number: '2'}}
+                        </td>
+                        <td class="text-right">
+                            <label translate="metroquitoApp.valuedSchedule.executedTotal"></label>
+                            <br>
+                            {{vm.executedTotal | number: '2'}}
+                        </td>
+                        <td class="text-right">
+                            <label translate="metroquitoApp.valuedSchedule.accumulatedTotal"></label>
+                            <br>
+                            {{vm.accumulatedTotal | number: '2'}}
+                        </td>
+                        <td class="text-right">
+                            <label translate="metroquitoApp.valuedSchedule.plannedTotal"></label>
+                            <br>
+                            {{vm.plannedTotal | number: '2'}}
+                        </td>
+
+                        <td class="text-right">
+                            <label translate="metroquitoApp.valuedSchedule.totalActualExecution"></label>
+                            <br>
+                            {{vm.totalActualExecution | number: '2'}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <p ng-if="!vm.componentList.length" translate="global.messages.search.noResult">
+                    No data for comparison
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <button type="submit" class="btn btn-danger" ng-if="vm.showAcceptButton" ng-click="vm.saveActualExecution()">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+
+    <br>
+    <br>
+</div>
+<br>

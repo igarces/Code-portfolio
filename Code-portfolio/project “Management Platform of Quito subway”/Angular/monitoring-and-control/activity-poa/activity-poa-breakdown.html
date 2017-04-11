@@ -1,0 +1,107 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.activityPoa.home.breakdown">Activity breakdown</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityPoa.home.activityData">Activity Data</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.product">Product</label>
+                        <span>{{vm.activityPoa.productName}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.activity">Activity</label>
+                        <span>{{vm.activityPoa.description}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.plannedGoal">Planned Goal</label>
+                        <span>{{vm.activityPoa.plannedGoal}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.startDate">Start Date</label>
+                        <span>{{vm.activityPoa.startDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.finalDate">Final Date</label>
+                        <span>{{vm.activityPoa.finalDate | date:vm.dateformat}}</span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label translate="metroquitoApp.activityPoa.responsible">responsible</label>
+                        <span ng-repeat="user in vm.activityPoa.users track by user.id">
+                            {{user.fullName}}<span ng-if="$index+1 < vm.activityPoa.users.length ">,</span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.activityPoa.home.yearsBreakdown">yearsBreakdown</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped" style="width: 300px;">
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.activityPoa.year">Year</span></th>
+                            <th><span translate="metroquitoApp.activityPoa.planned">Planned Percent</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="breakdown in vm.breakdownList">
+                            <td>{{breakdown.year}}</td>
+                            <td>
+                                <!--<input type="number" class="form-control" name="planningPercent" id="field_planningPercent" ng-if="vm.newActivityBreakdown"-->
+                                       <!--ng-model="breakdown.planningPercent" step="1" ng-change="vm.changePercent(breakdown.planningPercent)" />-->
+
+                                <span ng-if="!vm.newActivityBreakdown">{{breakdown.planningPercent | number: '2'}}%</span>
+
+                                <input-number  ng-if="vm.newActivityBreakdown" input-name="planningPercent" input-value="breakdown.planningPercent"
+                                              max="100.00" change="vm.changePercent(breakdown.planningPercent)"/>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Total:</td>
+                            <td>
+                                {{vm.totalSum | number:'2'}} %
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pull-right">
+        <button ng-disabled="vm.totalSum != 100" class="btn btn-danger" ng-if="vm.newActivityBreakdown" ng-click="vm.save()">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" ng-if="vm.newActivityBreakdown"  ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>
+            &nbsp;
+            <span translate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button ng-if="!vm.newActivityBreakdown" type="button" ng-click="vm.cancel()" class="btn btn-danger">
+            <span class="icon-button">
+                <img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.back">
+                Back
+            </span>
+        </button>
+    </div>
+</div>
+
+</br>
