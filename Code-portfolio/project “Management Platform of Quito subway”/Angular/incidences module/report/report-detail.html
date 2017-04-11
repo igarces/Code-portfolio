@@ -1,0 +1,265 @@
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.report.detail.title">Report</span></h2>
+        </div>
+    </div>
+
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.report.visitReportData">Visit Report Data</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.reportNumber">Report Number</label>
+                            <span>{{vm.report.reportNumber}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.reportDate">Report Date</label>
+                            <span>{{vm.report.reportDate | date: vm.dateformat}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.visitSite">Visit Site</label>
+                            <span>{{vm.report.visitSiteValue}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <div ng-if="vm.report.visitSiteId === vm.visitSiteStationId">
+                                <label class="control-label" translate="metroquitoApp.report.station">Station</label>
+                                <span>{{vm.station.name}}</span>
+                            </div>
+
+                            <div ng-if="vm.report.visitSiteId === vm.visitSiteTunnelSectionId">
+                                <label class="control-label" translate="metroquitoApp.report.betweenTunnel">Between Tunnel</label>
+                                <span>{{vm.stretchTunnel.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.visitor">Functionary</label>
+                            <span>{{vm.report.visitor.firstName}} {{vm.report.visitor.lastName}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.visitStartDate">Visit Start Date</label>
+                            <span>{{vm.report.visitStartDate | date: vm.dateformat}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <div ng-if="vm.report.visitSiteId === vm.visitSiteTunnelSectionId">
+                                <label class="control-label" translate="metroquitoApp.report.specialSite">Special Site</label>
+                                <span>{{vm.specialSite.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.administrativeUnit">Administrative Unit</label>
+                            <span>{{vm.report.administrativeUnitName}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <div class="col-md-6 no-padding-left">
+                                <label class="control-label" translate="metroquitoApp.report.startTime">Start Time</label>
+                                <span>{{vm.report.startTime | date: vm.hourformat}}</span>
+                            </div>
+                            <div class="col-md-6 no-padding-left">
+                                <label class="control-label" translate="metroquitoApp.report.endTime">End Time</label>
+                                <span>{{vm.report.endTime | date: vm.hourformat}} </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.activity">Activity</label>
+                            <span>{{vm.report.activityName}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.subActivity">Subactivity</label>
+                            <span>{{vm.report.subActivityName}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 form-group">
+                            <label class="control-label" for="map" translate="metroquitoApp.report.map">Map</label>
+                            <div id="map">
+                                <ng-map zoom="11" center="-0.1936, -78.4899" map-type-id="HYBRID">
+                                    <marker position="{{vm.pos.lat}}, {{vm.pos.lng}}"></marker>
+                                </ng-map>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-9 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.scopeWork">Scope Work</label>
+                            <br>
+                            <span>{{vm.report.scopeWork}}</span>
+                        </div>
+                        <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.report.responsibleWork">Responsible Work</label>
+                                    <span>{{vm.report.responsibleWork}}</span>
+                                </div>
+                                <!--<div class="col-md-6 form-group">-->
+                                    <!--<label class="control-label" translate="metroquitoApp.report.percentageAdvance">Percentage Advance</label>-->
+                                    <!--<span>{{vm.report.percentageAdvance}}</span>-->
+                                <!--</div>-->
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label" translate="metroquitoApp.report.comment">Comment</label>
+                            <br>
+                            <span>{{vm.report.comment}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <h4 translate="metroquitoApp.report.photos.title">Add photos</h4>
+                            <hr>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                <h4 translate="metroquitoApp.report.photos.list">File list</h4>
+
+                                <div class="table-responsive">
+                                    <table class="jh-table table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th><span translate="metroquitoApp.report.photos.name">File</span></th>
+                                            <th><span translate="metroquitoApp.report.photos.description">Description file</span></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="photo in vm.attacheddocuments track by $index ">
+                                            <td>{{photo.fileName}}</td>
+                                            <td>{{photo.description}}</td>
+                                            <td class="text-right">
+                                                <div class="btn-group flex-btn-group-container">
+                                                    <button type="button" ng-click="vm.openFile(photo.contentFileContentType, photo.contentFile)"
+                                                            class="btn btn-danger btn-sm">
+                                                        <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr ng-if="!vm.attacheddocuments.length">
+                                            <td colspan="3" class="text-center">
+                                                <span translate="global.messages.search.noFilter">No Result</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            <label class="control-label" translate="metroquitoApp.report.hasIncidences">Has Incidences</label>
+
+                            <div style="border: #d5d5d5 1px solid; padding: 7px; width:60px;">
+                                <div class="radio-inline" ng-if="vm.report.hasIncidences">
+                                    <label>
+                                        <input type="radio" name="hasIncidences" id="field_hasIncidence" required
+                                            disablesd ng-model="vm.report.hasIncidences" ng-value="true"/>
+                                        <span translate="entity.action.yes" for="field_hasIncidence">Yes</span>
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline" ng-if="!vm.report.hasIncidences">
+                                    <label>
+                                        <input type="radio" name="noHasIncidences" id="field_noHasIndicence" required
+                                            disables ng-model="vm.report.hasIncidences" ng-value="false"/>
+                                        <span translate="entity.action.no" for="field_noHasIndicence">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.report.hasIncidences">
+         <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.report.incidence.list">Incidence Technical List</div>
+            <div class="panel-body">
+
+                <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.report.incidence.incidenceNumber">Incidence Number</span></th>
+                            <th><span translate="metroquitoApp.report.incidence.startDate">Start Date</span></th>
+                            <th><span translate="metroquitoApp.report.incidence.state">State</span></th>
+                            <th><span translate="metroquitoApp.report.incidence.responsible">Responsible</span></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="incidenceTechnical in vm.incidenceTechnicals track by $index">
+                            <td>{{incidenceTechnical.incidenceNumber}}</td>
+                            <td>{{vm.report.visitStartDate | date:'dd/MM/yyyy' }}</td>
+                            <td>
+                                {{vm.getIncidenceState(incidenceTechnical.incidenceStateId)}}
+                            </td>
+                            <td>
+                            <span ng-if="incidenceTechnical.responsible">
+                                {{incidenceTechnical.responsible.firstName}} {{incidenceTechnical.responsible.lastName}}
+                            </span>
+                                <span ng-if="!incidenceTechnical.responsible">
+                                {{incidenceTechnical.responsibleId}}
+                            </span>
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="button" ng-click="vm.detailIncidenceTechnical(incidenceTechnical, $index)"
+                                            class="btn btn-danger btn-sm" title="Ver detalles">
+                                        <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!vm.incidenceTechnicals.length">
+                            <td colspan="5" class="text-center">
+                                <span translate="global.messages.search.noFilter">
+                                   No Result
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row pull-right">
+        <buttons class="btn btn-danger" ng-click="vm.exportReport()">
+            <span class="icon-button"><img src="content/images/exportar2.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.export"> Export</span>
+        </buttons>
+        <button type="submit" ng-click="vm.back()"
+                class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+        <br> <br>
+    </div>
+</div>

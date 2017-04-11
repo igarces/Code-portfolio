@@ -1,0 +1,172 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header" ng-if="vm.showAddVerification">
+        <h4 class="modal-title" ng-show="vm.verificationResolved.id" translate="metroquitoApp.verification.home.editLabel">Create or edit a Verification</h4>
+        <h4 class="modal-title" ng-show="!vm.verificationResolved.id" translate="metroquitoApp.verification.home.createLabel">Create or edit a Verification</h4>
+    </div>
+
+    <div class="modal-body">
+        <!--<jhi-alert></jhi-alert>-->
+        <!--<jhi-alert-error></jhi-alert-error>-->
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group col-md-8 no-padding">
+                    <label class="control-label" translate="metroquitoApp.verification.verificationDate"
+                           for="field_verificationDate">Verification Date</label>
+                    <div class="input-group" style="margin-top: 19px;">
+                        <input id="field_verificationDate" type="text" class="form-control"
+                               name="verificationDate" uib-datepicker-popup="{{vm.dateformat}}"
+                               ng-model="vm.verificationResolved.verificationDate"
+                               is-open="vm.datePickerOpenStatus.verificationDate"
+                               datepicker-options="vm.verificationDateOption"
+                               ng-change="vm.changeVerificationDate()"
+                               required readonly/>
+                        <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default"
+                                              ng-click="vm.openCalendar('verificationDate')"><i
+                                          class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                    </div>
+                    <div ng-show="editForm.verificationDate.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.verificationDate.$error.required"
+                           translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" translate="metroquitoApp.verification.hour"
+                           for="field_verificationDateHour">Hour</label>
+
+                    <div id="field_verificationDateHour" name="verificationDateHour"
+                         uib-timepicker ng-model="vm.verificationHour" ng-change="vm.changeVerificationHour()"
+                         required show-meridian="false"></div>
+
+                    <div ng-show="editForm.verificationDateHour.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.verificationDateHour.$error.required"
+                           translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group" ngf-drop ngf-change="vm.setPhotographicRecord($file, vm.verificationResolved)"
+                     ngf-pattern="'image/*'">
+                    <label class="control-label" translate="metroquitoApp.verification.photographicRecord"
+                           for="field_photographicRecord">Photographic Record</label>
+                    <div style="margin-top: 19px;">
+                        <img
+                            data-ng-src="{{'data:' + vm.verificationResolved.photographicRecordContentType + ';base64,' + vm.verificationResolved.photographicRecord}}"
+                            style="max-height: 100px;" ng-if="vm.verificationResolved.photographicRecord"/>
+                        <div ng-if="vm.verificationResolved.photographicRecord" class="help-block clearfix">
+                            <span class="pull-left">{{vm.verificationResolved.photographicRecordContentType}}, {{vm.byteSize(vm.verificationResolved.photographicRecord)}}</span>
+                            <button
+                                ng-click="vm.verificationResolved.photographicRecord=null;vm.verificationResolved.photographicRecordContentType=null;"
+                                class="btn btn-default btn-xs pull-right">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                        <button type="file" ngf-select class="btn btn-default btn-block" ngf-max-size="10MB"
+                                ngf-change="vm.setPhotographicRecord($file, vm.verificationResolved)" accept="image/*" ngf-pattern="'image/*'"
+                                translate="entity.action.addimage">
+                            Add image
+                        </button>
+                    </div>
+                    <input type="hidden" class="form-control" name="photographicRecord" id="field_photographicRecord"
+                           ng-model="vm.verificationResolved.photographicRecord"/>
+                    <input type="hidden" class="form-control" name="photographicRecordContentType"
+                           id="field_photographicRecordContentType"
+                           ng-model="vm.verificationResolved.photographicRecordContentType"/>
+                </div>
+                <div>
+                    <p class="help-block"
+                       translate="global.messages.info.fileSize">
+                        the permitted size is up to 10 MB.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.verification.subject" for="field_subjectVerification">Subject</label>
+                    <input type="text" class="form-control" name="subjectVerification" id="field_subjectVerification"
+                           ng-model="vm.verificationResolved.subject" maxlength="100" style="margin-top: 19px;"
+                           required ng-minlength="1" ng-maxlength="100" ng-pattern="vm.pattern" />
+                    <div ng-show="editForm.subjectVerification.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.subjectVerification.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subjectVerification.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subjectVerification.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                            This field cannot be longer than 100 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subjectVerification.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" translate="metroquitoApp.verification.description"
+                       for="field_descriptionVerification">Description</label>
+                <textarea type="text" class="form-control" name="descriptionVerification"
+                          id="field_descriptionVerification"
+                          ng-model="vm.verificationResolved.description"
+                          required ng-minlength="1" ng-maxlength="10000" maxlength="10000"
+                          ng-pattern="vm.patternNewLine"/>
+                <div ng-show="editForm.descriptionVerification.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.descriptionVerification.$error.required"
+                       translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.descriptionVerification.$error.minlength"
+                       translate="entity.validation.minlength" translate-value-min="1">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.descriptionVerification.$error.maxlength"
+                       translate="entity.validation.maxlength" translate-value-max="10000">
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.descriptionVerification.$error.pattern"
+                       translate="entity.validation.pattern"
+                       translate-value-pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\-_ \,\;\.\/]+">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button ng-if="!vm.showAddVerification" type="submit" ng-disabled="editForm.$invalid" class="btn btn-danger" ng-click="vm.addVerification()">
+            <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+            <span translate="entity.action.add">Add</span>
+        </button>
+        <button ng-if="vm.showAddVerification" type="submit" ng-disabled="editForm.$invalid" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+        <button ng-if="!vm.showAddVerification" type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.initializeVerificationResolved()">
+            <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.clean">Clean</span>
+        </button>
+        <button ng-if="vm.showAddVerification" type="button" class="btn btn-danger" data-dismiss="modal" onclick="window.history.back()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

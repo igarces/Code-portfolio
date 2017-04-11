@@ -1,0 +1,296 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.incidenceSocialResp.home.title">Incidence Social Resps</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.search.title">Search Criteria</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.incidenceSocialResp.incidenceNumber"
+                                           for="field_incidenceNumber">Incidence Number</label>
+                                    <input type="text" class="form-control" name="incidenceNumber"
+                                           id="field_incidenceNumber"
+                                           ng-model="vm.incidenceNumber" max-length="11" maxlength="11"
+                                           ng-pattern="vm.patternNumbers"/>
+
+                                    <div ng-show="myForm.incidenceNumber.$invalid">
+                                        <p class="help-block"
+                                           ng-show="myForm.incidenceNumber.$error.pattern" translate="metroquitoApp.incidenceSocialResp.validation.incidenceNumber" >
+                                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">-->
+                                    <!--<label translate="metroquitoApp.incidenceSocialResp.incidenceState"-->
+                                           <!--for="field_incidenceState">Incidence State</label>-->
+                                    <!--<select class="form-control" id="field_incidenceState" name="incidenceState"-->
+                                            <!--ng-model="vm.incidenceStateId"-->
+                                            <!--ng-options="incidenceStateNom.id as incidenceStateNom.value for incidenceStateNom in vm.incidencestatenoms">-->
+                                        <!--<option value="">{{vm.defaultOption}}</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidenceSocialResp.dateFrom"
+                                           for="field_fromDate">From</label>
+                                    <div class="input-group">
+                                        <input id="field_fromDate" readonly type="text" class="form-control"
+                                               name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.fromDate" is-open="vm.datePickerOpenStatus.fromDate"
+                                               datepicker-options="vm.fromDateOption"/>
+                                        <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default"
+                                                       ng-click="vm.openCalendar('fromDate')"><i
+                                                   class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">-->
+                                    <!--<label class="control-label"-->
+                                           <!--translate="metroquitoApp.incidenceSocialResp.responsible"-->
+                                           <!--for="field_responsible">Responsible</label>-->
+                                    <!--<input type="text" class="form-control" name="responsible" id="field_responsible"-->
+                                           <!--ng-model="vm.responsible" maxlength="100"-->
+                                           <!--ng-minlength="1" ng-pattern="vm.patternWords"/>-->
+                                    <!--<div ng-show="myForm.responsible.$invalid">-->
+                                        <!--<p class="help-block"-->
+                                           <!--ng-show="myForm.responsible.$error.pattern" translate="entity.validation.letterSpacesPattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">-->
+                                            <!--This field should follow pattern "[a-zA-Z0-9 \\-()]+".-->
+                                        <!--</p>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidenceSocialResp.dateTo"
+                                           for="field_toDate">To</label>
+                                    <div class="input-group">
+                                        <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                               uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.toDate" is-open="vm.datePickerOpenStatus.toDate"
+                                               datepicker-options="vm.toDateOption"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="vm.openCalendar('toDate')"><i
+                                                class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.incidenceSocialResp.incidenceType"
+                                           for="field_incidenceType">Incidence Type</label>
+                                    <select class="form-control" id="field_incidenceType" name="incidenceType"
+                                            ng-model="vm.incidenceTypeId"
+                                            ng-options="incidenceTypeNom.id as incidenceTypeNom.value for incidenceTypeNom in vm.incidencetypenoms">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label translate="metroquitoApp.incidenceSocialResp.incidenceState"
+                                       for="field_incidenceState">Incidence State</label>
+                                <select class="form-control" id="field_incidenceState" name="incidenceState"
+                                        ng-model="vm.incidenceStateId"
+                                        ng-options="incidenceStateNom.id as incidenceStateNom.value for incidenceStateNom in vm.incidencestatenoms">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.incidenceSocialResp.administrativeUnitResponsible"
+                                           for="field_administrativeUnit">Administrative Unit</label>
+                                    <select class="form-control" id="field_administrativeUnit" name="administrativeUnit"
+                                            ng-model="vm.administrativeUnitId"
+                                            ng-options="administrativeUnit.id as administrativeUnit.name for administrativeUnit in vm.administrativeunits">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.incidenceSocialResp.responsible"
+                                           for="field_responsible">Responsible</label>
+                                    <select class="form-control" id="field_responsible" name="responsible"
+                                            ng-model="vm.responsible"
+                                            ng-options="user.id as user.fullName for user in vm.users | filter : vm.filterUserAdministrativeUnit">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.incidenceSocialResp.socialPromoter"
+                                           for="field_socialPromoter">Social Promoter</label>
+                                    <select class="form-control" id="field_socialPromoter" name="socialPromoter"
+                                            ng-model="vm.promotor"
+                                            ng-options="user.id as user.fullName for user in vm.usersPromotor">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                            ng-click="vm.searchByFilters()" id="searchBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.showAddOption">
+        <div class="col-xs-12 no-padding-right">
+            <div class="pull-right">
+                <button class="btn btn-danger" ui-sref="incidence-social-resp.new">
+                    <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                    <span translate="metroquitoApp.incidenceSocialResp.home.createLabel">
+                        Create new Incidence Social Resp
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.search.result">List
+                incidences
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                            <th jh-sort-by="incidenceNumber"><span
+                                translate="metroquitoApp.incidenceSocialResp.incidenceNumber">Incidence Number</span>
+                                <span class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="incidenceReportDate"><span
+                                translate="metroquitoApp.incidenceSocialResp.incidenceDate">Incidence Date</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="incidenceTypeId"><span
+                                translate="metroquitoApp.incidenceSocialResp.incidenceType">Incidence Type</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="incidenceStateId"><span
+                                translate="metroquitoApp.incidenceSocialResp.incidenceState">Incidence State</span>
+                                <span class="glyphicon glyphicon-sort"></span></th>
+                            <th><span translate="metroquitoApp.incidenceSocialResp.socialPromoter">Social Promoter</span> </th>
+                            <th jh-sort-by="responsibleId"><span
+                                translate="metroquitoApp.incidenceSocialResp.responsible">Responsible</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="administrativeUnitResponsibleId"><span
+                                translate="metroquitoApp.incidenceSocialResp.administrativeUnitResponsible">Administrative Unit Responsible</span>
+                                <span class="glyphicon glyphicon-sort"></span></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="incidenceSocialResp in vm.incidenceSocialResps track by incidenceSocialResp.id"
+                            ng-class="incidenceSocialResp.cssRowColor">
+
+                            <td>{{incidenceSocialResp.incidenceNumber}}</td>
+                            <td>{{incidenceSocialResp.incidenceReportDate | date: vm.dateformat}}</td>
+                            <td>
+                                {{vm.getIncidenceType(incidenceSocialResp.incidenceTypeId)}}
+                            </td>
+                            <td>
+                                {{vm.getIncidenceState(incidenceSocialResp.incidenceStateId)}}
+                            </td>
+                            <td>
+                                {{incidenceSocialResp.socialPromoterName}} {{incidenceSocialResp.socialPromoterLastName}}
+                            </td>
+                            <td>
+                                {{vm.getResponsibleName(incidenceSocialResp.responsibleId)}}
+                            </td>
+                            <td>
+                                {{vm.getAdministrativeUnitName(incidenceSocialResp.administrativeUnitResponsibleId)}}
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit" title="Ver detalles"
+                                            ui-sref="incidence-social-resp-detail({id:incidenceSocialResp.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                                    </button>
+
+                                    <button type="submit"title="Modificar"
+                                            ng-if="vm.showEditOptionByIncidenceState(incidenceSocialResp)"
+                                            ui-sref="incidence-social-resp.edit({id:incidenceSocialResp.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/modificar.png" class="img-responsive"></span>
+                                    </button>
+
+                                    <button type="submit" title="Asignar/Reasignar"
+                                            ng-if="vm.showAssignOptionByIncidenceState(incidenceSocialResp)"
+                                            ui-sref="assing-incidence-social-resp({id:incidenceSocialResp.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/asignar-responsabilidad.png" class="img-responsive"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr ng-if="!vm.incidenceSocialResps.length">
+                            <td colspan="7" class="text-center">
+                                <span translate="global.messages.search.noResult">
+                                   No Result
+                                </span>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center" ng-if="vm.incidenceSocialResps.length">
+                    <jhi-item-count page="vm.page" total="vm.queryCount"
+                                    items-per-page="vm.itemsPerPage"></jhi-item-count>
+                    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                                    ng-change="vm.transition()"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

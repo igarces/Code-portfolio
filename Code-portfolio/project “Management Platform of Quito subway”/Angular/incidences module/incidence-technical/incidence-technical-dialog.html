@@ -1,0 +1,213 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.incidenceTechnical.id && vm.ficticeId != '0'"
+            translate="metroquitoApp.incidenceTechnical.home.createLabel">Add incidence technical</h4>
+        <h4 class="modal-title" ng-if="vm.incidenceTechnical.id || vm.ficticeId == '0'"
+            translate="metroquitoApp.incidenceTechnical.home.editLabel">Edit incidence technical</h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert></jhi-alert>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div ng-if="vm.initialIncidence">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.incidenceTechnical.incidenceData" ng-click="vm.showHidePanel(1)">Incidence Data</div>
+                <div class="panel-body" ng-show="vm.showIncidenceData">
+
+                    <div class="row">
+                        <div class="form-group col-md-3" ng-if="vm.incidenceTechnical.id">
+                            <label class="control-label" translate="metroquitoApp.incidenceTechnical.incidenceNumber" for="field_incidenceNumber">Incidence Number</label>
+                            <input type="text" class="form-control" name="incidenceNumber" id="field_incidenceNumber"
+                                   ng-model="vm.incidenceTechnical.incidenceNumber" readonly/>
+
+                        </div>
+                        <div class="form-group"  ng-class="vm.incidenceTechnical.id ? 'col-md-3' : 'col-md-4'">
+                            <label translate="metroquitoApp.incidenceTechnical.functionary" for="field_functionary">Functionary</label>
+                            <input type="text" class="form-control" name="field_socialPromoter" id="field_functionary"
+                                   ng-model="vm.userFunctionaryName" readonly />
+                        </div>
+                        <div class="form-group" ng-class="vm.incidenceTechnical.id ? 'col-md-3' : 'col-md-4'">
+                            <label translate="metroquitoApp.incidenceTechnical.administrativeUnitResponsible" for="field_administrativeUnitResponsible">Administrative Unit Responsible</label>
+                            <select class="form-control" id="field_administrativeUnitResponsible" name="administrativeUnitResponsible" ng-model="vm.incidenceTechnical.administrativeUnitResponsibleId"
+                                    required ng-change="vm.changeAdministrativeUnit()"
+                                    ng-options="administrativeUnit.id as administrativeUnit.name for administrativeUnit in vm.administrativeunits" >
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.administrativeUnitResponsible.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.administrativeUnitResponsible.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group"  ng-class="vm.incidenceTechnical.id ? 'col-md-3' : 'col-md-4'">
+                            <label translate="metroquitoApp.incidenceTechnical.responsible" for="field_responsible">Responsible</label>
+                            <select class="form-control" id="field_responsible" name="responsible" ng-model="vm.incidenceTechnical.responsibleId"
+                                    required ng-disabled="vm.responsibleReadOnly"
+                                    ng-options="user.id as user.firstName +' '+ user.lastName for user in vm.users | filter : vm.filterUserUnidadAdministrativa" >
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.responsible.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.responsible.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.incidenceTechnical.subject" for="field_subject">Subject</label>
+                                <input type="text" class="form-control" name="subject" id="field_subject"
+                                       ng-model="vm.incidenceTechnical.subject" maxlength="100"
+                                       required ng-minlength="1" ng-maxlength="100" ng-pattern="vm.pattern" />
+                                <div ng-show="editForm.subject.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.subject.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.subject.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.subject.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                                        This field cannot be longer than 100 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.subject.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z]+\\.?">
+                                        This field should follow pattern "[a-zA-Z]+\\.?".
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.incidenceTechnical.description" for="field_description">Description</label>
+                                <textarea type="text" class="form-control" name="description" id="field_description"
+                                          ng-model="vm.incidenceTechnical.description" maxlength="800"
+                                          required ng-minlength="1" ng-maxlength="800" ng-pattern="vm.patternNewLine" />
+                                <div ng-show="editForm.description.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.description.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.description.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="800">
+                                        This field cannot be longer than 800 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.description.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z]+\\.?">
+                                        This field should follow pattern "[a-zA-Z]+\\.?".
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4" ngf-drop ngf-change="vm.setPhoto($file, vm.incidenceTechnical)" ngf-pattern="'image/*'">
+                            <label class="control-label" translate="metroquitoApp.incidenceTechnical.photo" for="field_photo">Photo</label>
+                            <div>
+                                <img data-ng-src="{{'data:' + vm.incidenceTechnical.photoContentType + ';base64,' + vm.incidenceTechnical.photo}}" style="max-height: 100px;" ng-if="vm.incidenceTechnical.photo"/>
+                                <div ng-if="vm.incidenceTechnical.photo" class="help-block clearfix">
+                                    <span class="pull-left">{{vm.incidenceTechnical.photoContentType}}, {{vm.byteSize(vm.incidenceTechnical.photo)}}</span>
+                                    <button ng-click="vm.incidenceTechnical.photo=null;vm.incidenceTechnical.photoContentType=null;"
+                                            class="btn btn-default btn-xs pull-right">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                                <button type="file" ngf-select class="btn btn-default btn-block"
+                                        ngf-change="vm.setPhoto($file, vm.incidenceTechnical)" accept="image/*" ngf-pattern="'image/*'" translate="entity.action.addimage">
+                                    Add image
+                                </button>
+                            </div>
+                            <input type="hidden" class="form-control" name="photo" id="field_photo"
+                                   ng-model="vm.incidenceTechnical.photo"
+                                   required />
+                            <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                                   ng-model="vm.incidenceTechnical.photoContentType" />
+                            <div ng-show="editForm.photo.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.photo.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!vm.initialIncidence">
+
+            <div ng-include="'app/incidences/incidence-technical/incidence-technical-detail.html'"></div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="pull-right">
+                                <button class="btn btn-danger" ng-click="vm.createObservations()">
+                                    <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="metroquitoApp.incidenceTechnical.home.createObsevation">
+                                        Create Observations
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" translate="metroquitoApp.incidenceTechnical.observationsList" ng-click="vm.showHidePanel(2)">Observations List</div>
+                        <div class="panel-body" ng-show="vm.showObservations">
+
+                            <div ng-include="'app/incidences/observation/observations.html'"></div>
+
+                            <div class="col-md-4 form-group" ng-if="vm.incidenceInProcess">
+                                <label class="control-label" translate="metroquitoApp.incidenceTechnical.incidenceState"
+                                       for="field_incidenceState">Incidence State</label>
+                                <select class="form-control" id="field_incidenceState" name="incidenceType" ng-model="vm.incidenceStateId"
+                                        required
+                                        ng-options="incidenceStateNom.id as incidenceStateNom.value for incidenceStateNom in vm.incidencestatenoms | filter : vm.filterStatus ">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                                <div ng-show="editForm.incidenceType.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.incidenceType.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" ng-if="vm.initialIncidence" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.save">Save</span>
+        </button>
+        <button type="submit" ng-if="!vm.initialIncidence" ng-disabled="editForm.$invalid || vm.isSaving || vm.observations.length == 0" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

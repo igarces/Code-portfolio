@@ -1,0 +1,174 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.incidencesReports.visitReport.title">Visit Report Report</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.incidencesReports.home.parametersPanel">Parameters to conform the report</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidencesReports.visitReport.dateFrom"
+                                           for="field_fromDate">From</label>
+                                    <div class="input-group">
+                                        <input id="field_fromDate" readonly type="text" class="form-control"
+                                               name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.fromDate" is-open="vm.datePickerOpenStatus.fromDate"
+                                               datepicker-options="vm.fromDateOption"/>
+                                        <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default"
+                                                       ng-click="vm.openCalendar('fromDate')"><i
+                                                   class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidencesReports.visitReport.dateTo"
+                                           for="field_toDate">To</label>
+                                    <div class="input-group">
+                                        <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                               uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.toDate" is-open="vm.datePickerOpenStatus.toDate"
+                                               datepicker-options="vm.toDateOption"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="vm.openCalendar('toDate')"><i
+                                                class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.incidencesReports.visitReport.administrativeUnit"
+                                           for="field_administrativeUnit">Administrative Unit</label>
+                                    <select class="form-control" id="field_administrativeUnit" name="administrativeUnit"
+                                            ng-model="vm.administrativeUnitId"
+                                            ng-options="administrativeUnit.id as administrativeUnit.name for administrativeUnit in vm.administrativeunits">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           translate="metroquitoApp.incidencesReports.visitReport.functionary"
+                                           for="field_functionary">Functionary</label>
+                                    <select class="form-control" id="field_functionary" name="functionary"
+                                            ng-model="vm.functionary"
+                                            ng-options="user.id as user.fullName for user in vm.users | filter : vm.filterUserAdministrativeUnit">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.incidencesReports.visitReport.activity"
+                                           for="field_activity">Activity</label>
+                                    <select class="form-control" id="field_activity" name="activity"
+                                            ng-model="vm.activityId"
+                                            ng-options="activity.id as activity.name for activity in vm.activities | filter : vm.filterActivityByAdminUnit">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+                                <label translate="metroquitoApp.incidencesReports.visitReport.subactivity" for="field_subActivity">Sub Activity</label>
+                                <select class="form-control" id="field_subActivity" name="subActivity"
+                                        ng-model="vm.subactivityId" ng-disabled="!vm.activityId"
+                                        ng-options="activity.id as activity.name for activity in vm.activities | filter : vm.filterSubActivity">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label translate="metroquitoApp.incidencesReports.visitReport.visitSite" for="field_visitSite">Visit Site</label>
+                                <select class="form-control" id="field_visitSite" name="visitSite" ng-model="vm.visitSiteId"
+                                        ng-options="visitSiteNom.id as visitSiteNom.value for visitSiteNom in vm.visitsitenoms">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div ng-if="vm.visitSiteId === vm.visitSiteStationId">
+                                    <label translate="metroquitoApp.incidencesReports.station" for="field_station">Station</label>
+                                    <select class="form-control" id="field_station" name="station" ng-model="vm.stationId"
+                                            ng-options="station.id as station.name for station in vm.differentSites | filter: vm.filterStation">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+
+                                <div ng-if="vm.visitSiteId === vm.visitSiteTunnelSectionId">
+                                    <label translate="metroquitoApp.incidencesReports.betweenTunnel" for="field_betweenTunnel">Between Tunnel</label>
+                                    <select class="form-control" id="field_betweenTunnel" name="betweenTunnel"
+                                            ng-model="vm.stretchTunnelId"
+                                            ng-options="betweenTunnel.id as betweenTunnel.name for betweenTunnel in vm.differentSites | filter: vm.filterBetweenTunnel">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div ng-if="vm.visitSiteId === vm.visitSiteTunnelSectionId">
+                                    <label translate="metroquitoApp.incidencesReports.specialSite" for="field_specialSite">Special Site</label>
+                                    <select class="form-control" id="field_specialSite" name="specialSite"
+                                            ng-disabled="!vm.stretchTunnelId"
+                                            ng-model="vm.specialSiteId"
+                                            ng-options="specialSite.id as specialSite.name for specialSite in vm.differentSites | filter: vm.filterSpecialSite">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger"  ng-click="vm.generateReport()" id="generateBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.generate">
+                                            Generate
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger"  ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+
+    </div>
+
+</div>

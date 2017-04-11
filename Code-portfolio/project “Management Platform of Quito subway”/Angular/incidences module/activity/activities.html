@@ -1,0 +1,132 @@
+<div>
+    <h2 translate="metroquitoApp.activity.home.title">Activities</h2>
+    <jhi-alert></jhi-alert>
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.activity.search.title" ng-click="vm.colapsePanel()">List
+            activity
+        </div>
+        <div class="panel-body" ng-show="vm.colapse">
+            <form name="myForm" novalidate>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <label class="control-label" translate="metroquitoApp.activity.name"
+                                   for="search_input">Name</label>
+                            <input type="text" class="form-control" name="search_input" id="search_input"
+                                   ng-model="vm.name_activity" ng-maxlength="50" maxlength="50"/>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 no-padding-left">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid"
+                                        ng-click="vm.searchByName()" id="searchBtn">
+                                    <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                    <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="vm.cancel()" id="cancelBtn">
+                                    <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 no-padding-left">
+                <button class="btn btn-danger pull-right" ui-sref="activity.new">
+                    <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                    <span translate="metroquitoApp.activity.home.createLabel">
+                                Create new Activity
+                            </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.activity.search.result.title">Panel heading</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="name"><span translate="metroquitoApp.activity.name">Name</span> <span
+                            class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="classificationId"><span translate="metroquitoApp.activity.classification">Classification</span>
+                            <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="administrativeUnitId"><span
+                            translate="metroquitoApp.activity.administrativeUnit">Administrative Unit</span>
+                            <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="activityFatherId"><span translate="metroquitoApp.activity.activityFather">Activity Father</span>
+                            <span class="glyphicon glyphicon-sort"></span></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="activity in vm.activities track by activity.id">
+                        <td>{{activity.name}}</td>
+                        <td>
+                           {{activity.classificationValue}}
+                        </td>
+                        <td>
+                            {{activity.administrativeUnitName}}
+                        </td>
+                        <td>
+                            {{activity.activityFatherName}}
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit" title="Modificar"
+                                        ui-sref="activity.edit({id:activity.id})"
+                                        class="btn btn-danger btn-sm">
+                                <span class="icon-button"><img src="content/images/modificar.png"
+                                                               class="img-responsive"></span>
+                                </button>
+                                <button type="submit" title="Eliminar"
+                                        ui-sref="activity.delete({id:activity.id})"
+                                        class="btn btn-danger btn-sm">
+                                    <span class="icon-button"><img src="content/images/eliminar.png"
+                                                                   class="img-responsive"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr ng-if="!vm.activities.length">
+                        <td colspan="5" class="text-center">
+                            <span translate="global.messages.search.noResult">
+                                   No Result
+                            </span>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" ng-if="vm.activities.length">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                        ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

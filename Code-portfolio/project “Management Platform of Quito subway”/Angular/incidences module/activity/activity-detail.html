@@ -1,0 +1,30 @@
+
+<div>
+    <h2><span translate="metroquitoApp.activity.detail.title">Activity</span> {{vm.activity.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="metroquitoApp.activity.name">Name</span></dt>
+        <dd>
+            <span>{{vm.activity.name}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.activity.classification">Classification</span></dt>
+        <dd>
+            <a ui-sref="activity-classification-nom-detail({id:vm.activity.classificationId})">{{vm.activity.classificationId}}</a>
+        </dd>
+        <dt><span translate="metroquitoApp.activity.administrativeUnit">Administrative Unit</span></dt>
+        <dd>
+            <a ui-sref="administrative-unit-detail({id:vm.activity.administrativeUnitId})">{{vm.activity.administrativeUnitId}}</a>
+        </dd>
+        <dt><span translate="metroquitoApp.activity.activityFather">Activity Father</span></dt>
+        <dd>
+            <a ui-sref="activity-detail({id:vm.activity.activityFatherId})">{{vm.activity.activityFatherId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,239 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <!--<div class="modal-body">-->
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-8 no-padding">
+                            <label class="control-label" translate="metroquitoApp.verification.verificationDate"
+                                   for="field_verificationDate" >Verification Date</label>
+                            <div class="input-group" style="margin-top: 19px;">
+                                <input id="field_verificationDate" type="text" class="form-control"
+                                       name="verificationDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                       ng-model="vm.verification.verificationDate"
+                                       is-open="vm.datePickerOpenStatus.verificationDate"
+                                       datepicker-options="vm.verificationDateOption"
+                                       ng-change="vm.changeVerificationDate()"
+                                       required readonly />
+                                <span class="input-group-btn">
+                              <button type="button" class="btn btn-default"
+                                      ng-click="vm.openCalendar('verificationDate')"><i
+                                  class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                            </div>
+                            <div ng-show="editForm.verificationDate.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.verificationDate.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" translate="metroquitoApp.verification.hour"
+                                   for="field_verificationDateHour">Hour</label>
+
+                            <div id="field_verificationDateHour" name="verificationDateHour"
+                                 uib-timepicker ng-model="vm.verificationHour" ng-change="vm.changeVerificationHour()"
+                                 required show-meridian="false"></div>
+                            <div ng-show="editForm.verificationDateHour.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.verificationDateHour.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div style="height: 38px;" class="text-center">
+                                <a ng-click="vm.selectInformant()">
+                        <span class="icon-button" id="icon-select-informant">
+                            <img src="content/images/seleccionar.png" class="img-responsive"></span>
+                                    <span translate="metroquitoApp.verification.selectInformant">Select Informant</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-md-6">-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="control-label" translate="metroquitoApp.verification.description"-->
+                                   <!--for="field_descriptionVerification">Description</label>-->
+                            <!--<textarea type="text" class="form-control" name="descriptionVerification"-->
+                                      <!--id="field_descriptionVerification"-->
+                                      <!--ng-model="vm.verification.description"-->
+                                      <!--required ng-minlength="1" ng-maxlength="800" maxlength="800"-->
+                                      <!--ng-pattern="vm.patternNewLine"/>-->
+                            <!--<div ng-show="editForm.descriptionVerification.$invalid">-->
+                                <!--<p class="help-block"-->
+                                   <!--ng-show="editForm.descriptionVerification.$error.required"-->
+                                   <!--translate="entity.validation.required">-->
+                                    <!--This field is required.-->
+                                <!--</p>-->
+                                <!--<p class="help-block"-->
+                                   <!--ng-show="editForm.descriptionVerification.$error.minlength"-->
+                                   <!--translate="entity.validation.minlength" translate-value-min="1">-->
+                                <!--</p>-->
+                                <!--<p class="help-block"-->
+                                   <!--ng-show="editForm.descriptionVerification.$error.maxlength"-->
+                                   <!--translate="entity.validation.maxlength" translate-value-max="800">-->
+                                <!--</p>-->
+                                <!--<p class="help-block"-->
+                                   <!--ng-show="editForm.descriptionVerification.$error.pattern"-->
+                                   <!--translate="entity.validation.pattern"-->
+                                   <!--translate-value-pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\-_ \,\;\.\/]+">-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label translate="metroquitoApp.verification.reportSite" for="field_reportSite">Report
+                                Site</label>
+                            <select class="form-control" required id="field_reportSite" name="reportSite"
+                                    ng-model="vm.verification.reportSiteId"
+                                    ng-change="vm.changeReportSite()"
+                                    ng-options="reportSiteNom.id as reportSiteNom.value for reportSiteNom in vm.reportsitenoms">
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.reportSite.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.reportSite.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-if="vm.verification.reportSiteId == vm.reportSiteStationId ||
+                        vm.verification.reportSiteId == vm.reportSiteOperationsCenterId || vm.verification.reportSiteId == vm.reportSiteVentilationShaftsId">
+                            <label translate="metroquitoApp.verification.station" for="field_station">Station</label>
+                            <select class="form-control" required id="field_station" name="station"
+                                    ng-change="vm.changeStation()"
+                                    ng-model="vm.verification.stationId"
+                                    ng-options="station.id as station.name for station in vm.differentSites | filter: vm.filterStation">
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.station.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.station.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="vm.verification.reportSiteId == vm.reportSiteTunnelSectionId">
+                            <label translate="metroquitoApp.verification.betweenTunnel" for="field_betweenTunnel">Between
+                                Tunnel</label>
+                            <select class="form-control" required id="field_betweenTunnel" name="betweenTunnel"
+                                    ng-change="vm.changeStretchTunnel()"
+                                    ng-model="vm.verification.betweenTunnelId"
+                                    ng-options="betweenTunnel.id as betweenTunnel.name for betweenTunnel in vm.differentSites | filter: vm.filterBetweenTunnel">
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.betweenTunnel.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.betweenTunnel.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" ngf-drop ngf-change="vm.setPhotographicRecord($file, vm.verification)" ngf-pattern="'image/*'">
+                    <label class="control-label" translate="metroquitoApp.verification.photographicRecord" for="field_photographicRecord">Photographic Record</label>
+                    <div style="margin-top: 19px;">
+                        <div ng-if="vm.verification.photographicRecord">
+                            <img data-ng-src="{{'data:' + vm.verification.photographicRecordContentType + ';base64,' + vm.verification.photographicRecord}}" style="max-height: 100px;"
+                                 ng-if="vm.verification.photographicRecordContentType != 'application/pdf' &&
+                                    vm.verification.photographicRecordContentType != 'application/x-zip-compressed'"/>
+                            <img src="content/images/pdf2.png" class="img-responsive"
+                                 ng-if="vm.verification.photographicRecordContentType == 'application/pdf'"/>
+                            <img src="content/images/zip2.png" class="img-responsive"
+                                 ng-if="vm.verification.photographicRecordContentType == 'application/x-zip-compressed'"/>
+                        </div>
+                        <div ng-if="vm.verification.photographicRecord" class="help-block clearfix">
+                            <span class="pull-left">{{vm.verification.photographicRecordContentType}}, {{vm.byteSize(vm.verification.photographicRecord)}}</span>
+                            <button ng-click="vm.verification.photographicRecord=null;vm.verification.photographicRecordContentType=null;"
+                                    class="btn btn-default btn-xs pull-right">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                        <button type="file" ngf-select class="btn btn-default btn-block" ngf-max-size="10MB"
+                                ngf-change="vm.setPhotographicRecord($file, vm.verification)" accept="image/*,.pdf,.zip" ngf-pattern="'image/*,.pdf,.zip'"
+                                translate="entity.action.addimage">
+                            Add image
+                        </button>
+                    </div>
+                    <input type="hidden" class="form-control" name="photographicRecord" id="field_photographicRecord"
+                           ng-model="vm.verification.photographicRecord" />
+                    <input type="hidden" class="form-control" name="photographicRecordContentType" id="field_photographicRecordContentType"
+                           ng-model="vm.verification.photographicRecordContentType" />
+
+                </div>
+                <div>
+                    <p class="help-block"
+                       translate="global.messages.info.fileSize">
+                        the permitted size is up to 10 MB.
+                    </p>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" translate="metroquitoApp.verification.description"
+                               for="field_descriptionVerification">Description</label>
+                        <textarea type="text" class="form-control" name="descriptionVerification"
+                                  id="field_descriptionVerification"
+                                  ng-model="vm.verification.description"
+                                  required ng-minlength="1" ng-maxlength="10000" maxlength="10000"
+                                  ng-pattern="vm.patternNewLine"/>
+                        <div ng-show="editForm.descriptionVerification.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.descriptionVerification.$error.required"
+                               translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.descriptionVerification.$error.minlength"
+                               translate="entity.validation.minlength" translate-value-min="1">
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.descriptionVerification.$error.maxlength"
+                               translate="entity.validation.maxlength" translate-value-max="10000">
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.descriptionVerification.$error.pattern"
+                               translate="entity.validation.pattern"
+                               translate-value-pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\-_ \,\;\.\/]+">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+    <div class="modal-footer" ng-if="vm.showAddVerification">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

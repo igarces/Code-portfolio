@@ -1,0 +1,94 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myAttachedDocumentLabel" translate="metroquitoApp.attachedDocument.home.createOrEditLabel">Create or edit a Attached Document</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.attachedDocument.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.attachedDocument.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.attachedDocument.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.attachedDocument.description"
+                    ng-minlength="1" ng-maxlength="100" ng-pattern="/[a-zA-Z]+\\.?/" />
+            <div ng-show="editForm.description.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.description.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                    This field is required to be at least 1 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                    This field cannot be longer than 100 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.description.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z]+\\.?">
+                    This field should follow pattern "[a-zA-Z]+\\.?".
+                </p>
+            </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setContentFile($file, vm.attachedDocument)">
+            <label class="control-label" translate="metroquitoApp.attachedDocument.contentFile" for="field_contentFile">Content File</label>
+            <div>
+                <div ng-if="vm.attachedDocument.contentFile" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.attachedDocument.contentFileContentType, vm.attachedDocument.contentFile)" translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.attachedDocument.contentFileContentType}}, {{vm.byteSize(vm.attachedDocument.contentFile)}}</span>
+                    <button ng-click="vm.attachedDocument.contentFile=null;vm.attachedDocument.contentFileContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setContentFile($file, vm.attachedDocument)" translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="contentFile" id="field_contentFile"
+                    ng-model="vm.attachedDocument.contentFile"
+                     />
+            <input type="hidden" class="form-control" name="contentFileContentType" id="field_contentFileContentType"
+                    ng-model="vm.attachedDocument.contentFileContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.attachedDocument.fileName" for="field_fileName">File Name</label>
+            <input type="text" class="form-control" name="fileName" id="field_fileName"
+                    ng-model="vm.attachedDocument.fileName"
+                    ng-minlength="1" ng-maxlength="500" ng-pattern="/[a-zA-Z]+\\.?/" />
+            <div ng-show="editForm.fileName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.fileName.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                    This field is required to be at least 1 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.fileName.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="500">
+                    This field cannot be longer than 500 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.fileName.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z]+\\.?">
+                    This field should follow pattern "[a-zA-Z]+\\.?".
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label translate="metroquitoApp.attachedDocument.reports" for="field_reports">Reports</label>
+            <select class="form-control" id="field_reports" name="reports" ng-model="vm.attachedDocument.reportsId" ng-options="report.id as report.id for report in vm.reports"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

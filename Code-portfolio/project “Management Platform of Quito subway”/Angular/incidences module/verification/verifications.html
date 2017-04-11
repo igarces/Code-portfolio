@@ -1,0 +1,177 @@
+<div>
+    <!--<h2 translate="metroquitoApp.verification.home.title">Verifications</h2>-->
+    <!--<jhi-alert></jhi-alert>-->
+    <!--<div class="container-fluid">-->
+        <!--<div class="row">-->
+            <!--<div class="col-xs-4 no-padding-left">-->
+                <!--<button class="btn btn-primary" ui-sref="verification.new" >-->
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+                    <!--<span  translate="metroquitoApp.verification.home.createLabel">-->
+                        <!--Create new Verification-->
+                    <!--</span>-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<br/>-->
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.verification.verificationList">List of verifications</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <th><span translate="metroquitoApp.verification.date/hour">Verification Date</span> </th>
+                            <th><span translate="metroquitoApp.verification.socialPromoter">Social Promoter</span></th>
+                            <th><span translate="metroquitoApp.verification.verification">Verification</span></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="verification in vm.verifications track by verification.id">
+                            <!--<td><a ui-sref="verification-detail({id:verification.id})">{{verification.id}}</a></td>-->
+                            <td>{{verification.verificationDate | date: vm.dateHourFormat}}</td>
+                            <td>{{verification.socialPromoter.firstName}} {{verification.socialPromoter.lastName}}</td>
+                            <td>{{verification.subject}}</td>
+                            <!--<td>-->
+                                <!--<a ng-if="verification.photographicRecord" ng-click="vm.openFile(verification.photographicRecordContentType, verification.photographicRecord)">-->
+                                    <!--<img data-ng-src="{{'data:' + verification.photographicRecordContentType + ';base64,' + verification.photographicRecord}}" style="max-height: 30px;"/>-->
+                                <!--</a>-->
+                                <!--<span ng-if="verification.photographicRecord">{{verification.photographicRecordContentType}}, {{vm.byteSize(verification.photographicRecord)}}</span>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<a ui-sref="social-profile-detail({id:verification.informantId})">{{verification.informantId}}</a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<a ui-sref="report-site-nom-detail({id:verification.reportSiteId})">{{verification.reportSiteId}}</a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<a ui-sref="stations-nom-detail({id:verification.stationId})">{{verification.stationId}}</a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<a ui-sref="between-tunnel-nom-detail({id:verification.betweenTunnelId})">{{verification.betweenTunnelId}}</a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<a ui-sref="incidence-social-resp-detail({id:verification.incidenceSocialRespsId})">{{verification.incidenceSocialRespsId}}</a>-->
+                            <!--</td>-->
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button title="Exportar" ng-click="vm.exportVerification(verification.id)"
+                                        ng-if="vm.showExportVerificationButton && $index == 0"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/exportar.png" class="img-responsive"></span>
+                                    </button>
+                                    <button  title="Ver detalles"
+                                        ng-click="vm.detailVerifications(verification.id)"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                                    </button>
+                                    <button title="Modificar"
+                                        ng-if="vm.showEditVerificationOption" ng-click="vm.editVerifications(verification.id)"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/modificar.png" class="img-responsive"></span>
+                                    </button>
+                                    <!--<button type="submit"-->
+                                            <!--ui-sref="verification.delete({id:verification.id})"-->
+                                            <!--class="btn btn-danger btn-sm">-->
+                                        <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                                        <!--<span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>-->
+                                    <!--</button>-->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!vm.verifications.length">
+                            <td colspan="7" class="text-center">
+                                <span translate="global.messages.search.noResult">
+                                   No Result
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="text-center" ng-if="vm.verifications.length">
+                    <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+                </div>
+
+            </div>
+         </div>
+    </div>
+
+    <!--<div class="table-responsive">-->
+        <!--<table class="jh-table table table-striped">-->
+            <!--<thead>-->
+                <!--<tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">-->
+                    <!--<th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="verificationDate"><span translate="metroquitoApp.verification.verificationDate">Verification Date</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="description"><span translate="metroquitoApp.verification.description">Description</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="conformity"><span translate="metroquitoApp.verification.conformity">Conformity</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="photographicRecord"><span translate="metroquitoApp.verification.photographicRecord">Photographic Record</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="informantId"><span translate="metroquitoApp.verification.informant">Informant</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="reportSiteId"><span translate="metroquitoApp.verification.reportSite">Report Site</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="stationId"><span translate="metroquitoApp.verification.station">Station</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="betweenTunnelId"><span translate="metroquitoApp.verification.betweenTunnel">Between Tunnel</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="incidenceSocialRespsId"><span translate="metroquitoApp.verification.incidenceSocialResps">Incidence Social Resps</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th></th>-->
+                <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+                <!--<tr ng-repeat="verification in vm.verifications track by verification.id">-->
+                    <!--<td><a ui-sref="verification-detail({id:verification.id})">{{verification.id}}</a></td>-->
+                    <!--<td>{{verification.verificationDate | date:'medium'}}</td>-->
+                    <!--<td>{{verification.description}}</td>-->
+                    <!--<td>{{verification.conformity}}</td>-->
+                    <!--<td>-->
+                        <!--<a ng-if="verification.photographicRecord" ng-click="vm.openFile(verification.photographicRecordContentType, verification.photographicRecord)">-->
+                            <!--<img data-ng-src="{{'data:' + verification.photographicRecordContentType + ';base64,' + verification.photographicRecord}}" style="max-height: 30px;"/>-->
+                        <!--</a>-->
+                        <!--<span ng-if="verification.photographicRecord">{{verification.photographicRecordContentType}}, {{vm.byteSize(verification.photographicRecord)}}</span>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<a ui-sref="social-profile-detail({id:verification.informantId})">{{verification.informantId}}</a>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<a ui-sref="report-site-nom-detail({id:verification.reportSiteId})">{{verification.reportSiteId}}</a>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<a ui-sref="stations-nom-detail({id:verification.stationId})">{{verification.stationId}}</a>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<a ui-sref="between-tunnel-nom-detail({id:verification.betweenTunnelId})">{{verification.betweenTunnelId}}</a>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<a ui-sref="incidence-social-resp-detail({id:verification.incidenceSocialRespsId})">{{verification.incidenceSocialRespsId}}</a>-->
+                    <!--</td>-->
+                    <!--<td class="text-right">-->
+                        <!--<div class="btn-group flex-btn-group-container">-->
+                            <!--<button type="submit"-->
+                                    <!--ui-sref="verification-detail({id:verification.id})"-->
+                                    <!--class="btn btn-info btn-sm">-->
+                                <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                                <!--<span class="hidden-xs hidden-sm" translate="entity.action.view"></span>-->
+                            <!--</button>-->
+                            <!--<button type="submit"-->
+                                    <!--ui-sref="verification.edit({id:verification.id})"-->
+                                    <!--class="btn btn-primary btn-sm">-->
+                                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                <!--<span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>-->
+                            <!--</button>-->
+                            <!--<button type="submit"-->
+                                    <!--ui-sref="verification.delete({id:verification.id})"-->
+                                    <!--class="btn btn-danger btn-sm">-->
+                                <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                                <!--<span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+
+</div>

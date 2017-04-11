@@ -1,0 +1,78 @@
+<div>
+    <h2 translate="metroquitoApp.incidenceStates.home.title">Incidence States</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="incidence-states.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="metroquitoApp.incidenceStates.home.createLabel">
+                        Create new Incidence States
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="date"><span translate="metroquitoApp.incidenceStates.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="active"><span translate="metroquitoApp.incidenceStates.active">Active</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="userId"><span translate="metroquitoApp.incidenceStates.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="stateId"><span translate="metroquitoApp.incidenceStates.state">State</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="incidenceSocialRespsId"><span translate="metroquitoApp.incidenceStates.incidenceSocialResps">Incidence Social Resps</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="incidenceTechnicalsId"><span translate="metroquitoApp.incidenceStates.incidenceTechnicals">Incidence Technicals</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="incidenceStates in vm.incidenceStates track by incidenceStates.id">
+                    <td><a ui-sref="incidence-states-detail({id:incidenceStates.id})">{{incidenceStates.id}}</a></td>
+                        <td>{{incidenceStates.date | date:'mediumDate'}}</td>
+                    <td>{{incidenceStates.active}}</td>
+                    <td>
+                        {{incidenceStates.userId}}
+                    </td>
+                    <td>
+                        <a ui-sref="incidence-state-nom-detail({id:incidenceStates.stateId})">{{incidenceStates.stateId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="incidence-social-resp-detail({id:incidenceStates.incidenceSocialRespsId})">{{incidenceStates.incidenceSocialRespsId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="incidence-technical-detail({id:incidenceStates.incidenceTechnicalsId})">{{incidenceStates.incidenceTechnicalsId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="incidence-states-detail({id:incidenceStates.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="incidence-states.edit({id:incidenceStates.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="incidence-states.delete({id:incidenceStates.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

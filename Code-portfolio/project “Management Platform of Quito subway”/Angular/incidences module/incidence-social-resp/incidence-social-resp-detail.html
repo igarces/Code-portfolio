@@ -1,0 +1,250 @@
+
+<div class="container-fluid" ng-class="!vm.showCompleteIncidenceDetail ? 'no-padding': 'clas'">
+    <div class="row" ng-if="vm.showCompleteIncidenceDetail">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.incidenceSocialResp.detail.title">Incidence Social Resp</span></h2>
+        </div>
+    </div>
+    <hr ng-if="vm.showCompleteIncidenceDetail">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.citizenAttention" ng-click="vm.showHidePanel(1)">Citizen Attention</div>
+                <div class="panel-body" ng-show="vm.showCitizenAttention">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceNumber">Incidence Number</label>
+                            <span>{{vm.incidenceSocialResp.incidenceNumber}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <div ng-if="vm.incidenceSocialResp.incidenceTypeId !== vm.incidenceTypeInformationId">
+                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceRealDate">Incidence Real Date</label>
+                                <span>{{vm.incidenceSocialResp.incidenceRealDate | date: vm.dateformat}}</span>
+                            </div>
+                            <div ng-if="vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeInformationId">
+                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceReportDate">Incidence Report Date</label>
+                                <span>{{vm.incidenceSocialResp.incidenceReportDate | date: vm.dateformat}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceType">Incidence Type</label>
+                            <span>{{vm.getIncidenceType()}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.socialPromoter">Social Promoter</label>
+                            <span>{{vm.getSocialPromoterName(vm.incidenceSocialResp.socialPromoterId)}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.subject">Subject</label>
+                            <span>{{vm.incidenceSocialResp.subject}}</span>
+                        </div>
+                        <div class="col-md-3 form-group" ng-if="vm.incidenceSocialResp.incidenceTypeId !== vm.incidenceTypeInformationId">
+                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceReportDate">Incidence Report Date</label>
+                             <span>{{vm.incidenceSocialResp.incidenceReportDate | date: vm.dateformat}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.description">Description</label></dt>
+                            <span>{{vm.incidenceSocialResp.description}}</span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label"  translate="metroquitoApp.incidenceSocialResp.informant">Informant</label></dt>
+                            <span>{{vm.incidenceSocialResp.informant}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeComplainId || vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeClaimId">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.verificationPanel" ng-click="vm.showHidePanel(2)">Verification</div>
+                    <div class="panel-body"  ng-show="vm.showVerification">
+                        <div ng-include="'app/incidences/verification/verification-detail.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.verification.informant.id">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.informantDataPanel" ng-click="vm.showHidePanel(3)">Informant Data</div>
+                    <div class="panel-body"  ng-show="vm.showInformantData">
+
+                        <div class="row">
+                            <div class="col-xs-12 no-padding">
+                                <div ng-include="'app/incidences/social-profile/social-profile-detail.html'"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.map" for="informantMap">Map</label>
+                                <div id="informantMap">
+                                    <ng-map zoom="11" center="-0.1936, -78.4899" map-type-id="HYBRID">
+                                        <marker position="{{vm.pos.lat}}, {{vm.pos.lng}}"></marker>
+                                    </ng-map>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.coordinates" for="informantCoordinates">Coordinates</label>
+                                <div id="informantCoordinates">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label class="control-label" translate="metroquitoApp.socialProfile.locationLongitude">Location Longitude</label>
+                                            <span>{{vm.mapLongitude}}</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label class="control-label" translate="metroquitoApp.socialProfile.locationLatitude">Location Latitude</label>
+                                            <span>{{vm.mapLatitude}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group"
+                                 ng-if="vm.socialProfile.cardCopy && vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeClaimId">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.cardCopy">Card Copy</label>
+                                <a ng-if="vm.socialProfile.cardCopy" ng-click="vm.openFile(vm.socialProfile.cardCopyContentType, vm.socialProfile.cardCopy)">
+                                    <img data-ng-src="{{'data:' + vm.socialProfile.cardCopyContentType + ';base64,' + vm.socialProfile.cardCopy}}" style="max-height: 30px;"/>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceState">Incidence State</label>
+                                {{vm.incidenceState1}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.incidenceState1 == 'Aceptada'">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.complaintClaimData" ng-click="vm.showHidePanel(4)">Complaint / Claim Data</div>
+                    <div class="panel-body" ng-show="vm.showComplaintClaimData">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                   <label class="control-label" translate="metroquitoApp.incidenceSocialResp.complaintClaimRegistrationDate">Complaint Claim Registration Date</label>
+                                   <span>{{vm.incidenceSocialResp.complaintClaimRegistrationDate | date: vm.dateformat}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.incidenceSocialResp.category">Category</label>
+                                    <span>{{vm.getCategory()}}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidenceSocialResp.complaintClaimDescription">Complaint Claim Description</label>
+                                    <span>{{vm.incidenceSocialResp.complaintClaimDescription}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.showObservationsListPanel">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.observationsList" ng-click="vm.showHidePanel(6)">Observations List</div>
+                    <div class="panel-body" ng-show="vm.showObservations">
+
+                        <div ng-include="'app/incidences/observation/observations.html'"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.showVerificationsList && vm.verifications.length">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.verificationIncidenceResolve" ng-click="vm.showHidePanel(5)">Verification Data Incidences Resolved</div>
+                    <div class="panel-body" ng-show="vm.showResolvedVerification">
+
+                        <!--<div ng-if="vm.incidenceSocialResp.incidenceStateId == vm.incidenceStateCloseId"-->
+                        <!--ng-include="'app/incidences/verification/verification-resolved-detail.html'"></div>-->
+
+                        <div ng-include="'app/incidences/verification/verifications.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.incidenceClaimClosed">
+            <div class="col-md-4 form-group">
+                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.closedState">Closed state</label>
+                <span ng-if="vm.incidenceSocialResp.conformity == true" translate="metroquitoApp.incidenceSocialResp.conforming"></span>
+                <span ng-if="vm.incidenceSocialResp.conformity == false" translate="metroquitoApp.incidenceSocialResp.withoutConformity"></span>
+            </div>
+
+            <div ng-if="vm.incidenceSocialResp.conformity == true">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" translate="metroquitoApp.agreementAct.title">Agreement Act</div>
+                        <div class="panel-body">
+                            <div ng-include="'app/incidences/agreement-act/agreement-act-detail.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.showCompleteIncidenceDetail">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.statesHistory">States History</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="jh-table table table-striped">
+                                <thead>
+                                    <tr>
+                                       <th><span translate="metroquitoApp.statesHistory.date">Date</span></th>
+                                       <th><span translate="metroquitoApp.statesHistory.state">State</span></th>
+                                       <th><span translate="metroquitoApp.statesHistory.user">User</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="state in vm.statesHistories | orderBy: 'id'">
+                                        <td>{{state.date | date: vm.dateformat}}</td>
+                                        <td>{{state.state.value}}</td>
+                                        <td>{{state.user.firstName}} {{state.user.lastName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+
+    <div class="row pull-right" ng-if="vm.showCompleteIncidenceDetail">
+        <buttons class="btn btn-danger" ng-click="vm.exportIncidence()"
+            ng-if="vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeComplainId || vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeClaimId">
+            <span class="icon-button"><img src="content/images/exportar2.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.export"> Export</span>
+        </buttons>
+        <button type="submit"
+                ui-sref="incidence-social-resp"
+                class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+        <br><br>
+    </div>
+</div>

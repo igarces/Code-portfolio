@@ -1,0 +1,72 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myIncidenceStatesLabel" translate="metroquitoApp.incidenceStates.home.createOrEditLabel">Create or edit a Incidence States</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.incidenceStates.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.incidenceStates.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.incidenceStates.date" for="field_date">Date</label>
+                <div class="input-group">
+                    <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.incidenceStates.date" is-open="vm.datePickerOpenStatus.date"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.date.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.date.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="metroquitoApp.incidenceStates.active" for="field_active">Active</label>
+            <input type="checkbox" class="form-control" name="active" id="field_active"
+                    ng-model="vm.incidenceStates.active"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label translate="metroquitoApp.incidenceStates.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" ng-model="vm.incidenceStates.userId" ng-options="user.id as user.id for user in vm.users"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="metroquitoApp.incidenceStates.state" for="field_state">State</label>
+            <select class="form-control" id="field_state" name="state" ng-model="vm.incidenceStates.stateId" ng-options="incidenceStateNom.id as incidenceStateNom.id for incidenceStateNom in vm.incidencestatenoms"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="metroquitoApp.incidenceStates.incidenceSocialResps" for="field_incidenceSocialResps">Incidence Social Resps</label>
+            <select class="form-control" id="field_incidenceSocialResps" name="incidenceSocialResps" ng-model="vm.incidenceStates.incidenceSocialRespsId" ng-options="incidenceSocialResp.id as incidenceSocialResp.id for incidenceSocialResp in vm.incidencesocialresps"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="metroquitoApp.incidenceStates.incidenceTechnicals" for="field_incidenceTechnicals">Incidence Technicals</label>
+            <select class="form-control" id="field_incidenceTechnicals" name="incidenceTechnicals" ng-model="vm.incidenceStates.incidenceTechnicalsId" ng-options="incidenceTechnical.id as incidenceTechnical.id for incidenceTechnical in vm.incidencetechnicals"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

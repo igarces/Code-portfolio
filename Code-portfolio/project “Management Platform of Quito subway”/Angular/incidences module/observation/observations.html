@@ -1,0 +1,71 @@
+<div>
+    <div ng-if="vm.showCompleteObservationSearch">
+        <h2 translate="metroquitoApp.observation.home.title">Observations</h2>
+        <jhi-alert></jhi-alert>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-4 no-padding-left">
+                    <button class="btn btn-primary" ui-sref="observation.new" >
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span  translate="metroquitoApp.observation.home.createLabel">
+                        Create new Observation
+                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="date"><span translate="metroquitoApp.observation.observationDate">Date</span> <span ng-if="vm.showCompleteObservationSearch" class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="subject"><span translate="metroquitoApp.observation.observation">Observation</span> <span ng-if="vm.showCompleteObservationSearch" class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="authorId"><span translate="metroquitoApp.observation.responsible">Author</span> <span ng-if="vm.showCompleteObservationSearch" class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="observation in vm.observations track by observation.id">
+                    <td>{{observation.date | date : vm.dateformat}}</td>
+                    <td>{{observation.subject}}</td>
+                    <td>
+                        {{observation.author.firstName}} {{observation.author.lastName}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button title="Ver detalles" ng-click="vm.detailObservations(observation.id)"
+                                    class="btn btn-info btn-sm">
+                                <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                            </button>
+                            <button title="Modificar" ng-if="observation.authorId === vm.userLoggedId && vm.showObservationEdit"
+                                    ng-click="vm.editObservations(observation.id)"
+                                    class="btn btn-primary btn-sm">
+                                <span class="icon-button"><img src="content/images/modificar.png" class="img-responsive"></span>
+                            </button>
+                            <!--<button type="submit"-->
+                                    <!--ui-sref="observation.delete({id:observation.id})"-->
+                                    <!--class="btn btn-danger btn-sm">-->
+                                <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                                <!--<span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>-->
+                            <!--</button>-->
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!vm.observations.length">
+                    <td colspan="7" class="text-center">
+                        <span translate="global.messages.search.noResult">
+                            No Result
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center" ng-if="vm.showCompleteObservationSearch">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

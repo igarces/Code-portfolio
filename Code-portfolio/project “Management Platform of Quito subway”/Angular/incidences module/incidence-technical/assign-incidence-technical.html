@@ -1,0 +1,52 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" translate="metroquitoApp.incidenceTechnical.home.assignIncidence">Assign Incidence</h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.administrativeUnit" for="field_administrativeUnitResponsible"> Administrative Unit </label>
+                    <select class="form-control" id="field_administrativeUnitResponsible" name="administrativeUnitResponsible"
+                            ng-model="vm.incidenceTechnical.administrativeUnitResponsibleId"
+                            ng-change="vm.changeAdministrativeUnit()"
+                            ng-options="administrativeUnit.id as administrativeUnit.name for administrativeUnit in vm.administrativeunits">
+                        <option value="">{{vm.defaultOption}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.responsible" for="field_responsible">Incidence Responsible</label>
+                    <select class="form-control" id="field_responsible" name="responsible"
+                            required ng-model="vm.incidenceTechnical.responsibleId"
+                            ng-disabled="vm.responsibleReadOnly"
+                            ng-options="user.id as user.firstName +' '+ user.lastName for user in vm.users | filter : vm.filterUserAdministrativeUnit" >
+                        <option value="">{{vm.defaultOption}}</option>
+                    </select>
+                    <div ng-show="editForm.responsible.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.responsible.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit"
+                ng-disabled="editForm.$invalid"
+                class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.cancel()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

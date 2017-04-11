@@ -1,0 +1,113 @@
+
+<div ng-class="vm.showCompleteIncidenceDetail ? 'container-fluid' : 'container'">
+    <div class="row" ng-if="vm.showCompleteIncidenceDetail">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.incidenceTechnical.detail.title">Incidence Technical</span></h2>
+        </div>
+    </div>
+
+    <hr ng-if="vm.showCompleteIncidenceDetail">
+    <jhi-alert-error ng-if="vm.showCompleteIncidenceDetail"></jhi-alert-error>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" translate="metroquitoApp.incidenceTechnical.incidenceData" ng-click="vm.showHidePanel(1)">Incidence Data</div>
+        <div class="panel-body" ng-show="vm.showIncidenceData">
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.incidenceNumber">Incidence Number</label>
+                    <span>{{vm.incidenceTechnical.incidenceNumber}}</span>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.functionary">Functionary</label>
+                    {{vm.userFunctionaryName}}
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.administrativeUnitResponsible">Administrative Unit Responsible</label>
+                    {{vm.administrativeUnitName}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" translate="metroquitoApp.incidenceTechnical.subject">Subject</label>
+                        <span>{{vm.incidenceTechnical.subject}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" translate="metroquitoApp.incidenceTechnical.description">Incidence</label>
+                        <span>{{vm.incidenceTechnical.description}}</span>
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.responsible">Responsible</label>
+                    {{vm.incidenceTechnical.responsible.firstName}} {{vm.incidenceTechnical.responsible.lastName}}
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" translate="metroquitoApp.incidenceTechnical.photo">Photo</label>
+                    <a ng-if="vm.incidenceTechnical.photo" ng-click="vm.openFile(vm.incidenceTechnical.photoContentType, vm.incidenceTechnical.photo)">
+                        <img data-ng-src="{{'data:' + vm.incidenceTechnical.photoContentType + ';base64,' + vm.incidenceTechnical.photo}}" style="max-height: 30px;"/>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.showCompleteIncidenceDetail && vm.observations.length">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.incidenceTechnical.observationsList">States History</div>
+                <div class="panel-body">
+                    <div ng-include="'app/incidences/observation/observations.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.showCompleteIncidenceDetail">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.statesHistory.title">States History</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span translate="metroquitoApp.statesHistory.date">Date</span></th>
+                                <th><span translate="metroquitoApp.statesHistory.state">State</span></th>
+                                <th><span translate="metroquitoApp.statesHistory.user">User</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="state in vm.statesHistories | orderBy: 'id'">
+                                <td>{{state.date | date: vm.dateformat}}</td>
+                                <td>{{state.state.value}}</td>
+                                <td>{{state.user.firstName}} {{state.user.lastName}}</td>
+                            </tr>
+                            <tr ng-if="!vm.statesHistories.length">
+                                <td colspan="3" class="text-center">
+                                    <span translate="global.messages.search.noFilter">
+                                       No Result
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pull-right" ng-if="vm.showCompleteIncidenceDetail">
+        <buttons class="btn btn-danger" ng-click="vm.exportIncidence()">
+            <span class="icon-button"><img src="content/images/exportar2.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.export"> Export</span>
+        </buttons>
+        <button type="submit" ng-click="vm.back()"
+                class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+        <br><br>
+    </div>
+</div>

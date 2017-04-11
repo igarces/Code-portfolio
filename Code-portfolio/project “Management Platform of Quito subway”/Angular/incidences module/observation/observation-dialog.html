@@ -1,0 +1,130 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" ng-show="!vm.observation.id" translate="metroquitoApp.observation.home.createLabel">Create Observation</h4>
+        <h4 class="modal-title" ng-show="vm.observation.id" translate="metroquitoApp.observation.home.editLabel">Edit Observation</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.observation.subject" for="field_subject">Subject</label>
+                    <input type="text" class="form-control" name="subject" id="field_subject"
+                           ng-model="vm.observation.subject" maxlength="100"
+                           required ng-minlength="1" ng-maxlength="100" ng-pattern="vm.pattern" />
+                    <div ng-show="editForm.subject.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.subject.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subject.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                            This field cannot be longer than 100 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subject.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z]+\\.?">
+                            This field should follow pattern "[a-zA-Z]+\\.?".
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subject.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label translate="metroquitoApp.observation.author" for="field_author">Author</label>
+                <input type="text" class="form-control" name="field_author" id="field_author"
+                       ng-model="vm.userLogged" readonly />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.observation.description" for="field_description">Description</label>
+                    <textarea type="text" class="form-control" name="description" id="field_description"
+                           ng-model="vm.observation.description" maxlength="800"
+                           required ng-minlength="1" ng-maxlength="800" ng-pattern="vm.patternNewLine" />
+                    <div ng-show="editForm.description.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.description.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="800">
+                            This field cannot be longer than 800 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.description.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z]+\\.?">
+                            This field should follow pattern "[a-zA-Z]+\\.?".
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.subject.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group" ngf-drop ngf-change="vm.setEvidence($file, vm.observation)" ngf-pattern="'image/*'">
+                    <label class="control-label" translate="metroquitoApp.observation.evidence" for="field_evidence">Evidence</label>
+                    <div>
+                        <div ng-if="vm.observation.evidence">
+                            <img data-ng-src="{{'data:' + vm.observation.evidenceContentType + ';base64,' + vm.observation.evidence}}" style="max-height: 100px;"
+                                ng-if="vm.observation.evidenceContentType != 'application/pdf' &&
+                                    vm.observation.evidenceContentType != 'application/x-zip-compressed'"/>
+                            <img src="content/images/pdf2.png" class="img-responsive"
+                                 ng-if="vm.observation.evidenceContentType == 'application/pdf'"/>
+                            <img src="content/images/zip2.png" class="img-responsive"
+                                 ng-if="vm.observation.evidenceContentType == 'application/x-zip-compressed'"/>
+                        </div>
+
+                        <div ng-if="vm.observation.evidence" class="help-block clearfix">
+                            <span class="pull-left">{{vm.observation.evidenceContentType}}, {{vm.byteSize(vm.observation.evidence)}}</span>
+                            <button ng-click="vm.observation.evidence=null;vm.observation.evidenceContentType=null;"
+                                    class="btn btn-default btn-xs pull-right">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                        <button type="file" ngf-select class="btn btn-default btn-block" ngf-max-size="10MB"
+                                ngf-change="vm.setEvidence($file, vm.observation)" accept="image/*,.pdf,.zip" ngf-pattern="'image/*,.pdf,.zip'"
+                                translate="entity.action.addimage">
+                            Add image
+                        </button>
+                    </div>
+                    <input type="hidden" class="form-control" name="evidence" id="field_evidence"
+                           ng-model="vm.observation.evidence"
+                           required />
+                    <input type="hidden" class="form-control" name="evidenceContentType" id="field_evidenceContentType"
+                           ng-model="vm.observation.evidenceContentType" />
+                    <div ng-show="editForm.evidence.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.evidence.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="help-block"
+                           translate="global.messages.info.fileSize">
+                            the permitted size is up to 10 MB.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

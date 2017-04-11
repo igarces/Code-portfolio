@@ -1,0 +1,38 @@
+
+<div>
+    <h2><span translate="metroquitoApp.incidenceStates.detail.title">Incidence States</span> {{vm.incidenceStates.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="metroquitoApp.incidenceStates.date">Date</span></dt>
+        <dd>
+            <span>{{vm.incidenceStates.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.incidenceStates.active">Active</span></dt>
+        <dd>
+            <span>{{vm.incidenceStates.active}}</span>
+        </dd>
+        <dt><span translate="metroquitoApp.incidenceStates.user">User</span></dt>
+        <dd>
+            {{vm.incidenceStates.userId}}
+        </dd>
+        <dt><span translate="metroquitoApp.incidenceStates.state">State</span></dt>
+        <dd>
+            <a ui-sref="incidence-state-nom-detail({id:vm.incidenceStates.stateId})">{{vm.incidenceStates.stateId}}</a>
+        </dd>
+        <dt><span translate="metroquitoApp.incidenceStates.incidenceSocialResps">Incidence Social Resps</span></dt>
+        <dd>
+            <a ui-sref="incidence-social-resp-detail({id:vm.incidenceStates.incidenceSocialRespsId})">{{vm.incidenceStates.incidenceSocialRespsId}}</a>
+        </dd>
+        <dt><span translate="metroquitoApp.incidenceStates.incidenceTechnicals">Incidence Technicals</span></dt>
+        <dd>
+            <a ui-sref="incidence-technical-detail({id:vm.incidenceStates.incidenceTechnicalsId})">{{vm.incidenceStates.incidenceTechnicalsId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

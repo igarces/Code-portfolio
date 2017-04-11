@@ -1,0 +1,548 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myReportCreateLabel" ng-if="!vm.showEditLabel"
+            translate="metroquitoApp.report.home.createLabel">Add Report</h4>
+        <h4 class="modal-title" id="myReportEditLabel" ng-if="vm.showEditLabel"
+            translate="metroquitoApp.report.home.editLabel">Edit Report</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert></jhi-alert>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.report.visitReportData" ng-click="vm.showHidePanel(1)">Visit Report Data</div>
+            <div class="panel-body" ng-show="vm.showVisitReportData">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group" ng-if="vm.report.id">
+                            <label class="control-label" translate="metroquitoApp.report.reportNumber" for="field_reportNumber">Report
+                                Number</label>
+                            <input type="text" class="form-control" name="reportNumber" id="field_reportNumber"
+                                   ng-model="vm.report.reportNumber" readonly/>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label class="control-label" translate="metroquitoApp.report.reportDate" for="field_reportDate">Report Date</label>
+                            <input id="field_reportDate" type="text" class="form-control" name="reportDate"
+                                   uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.report.reportDate" readonly/>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label translate="metroquitoApp.report.visitSite" for="field_visitSite">Visit Site</label>
+                        <select class="form-control" id="field_visitSite" name="visitSite" ng-model="vm.report.visitSiteId"
+                            ng-change="vm.changeVisitSite()"
+                            required ng-options="visitSiteNom.id as visitSiteNom.value for visitSiteNom in vm.visitsitenoms">
+                            <option value="">{{vm.defaultOption}}</option>
+                        </select>
+                        <div ng-show="editForm.visitSite.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.visitSite.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div ng-if="vm.report.visitSiteId === vm.visitSiteStationId">
+                            <label translate="metroquitoApp.report.station" for="field_station">Station</label>
+                            <select class="form-control" id="field_station" name="station" ng-model="vm.report.stationId"
+                                ng-change="vm.changeStation()"
+                                required ng-options="station.id as station.name for station in vm.differentSites | filter: vm.filterStation">
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.station.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.station.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div ng-if="vm.report.visitSiteId === vm.visitSiteTunnelSectionId">
+                            <label translate="metroquitoApp.report.betweenTunnel" for="field_betweenTunnel">Between Tunnel</label>
+                            <select class="form-control" id="field_betweenTunnel" name="betweenTunnel"
+                                required ng-model="vm.report.stretchTunnelId" ng-change="vm.changeStretchTunnel()"
+                                ng-options="betweenTunnel.id as betweenTunnel.name for betweenTunnel in vm.differentSites | filter: vm.filterBetweenTunnel">
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                            <div ng-show="editForm.betweenTunnel.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.betweenTunnel.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label translate="metroquitoApp.report.visitor" for="field_visitor">Visitor</label>
+                        <input type="text" class="form-control" name="visitor" id="field_visitor"
+                               ng-model="vm.currentUser" value="vm.report.visitorId" disabled />
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label class="control-label" translate="metroquitoApp.report.visitStartDate" for="field_visitStartDate">Visit
+                            Start Date</label>
+                        <div class="input-group">
+                            <input id="field_visitStartDate" type="text" class="form-control" name="visitStartDate"
+                                   uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.report.visitStartDate"
+                                   datepicker-options="vm.visitDateOption"
+                                   is-open="vm.datePickerOpenStatus.visitStartDate" required readonly/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vm.openCalendar('visitStartDate')"><i
+                                    class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                        <div ng-show="editForm.visitStartDate.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.visitStartDate.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div ng-if="vm.report.visitSiteId === vm.visitSiteTunnelSectionId">
+                            <label translate="metroquitoApp.report.specialSite" for="field_specialSite">Special Site</label>
+                            <select class="form-control" id="field_specialSite" name="specialSite"
+                                    ng-disabled="!vm.report.stretchTunnelId"
+                                    ng-model="vm.report.specialSiteId"
+                                    ng-change="vm.changeSpecialSite()"
+                                    ng-options="specialSite.id as specialSite.name for specialSite in vm.differentSites | filter: vm.filterSpecialSite">
+                                <option value="">{{vm.defaultOption}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label translate="metroquitoApp.report.administrativeUnit" for="field_administrativeUnit">Administrative
+                            Unit</label>
+                        <input type="text" class="form-control" name="administrativeUnit" id="field_administrativeUnit" style="margin-top: 19px;"
+                               ng-model="vm.report.administrativeUnitName" disabled />
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div class="col-md-6">
+                            <label class="control-label" translate="metroquitoApp.report.startTime" for="field_startTime">Start
+                                Time</label>
+                            <div id="field_startTime" name="startTime" uib-timepicker ng-model="vm.report.startTime"
+                                 required show-meridian="false"></div>
+                            <div ng-show="editForm.startTime.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.startTime.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="control-label" translate="metroquitoApp.report.endTime" for="field_endTime">End
+                                Time</label>
+                            <div id="field_endTime" name="endTime" uib-timepicker ng-model="vm.report.endTime"
+                                 required show-meridian="false"></div>
+                            <div ng-show="editForm.endTime.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.endTime.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label translate="metroquitoApp.report.activity" for="field_activity">Activity</label>
+                        <select class="form-control" id="field_activity" name="activity" ng-model="vm.report.activityId" style="margin-top: 19px;"
+                            required ng-options="activity.id as activity.name for activity in vm.activities | filter : vm.filterActivityByAdminUnit">
+                            <option value="">{{vm.defaultOption}}</option>
+                        </select>
+                        <div ng-show="editForm.activity.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.activity.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <label translate="metroquitoApp.report.subActivity" for="field_subActivity">Sub Activity</label>
+                        <select class="form-control" id="field_subActivity" name="subActivity" style="margin-top: 19px;"
+                                ng-model="vm.report.subActivityId" ng-disabled="!vm.report.activityId"
+                                ng-options="activity.id as activity.name for activity in vm.activities | filter : vm.filterSubActivity">
+                            <option value="">{{vm.defaultOption}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label translate="metroquitoApp.report.map" for="map">Map</label>
+                        <div id="map">
+                            <ng-map zoom="11" center="-0.1936, -78.4899" map-type-id="HYBRID">
+                                <marker position="{{vm.pos.lat}}, {{vm.pos.lng}}"></marker>
+                            </ng-map>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-9">
+                        <label class="control-label" translate="metroquitoApp.report.scopeWork" for="field_scopeWork">Scope
+                            Work</label>
+                        <textarea type="text" class="form-control" name="scopeWork" id="field_scopeWork"
+                                  ng-model="vm.report.scopeWork" rows="4" maxlength="100000"
+                                  required ng-minlength="1" ng-maxlength="100000" ng-pattern="vm.patternNewLine"/>
+                        <div ng-show="editForm.scopeWork.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.scopeWork.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.scopeWork.$error.maxlength" translate="entity.validation.maxlength"
+                               translate-value-max="100000">
+                                This field cannot be longer than 100000 characters.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.scopeWork.$error.pattern" translate="entity.validation.pattern"
+                               translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                            </p>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group col-md-3">-->
+                        <!--<label class="control-label" translate="metroquitoApp.report.percentageAdvance"-->
+                               <!--for="field_percentageAdvance">Percentage Advance</label>-->
+                        <!--<input type="number" class="form-control" name="percentageAdvance" id="field_percentageAdvance"-->
+                               <!--ng-model="vm.report.percentageAdvance" min="0" max="100" required />-->
+                        <!--<div ng-show="editForm.percentageAdvance.$invalid">-->
+                            <!--<p class="help-block"-->
+                               <!--ng-show="editForm.percentageAdvance.$error.required" translate="entity.validation.required">-->
+                                <!--This field is required.-->
+                            <!--</p>-->
+                            <!--<p class="help-block"-->
+                               <!--ng-show="editForm.percentageAdvance.$error.number" translate="entity.validation.number">-->
+                            <!--</p>-->
+                            <!--<p class="help-block"-->
+                               <!--ng-show="editForm.percentageAdvance.$error.max" translate="entity.validation.max"-->
+                               <!--translate-value-max="100">-->
+                            <!--</p>-->
+                            <!--<p class="help-block"-->
+                               <!--ng-show="editForm.percentageAdvance.$error.min" translate="entity.validation.min"-->
+                               <!--translate-value-min="0">-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="form-group col-md-3">
+                        <label class="control-label" translate="metroquitoApp.report.responsibleWork"
+                               for="field_responsibleWork">Responsible Work</label>
+                        <input type="text" class="form-control" name="responsibleWork" id="field_responsibleWork"
+                               ng-model="vm.report.responsibleWork" maxlength="50"
+                               ng-minlength="1" ng-maxlength="50" ng-pattern="vm.patternWords"/>
+                        <div ng-show="editForm.responsibleWork.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.responsibleWork.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.responsibleWork.$error.maxlength" translate="entity.validation.maxlength"
+                               translate-value-max="50">
+                                This field cannot be longer than 50 characters.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.responsibleWork.$error.pattern" translate="entity.validation.letterSpacesPattern"
+                               translate-value-pattern="vm.pattern">
+                                This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label" translate="metroquitoApp.report.comment"
+                               for="field_comment">Comment</label>
+                        <textarea type="text" class="form-control" name="comment" id="field_comment"
+                                  ng-model="vm.report.comment" rows="4" maxlength="100000"
+                                  required ng-minlength="1" ng-maxlength="100000" ng-pattern="vm.patternNewLine"/>
+                        <div ng-show="editForm.comment.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.comment.$error.required" translate="entity.validation.required">
+                                This field is required.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.comment.$error.maxlength" translate="entity.validation.maxlength"
+                               translate-value-max="100000">
+                                This field cannot be longer than 100000 characters.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.comment.$error.pattern" translate="entity.validation.pattern"
+                               translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h4 translate="metroquitoApp.report.photos.title">Add photos</h4>
+                        <hr>
+
+                        <div class="alerts" ng-cloak="" ng-if="vm.showErrorDocMessage">
+                            <uib-alert ng-cloak="" type="danger" close="vm.closeErrorDocMessage()">
+                                <pre translate="metroquitoApp.report.photos.repeatedFile">repeated file</pre>
+                            </uib-alert>
+                        </div>
+
+                        <div class="form-group col-md-3" ngf-drop
+                             ngf-change="vm.setPhoto($file)" ngf-pattern="'image/*'">
+                            <label class="control-label" translate="metroquitoApp.report.photos.name" for="field_photo">Photo</label>
+                            <div>
+                                <img data-ng-src="{{'data:' + vm.photoContentType + ';base64,' + vm.photo}}"
+                                     style="max-height: 100px;" ng-if="vm.photo"/>
+                                <div ng-if="vm.photo" class="help-block clearfix">
+                                    <span class="pull-left">{{vm.photoContentType}}, {{vm.byteSize(vm.photo)}}</span>
+                                    <button ng-click="vm.photo=null;vm.photoContentType=null;"
+                                            class="btn btn-default btn-xs pull-right">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                                <button type="file" ngf-select class="btn btn-default btn-block" ngf-max-size="10MB"
+                                        ngf-change="vm.setPhoto($file)" accept="image/*" ngf-pattern="'image/*'"
+                                        translate="entity.action.addimage">
+                                    Add image
+                                </button>
+                            </div>
+                            <input type="hidden" class="form-control" name="photo" id="field_photo"
+                                   ng-model="vm.photo" required />
+                            <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                                   ng-model="vm.photoContentType"/>
+                            <div ng-show="editForm.photo.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.photo.$error.required" translate="entity.validation.required">
+                                </p>
+                            </div>
+                            <div>
+                                <p class="help-block"
+                                   translate="global.messages.info.fileSize">
+                                    the permitted size is up to 10 MB.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <label class="control-label" translate="metroquitoApp.report.photos.description"
+                                   for="field_attachedDescripcion">File description Number</label>
+                            <input type="text" class="form-control" name="attachedDescripcion"
+                                   id="field_attachedDescripcion" required
+                                   ng-model="vm.photoDescription" maxlength="100"
+                                   ng-minlength="1" ng-maxlength="100" pattern="{{vm.pattern}}"/>
+                            <div ng-show="editForm.attachedDescripcion.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.attachedDescripcion.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.attachedDescripcion.$error.maxlength"
+                                   translate="entity.validation.maxlength"
+                                   translate-value-max="100">
+                                    This field cannot be longer than 100 characters.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.attachedDescripcion.$error.pattern"
+                                   translate="entity.validation.pattern"
+                                   translate-value-pattern="vm.pattern">
+                                    This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <button type="button"
+                                ng-disabled="!vm.photoContentType || !vm.photo || !vm.photoDescription || vm.attacheddocuments.length == 4"
+                                class="btn btn-danger pull-right" ng-click="vm.addPhoto()">
+                            <span class="icon-button"><img src="content/images/adjuntar.png" class="img-responsive"></span>&nbsp;<span
+                            translate="metroquitoApp.report.photos.upload">Attach</span>
+                        </button>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                        <h4 translate="metroquitoApp.report.photos.list">File list</h4>
+
+                        <div class="table-responsive">
+                            <table class="jh-table table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><span translate="metroquitoApp.report.photos.name">File</span></th>
+                                        <th><span translate="metroquitoApp.report.photos.description">Description file</span></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="photo in vm.attacheddocuments track by $index ">
+                                        <td>{{photo.fileName}}</td>
+                                        <td>{{photo.description}}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="button" ng-click="vm.openFile(photo.contentFileContentType, photo.contentFile)"
+                                                        class="btn btn-danger btn-sm">
+                                                    <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                                                </button>
+                                                <button class="btn btn-danger btn-sm" ng-click="vm.deletePhoto($index)" type="button">
+                                                    <span class="icon-button"><img src="content/images/eliminar.png" class="img-responsive"></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-if="!vm.attacheddocuments.length">
+                                        <td colspan="3" class="text-center">
+                                            <span translate="global.messages.search.noFilter">No Result</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">
+                        <label class="control-label" translate="metroquitoApp.report.hasIncidences"></label>
+                        <div style="border: #d5d5d5 1px solid; padding: 7px;">
+
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="hasIncidences" id="field_hasIncidence" required
+                                           ng-model="vm.report.hasIncidences" ng-value="true"/>
+                                    <span translate="entity.action.yes" for="field_hasIncidence">Yes</span>
+                                </label>
+                            </div>
+
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="noHasIncidences" id="field_noHasIndicence" required
+                                           ng-model="vm.report.hasIncidences" ng-value="false"/>
+                                    <span translate="entity.action.no" for="field_noHasIndicence">No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.report.hasIncidences">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12 no-padding-left">
+                        <button class="btn btn-danger pull-right" type="button"  ng-click="vm.addIncidenceTechnical()" >
+                            <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                            <span  translate="metroquitoApp.report.incidence.create">
+                        Create new Incidence Technical
+                    </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="metroquitoApp.report.incidence.list" ng-click="vm.showHidePanel(2)">Incidence Technical List</div>
+                <div class="panel-body" ng-show="vm.showIncidenceTechnical">
+
+                    <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span translate="metroquitoApp.report.incidence.incidenceNumber">Incidence Number</span></th>
+                                <th><span translate="metroquitoApp.report.incidence.startDate">Start Date</span></th>
+                                <th><span translate="metroquitoApp.report.incidence.state">State</span></th>
+                                <th><span translate="metroquitoApp.report.incidence.responsible">Responsible</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="incidenceTechnical in vm.incidenceTechnicals track by $index">
+                                <td>{{incidenceTechnical.incidenceNumber}}</td>
+                                <td>{{vm.report.visitStartDate | date:'dd/MM/yyyy' }}</td>
+                                <td>
+                                    {{vm.getIncidenceState(incidenceTechnical.incidenceStateId)}}
+                                </td>
+                                <td>
+                            <span ng-if="incidenceTechnical.responsible">
+                                {{incidenceTechnical.responsible.firstName}} {{incidenceTechnical.responsible.lastName}}
+                            </span>
+                                    <span ng-if="!incidenceTechnical.responsible">
+                                {{incidenceTechnical.responsibleId}}
+                            </span>
+                                </td>
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="button" ng-click="vm.detailIncidenceTechnical(incidenceTechnical, $index)"
+                                                class="btn btn-danger btn-sm" title="Ver detalles">
+                                <span class="icon-button"><img src="content/images/ver.png"
+                                                               class="img-responsive"></span>
+                                        </button>
+                                        <button type="button" ng-if="incidenceTechnical.incidenceStateId == vm.incidenceStateOpenId"
+                                                ng-click="vm.editIncidenceTechnical(incidenceTechnical, $index)"
+                                                class="btn btn-danger btn-sm" title="Modificar">
+                                <span class="icon-button"><img src="content/images/modificar.png"
+                                                               class="img-responsive"></span>
+                                        </button>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="!vm.incidenceTechnicals.length">
+                                <td colspan="5" class="text-center">
+                                <span translate="global.messages.search.noFilter">
+                                   No Result
+                                </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" ng-click="vm.definitive(true)" class="btn btn-danger"
+                ng-disabled="editForm.visitStartDate.$invalid || editForm.visitSite.$invalid || editForm.station.$invalid ||
+                editForm.betweenTunnel.$invalid || editForm.startTime.$invalid || editForm.specialSite.$invalid ||
+                editForm.endTime.$invalid || editForm.activity.$invalid || editForm.subActivity.$invalid || editForm.scopeWork.$invalid ||
+                editForm.responsibleWork.$invalid || editForm.comment.$invalid ||
+                (vm.report.hasIncidences && !vm.incidenceTechnicals.length) || !vm.attacheddocuments.length">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.save">Save</span>
+        </button>
+        <button type="submit" ng-click="vm.definitive(false)" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/guardar2.png" class="img-responsive"></span>&nbsp;<span
+            translate="metroquitoApp.report.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
+        </button>
+
+    </div>
+</form>

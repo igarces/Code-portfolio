@@ -1,0 +1,431 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="mySocialProfileLabel" ng-show="!vm.socialProfile.id"
+            translate="metroquitoApp.socialProfile.home.createLabel">Create a Social Profile</h4>
+        <h4 class="modal-title" id="mySocialProfileLabelEdit" ng-show="vm.socialProfile.id"
+            translate="metroquitoApp.socialProfile.home.editLabel">Edit a Social Profile</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           ng-model="vm.socialProfile.name" maxlength="50"
+                           required ng-minlength="1" ng-maxlength="50" ng-pattern="vm.patternWords" />
+                    <div ng-show="editForm.name.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.name.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.name.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                            This field cannot be longer than 50 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.name.$error.pattern" translate="entity.validation.letterSpacesPattern">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.lastName" for="field_lastName">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" id="field_lastName"
+                           ng-model="vm.socialProfile.lastName" maxlength="50"
+                           required ng-minlength="1" ng-maxlength="50" ng-pattern="vm.patternWords" />
+                    <div ng-show="editForm.lastName.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.lastName.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.lastName.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                            This field cannot be longer than 50 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.lastName.$error.pattern" translate="entity.validation.letterSpacesPattern">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label translate="metroquitoApp.socialProfile.sex" for="field_sex">Sex</label>
+                    <select class="form-control" required id="field_sex" name="sex" ng-model="vm.socialProfile.sexId" ng-options="gender.id as gender.name for gender in vm.genders">
+                        <option value="">{{vm.defaultOption}}</option>
+                    </select>
+
+                    <div ng-show="editForm.sex.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.sex.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.identityCard" for="field_identityCard">identityCard</label>
+                    <input type="text" class="form-control" name="identityCard" id="field_identityCard"
+                           ng-model="vm.socialProfile.identityCard" maxlength="10"
+                           required ng-minlength="10" ng-maxlength="10" ng-pattern="vm.patternOnlyNumbers" />
+                    <div ng-show="editForm.identityCard.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.identityCard.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.identityCard.$error.minlength" translate="entity.validation.requiredLength" translate-value-min="10">
+                            This field requires 10 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.identityCard.$error.pattern" translate="entity.validation.numberPattern">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.conventionalPhone" for="field_conventionalPhone">Conventional Phone</label>
+                    <input type="text" class="form-control" name="conventionalPhone" id="field_conventionalPhone"
+                           ng-model="vm.socialProfile.conventionalPhone" maxlength="20"
+                           ng-minlength="1" ng-maxlength="20" ng-pattern="vm.patternNumbers" />
+                    <div ng-show="editForm.conventionalPhone.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.conventionalPhone.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="20">
+                            This field cannot be longer than 20 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.conventionalPhone.$error.pattern" translate="entity.validation.phoneNumberPattern">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.cellPhone" for="field_cellPhone">Cell Phone</label>
+                    <input type="text" class="form-control" name="cellPhone" id="field_cellPhone"
+                           ng-model="vm.socialProfile.cellPhone" maxlength="20"
+                           ng-minlength="1" ng-maxlength="20" ng-pattern="vm.patternNumbers" />
+                    <div ng-show="editForm.cellPhone.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.cellPhone.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="20">
+                            This field cannot be longer than 20 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.cellPhone.$error.pattern" translate="entity.validation.phoneNumberPattern">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.email" for="field_email">Email</label>
+                    <input type="email" class="form-control" name="email" id="field_email"
+                           ng-model="vm.socialProfile.email" maxlength="30"
+                           ng-minlength="1" ng-maxlength="30" ng-pattern="vm.patternEmail"/>
+                    <div ng-show="editForm.email.$invalid && editForm.email.$dirty">
+                        <p class="help-block"
+                           ng-show="editForm.email.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.email.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="30">
+                            This field cannot be longer than 30 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.email.$error.email || editForm.email.$error.pattern" translate="entity.validation.emailFormat">
+                            e-mail field is invalid.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.address" for="field_address">Address</label>
+                    <input type="text" class="form-control" name="address" id="field_address"
+                           ng-model="vm.socialProfile.address" maxlength="100"
+                           required ng-minlength="1" ng-maxlength="100" ng-pattern="vm.pattern" />
+                    <div ng-show="editForm.address.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.address.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.address.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                            This field cannot be longer than 100 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.address.$error.pattern" translate="entity.validation.pattern">
+                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" translate="metroquitoApp.socialProfile.predio" for="field_predio">Predio</label>
+                    <input type="text" class="form-control" name="predio" id="field_predio"
+                           ng-model="vm.socialProfile.predio" maxlength="10"
+                           ng-minlength="1" ng-maxlength="10" ng-pattern="vm.patternOnlyNumbers" />
+                    <div ng-show="editForm.predio.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.predio.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="10">
+                            This field cannot be longer than 10 characters.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.predio.$error.pattern" translate="entity.validation.numberPattern">
+                            This field should follow pattern "[0-9]+".
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="metroquitoApp.socialProfile.affectedMedium">Affected Environment</div>
+                    <div class="panel-body">
+                        <div class="col-md-3">
+
+                            <p class="help-block"
+                               ng-show="!vm.socialProfile.affectedHouse && !vm.socialProfile.affectedBusiness && !vm.otherCheck"
+                               translate="metroquitoApp.socialProfile.requiredAffectedMedium">
+                                You must select at least one affected medium.
+                            </p>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="affectedHouse" id="field_affectedHouse"
+                                           ng-model="vm.socialProfile.affectedHouse" ng-change="vm.changeAffectedEnvironmentCheck()"/>
+                                    <span class="control-label" translate="metroquitoApp.socialProfile.affectedHouse" for="field_affectedHouse">Affected House</span>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="affectedBusiness" id="field_affectedBusiness"
+                                           ng-model="vm.socialProfile.affectedBusiness" ng-change="vm.changeAffectedEnvironmentCheck()"/>
+                                    <span class="control-label" translate="metroquitoApp.socialProfile.affectedBusiness" for="field_affectedBusiness">Affected Business</span>
+                                </label>
+                            </div>
+                            <div class="checkbox" id="div_field_others">
+                                <label>
+                                    <input type="checkbox" name="others" id="field_others"
+                                           ng-model="vm.otherCheck" ng-change="vm.changeAffectedEnvironmentCheck()"/>
+                                    <span class="control-label" translate="metroquitoApp.socialProfile.othersAffected" for="field_others">Others</span>
+                                </label>
+                            </div>
+                            <div class="form-group" ng-if="vm.otherCheck">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.othersAffected" for="field_othersAffected">Others Affected</label>
+                                <input type="text" class="form-control" name="othersAffected" id="field_othersAffected"
+                                       ng-model="vm.socialProfile.othersAffected" maxlength="50"
+                                       required ng-minlength="1" ng-maxlength="50" ng-pattern="vm.pattern" />
+                                <div ng-show="editForm.othersAffected.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.othersAffected.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.othersAffected.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                                        This field cannot be longer than 50 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.othersAffected.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.othersAffected.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-if="vm.socialProfile.affectedBusiness || vm.socialProfile.affectedHouse">
+                            <div class="form-group">
+                                <label translate="metroquitoApp.socialProfile.infrastructureType" for="field_infrastructureType">Infrastructure Type</label>
+                                <select class="form-control" required id="field_infrastructureType" name="infrastructureType" ng-model="vm.socialProfile.infrastructureTypeId" ng-change="vm.changeInfrastructureType()"
+                                        ng-options="infrastructureTypeNom.id as infrastructureTypeNom.value for infrastructureTypeNom in vm.infrastructuretypenoms">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+
+                                <div ng-show="editForm.infrastructureType.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.infrastructureType.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                            <div ng-if="vm.socialProfile.infrastructureTypeId == vm.infrastructureTypeOtherId" class="hidden-sm hidden-xs" style="padding-top: 23px;"></div>
+                            <div class="form-group" ng-if="vm.socialProfile.infrastructureTypeId == vm.infrastructureTypeOtherId">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.otherInfrastructure" for="field_otherInfrastructure">Other Infrastructure</label>
+                                <input type="text" class="form-control" name="otherInfrastructure" id="field_otherInfrastructure"
+                                       ng-model="vm.socialProfile.otherInfrastructure" maxlength="50"
+                                       required ng-minlength="1" ng-maxlength="50" ng-pattern="vm.pattern" />
+                                <div ng-show="editForm.otherInfrastructure.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.otherInfrastructure.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.otherInfrastructure.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                                        This field cannot be longer than 50 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.otherInfrastructure.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.otherInfrastructure.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-if="vm.socialProfile.affectedBusiness || vm.socialProfile.affectedHouse">
+                            <div class="form-group">
+                                <label translate="metroquitoApp.socialProfile.propertyType" for="field_propertyType">Property Type</label>
+                                <select class="form-control" required id="field_propertyType" name="propertyType" ng-model="vm.socialProfile.propertyTypeId" ng-change="vm.changePropertyType()"
+                                        ng-options="propertyTypeNom.id as propertyTypeNom.value for propertyTypeNom in vm.propertytypenoms">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                                <div ng-show="editForm.propertyType.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.propertyType.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                            <div ng-if="vm.socialProfile.propertyTypeId == vm.propertyTypeOtherId" class="hidden-sm hidden-xs" style="padding-top: 23px;"></div>
+                            <div class="form-group" ng-if="vm.socialProfile.propertyTypeId == vm.propertyTypeOtherId" >
+                                <label class="control-label" translate="metroquitoApp.socialProfile.otherProperty" for="field_otherProperty">Other Property</label>
+                                <input type="text" class="form-control" name="otherProperty" id="field_otherProperty"
+                                       ng-model="vm.socialProfile.otherProperty" maxlength="50"
+                                       required ng-minlength="1" ng-maxlength="50" ng-pattern="vm.pattern" />
+                                <div ng-show="editForm.otherProperty.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.otherProperty.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.otherProperty.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                                        This field cannot be longer than 50 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.otherProperty.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.otherProperty.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-if="vm.socialProfile.affectedBusiness">
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.businessType" for="field_businessType">Business Type</label>
+                                <input type="text" class="form-control" name="businessType" id="field_businessType"
+                                       ng-model="vm.socialProfile.businessType" maxlength="70"
+                                       required ng-minlength="1" ng-maxlength="70" ng-pattern="vm.pattern" />
+                                <div ng-show="editForm.businessType.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.businessType.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.businessType.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="70">
+                                        This field cannot be longer than 70 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.businessType.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.businessType.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                            <div ng-if="!editForm.businessType.$invalid" class="hidden-sm hidden-xs" style="padding-top: 23px;"></div>
+                            <div class="form-group">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.businessName" for="field_businessName">Business Name</label>
+                                <input type="text" class="form-control" name="businessName" id="field_businessName"
+                                       ng-model="vm.socialProfile.businessName" maxlength="70"
+                                       required ng-minlength="1" ng-maxlength="70" ng-pattern="vm.pattern" />
+                                <div ng-show="editForm.businessName.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.businessName.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                        This field is required to be at least 1 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.businessName.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="70">
+                                        This field cannot be longer than 70 characters.
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.businessName.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                    <p class="help-block"
+                                       ng-show="editForm.businessName.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="form-group">-->
+            <!--<label class="control-label" translate="metroquitoApp.socialProfile.locationLongitude" for="field_locationLongitude">Location Longitude</label>-->
+            <!--<input type="number" class="form-control" name="locationLongitude" id="field_locationLongitude"-->
+                    <!--ng-model="vm.socialProfile.locationLongitude"-->
+                     <!--/>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="control-label" translate="metroquitoApp.socialProfile.locationLatitude" for="field_locationLatitude">Location Latitude</label>-->
+            <!--<input type="number" class="form-control" name="locationLatitude" id="field_locationLatitude"-->
+                    <!--ng-model="vm.socialProfile.locationLatitude"-->
+                     <!--/>-->
+        <!--</div>-->
+
+        <!--<div class="form-group">-->
+            <!--<label translate="metroquitoApp.socialProfile.cardCopy" for="field_cardCopy">Card Copy</label>-->
+            <!--<select class="form-control" id="field_cardCopy" name="cardCopy" ng-model="vm.socialProfile.cardCopyId" ng-options="attachedDocument.id as attachedDocument.id for attachedDocument in vm.cardcopies | orderBy:'id'">-->
+                <!--<option value=""></option>-->
+            <!--</select>-->
+        <!--</div>-->
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit"
+                ng-disabled="editForm.$invalid || !(vm.socialProfile.affectedHouse || vm.socialProfile.affectedBusiness || vm.otherCheck) || vm.isSaving"
+                class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;
+            <span translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

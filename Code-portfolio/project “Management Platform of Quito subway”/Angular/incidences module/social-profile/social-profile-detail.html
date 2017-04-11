@@ -1,0 +1,138 @@
+<div class="container-fluid">
+    <div class="row" ng-if="vm.showCompleteDetail">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.socialProfile.detail.title">Social Profile</span></h2>
+        </div>
+    </div>
+
+    <hr ng-if="vm.showCompleteDetail">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.name">Name</label>
+            <span>{{vm.socialProfile.name}}</span>
+        </div>
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.lastName">Last Name</label>
+            <span>{{vm.socialProfile.lastName}}</span>
+        </div>
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.sex">Sex</label>
+            {{vm.socialProfileSexValue}}
+        </div>
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.identityCard">Identity Card</label>
+            <span>{{vm.socialProfile.identityCard}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.conventionalPhone">Conventional
+                Phone</label>
+            <span>{{vm.socialProfile.conventionalPhone}}</span>
+        </div>
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.cellPhone">Cell Phone</label>
+            <span>{{vm.socialProfile.cellPhone}}</span>
+        </div>
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.email">Email</label>
+            <span>{{vm.socialProfile.email}}</span>
+        </div>
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.address">Address</label>
+            <span>{{vm.socialProfile.address}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label class="control-label" translate="metroquitoApp.socialProfile.predio">Predio</label>
+            <span>{{vm.socialProfile.predio}}</span>
+        </div>
+    </div>
+
+    <div class="container-fluid" id="divContainer_affectedMedium">
+        <div class="row">
+            <label class="control-label" translate="metroquitoApp.socialProfile.affectedMediumP" for="div_affectedMedium">Affected Medium</label>
+            <div class="col-md-12" id="div_affectedMedium">
+
+                <div class="col-md-3">
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="affectedHouse" id="field_affectedHouse"
+                                   ng-model="vm.socialProfile.affectedHouse" disabled="true"/>
+                            <span translate="metroquitoApp.socialProfile.affectedHouse">Affected House</span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="affectedBusiness" id="field_affectedBusiness"
+                                   ng-model="vm.socialProfile.affectedBusiness" disabled="true"/>
+                            <span translate="metroquitoApp.socialProfile.affectedBusiness">Affected Business</span>
+                        </label>
+                    </div>
+                    <div class="checkbox" id="div_field_others">
+                        <label>
+                            <input type="checkbox" name="others" id="field_others"
+                                   ng-model="vm.otherCheck" disabled="true"/>
+                            <span translate="metroquitoApp.socialProfile.othersAffected">Others</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group" ng-if="vm.otherCheck">
+                        <label class="control-label" translate="metroquitoApp.socialProfile.othersAffected">Others Affected</label>
+                        <span>{{vm.socialProfile.othersAffected}}</span>
+                    </div>
+                </div>
+                <div class="col-md-3 no-padding">
+                    <div ng-if="vm.socialProfile.affectedBusiness || vm.socialProfile.affectedHouse">
+                        <div class="form-group">
+                            <label class="control-label" translate="metroquitoApp.socialProfile.infrastructureType">Infrastructure Type</label>
+                            {{vm.socialProfileInfrastructure}}
+                        </div>
+                        <div class="form-group" ng-if="vm.socialProfile.otherInfrastructure != null">
+                            <label class="control-label" translate="metroquitoApp.socialProfile.otherInfrastructure">Other Infrastructure</label>
+                            <span>{{vm.socialProfile.otherInfrastructure}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div ng-if="vm.socialProfile.affectedBusiness || vm.socialProfile.affectedHouse">
+                        <div class="form-group">
+                            <label class="control-label" translate="metroquitoApp.socialProfile.propertyType">Property Type</label>
+                            {{vm.socialProfileProperty}}
+                        </div>
+                        <div class="form-group" ng-if="vm.socialProfile.otherProperty != null">
+                            <label class="control-label" translate="metroquitoApp.socialProfile.otherProperty">Other Property</label>
+                            <span>{{vm.socialProfile.otherProperty}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div ng-if="vm.socialProfile.affectedBusiness">
+                        <div class="form-group">
+                            <label class="control-label" translate="metroquitoApp.socialProfile.businessType">Business Type</label>
+                            {{vm.socialProfile.businessType}}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" translate="metroquitoApp.socialProfile.businessName">Business Name</label>
+                            <span>{{vm.socialProfile.businessName}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.showCompleteDetail">
+        <button type="submit"
+                onclick="window.history.back()"
+                class="btn btn-danger pull-right">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+</div>

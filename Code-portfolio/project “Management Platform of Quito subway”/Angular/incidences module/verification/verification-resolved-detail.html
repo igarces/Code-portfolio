@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="row" ng-if="vm.showCompleteDetail">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.verification.detail.title">Detail of Verification</span></h2>
+        </div>
+    </div>
+    <hr ng-if="vm.showCompleteDetail">
+
+    <div class="row">
+        <div class="col-md-4 no-padding">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label" translate="metroquitoApp.verification.verificationDate">Verification Date</label>
+                        <span>{{vm.verificationResolved.verificationDate | date: vm.dateformat}}</span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="control-label" translate="metroquitoApp.verification.hour">Hour</label>
+                        <span>{{vm.verificationResolved.verificationDate | date: vm.hourformat}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.verification.photographicRecord">Photographic Record</label>
+            <a ng-if="vm.verificationResolved.photographicRecord" ng-click="vm.openFile(vm.verificationResolved.photographicRecordContentType, vm.verificationResolved.photographicRecord)">
+                <img data-ng-src="{{'data:' + vm.verificationResolved.photographicRecordContentType + ';base64,' + vm.verificationResolved.photographicRecord}}" style="max-height: 30px;"/>
+            </a>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.verification.subject">Subject</label>
+            <span>{{vm.verificationResolved.subject}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label class="control-label" translate="metroquitoApp.verification.description">Description</label>
+            <span>{{vm.verificationResolved.description}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ng-if="vm.showCompleteDetail" ng-click="vm.back()"
+                class="btn btn-danger pull-right">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+    <br>
+</div>

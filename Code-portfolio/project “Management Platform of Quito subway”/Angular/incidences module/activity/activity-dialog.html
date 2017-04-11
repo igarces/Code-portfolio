@@ -1,0 +1,95 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header" ng-switch="vm.activity.id == null">
+        <h4 class="modal-title" id="myActivityCreateLabel" ng-switch-when="true"
+            translate="metroquitoApp.activity.home.createLabel">Add Activity</h4>
+        <h4 class="modal-title" id="myActivityEditLabel" ng-switch-when="false"
+            translate="metroquitoApp.activity.home.editLabel">Edit Activity</h4>
+    </div>
+    <div class="modal-body container-fluid">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <label class="control-label" translate="metroquitoApp.activity.name" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="field_name"
+                       ng-model="vm.activity.name" maxlength="50"
+                       required ng-minlength="1" ng-maxlength="50"/>
+                <div ng-show="editForm.name.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.name.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.name.$error.minlength" translate="entity.validation.minlength"
+                       translate-value-min="1">
+                        This field is required to be at least 1 characters.
+                    </p>
+                    <p class="help-block"
+                       ng-show="editForm.name.$error.maxlength" translate="entity.validation.maxlength"
+                       translate-value-max="50">
+                        This field cannot be longer than 50 characters.
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <label translate="metroquitoApp.activity.classification"
+                       for="field_classification">Classification</label>
+                <select class="form-control" id="field_classification" name="classification" required
+                        ng-model="vm.activity.classificationId" ng-change="vm.classificationChanged()"
+                        ng-disabled="vm.noEditActivity"
+                        ng-options="activityClassificationNom.id as activityClassificationNom.value for activityClassificationNom in vm.activityclassificationnoms">
+                    <option value="">{{vm.defaultOption}}</option>
+                </select>
+                <div ng-show="editForm.classification.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.classification.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <label translate="metroquitoApp.activity.administrativeUnit" for="field_administrativeUnit">Administrative
+                    Unit</label>
+                <select class="form-control" id="field_administrativeUnit" name="administrativeUnit"
+                        ng-model="vm.activity.administrativeUnitId" required ng-change="vm.administrativeUnitChanged()"
+                        ng-disabled="vm.noEditActivity"
+                        ng-options="administrativeUnit.id as administrativeUnit.name for administrativeUnit in vm.administrativeunits">
+                    <option value="">{{vm.defaultOption}}</option>
+                </select>
+                <div ng-show="editForm.administrativeUnit.$invalid">
+                    <p class="help-block"
+                       ng-show="editForm.administrativeUnit.$error.required" translate="entity.validation.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <label translate="metroquitoApp.activity.activityFather" for="field_activityFather">Activity</label>
+                <select class="form-control" id="field_activityFather" name="activityFather"
+                        ng-model="vm.activity.activityFatherId" ng-disabled="vm.disabled || vm.noEditActivity" ng-required="vm.activity.classificationId != vm.classificationActivityId"
+                        ng-options="activity.id as activity.name for activity in vm.activities | filter : vm.filterActivity">
+                    <option value="">{{vm.defaultOption}}</option>
+                </select>
+                <div ng-show="editForm.activityFather.$invalid">
+                    <div ng-show="editForm.activityFather.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.activityFather.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-danger">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

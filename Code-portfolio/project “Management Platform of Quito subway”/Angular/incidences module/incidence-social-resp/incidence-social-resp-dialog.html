@@ -1,0 +1,545 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myIncidenceSocialRespLabel" ng-if="!vm.showEditLabel" translate="metroquitoApp.incidenceSocialResp.home.createLabel">Create or edit a Incidence Social Resp</h4>
+        <h4 class="modal-title" id="myIncidenceSocialRespLabelEdit" ng-if="vm.showEditLabel" translate="metroquitoApp.incidenceSocialResp.home.editLabel">Create or edit a Incidence Social Resp</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert></jhi-alert>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div ng-if="vm.incidenceInitial">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.citizenAttention" ng-click="vm.showHidePanel(1)">Citizen Attention</div>
+                        <div class="panel-body" ng-show="vm.showCitizenAttention">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" ng-if="vm.incidenceSocialResp.id">
+                                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceNumber" for="field_incidenceNumber">Incidence Number</label>
+                                                <input type="text" class="form-control" name="incidenceNumber" id="field_incidenceNumber"
+                                                       ng-model="vm.incidenceSocialResp.incidenceNumber" readonly/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group" ng-if="vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeInformationId">
+                                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceReportDate" for="field_incidenceReportDateI">Incidence Report Date</label>
+                                                <div class="input-group">
+                                                    <input id="field_incidenceReportDateI" type="text" class="form-control" name="incidenceReportDate"
+                                                           uib-datepicker-popup="{{vm.dateformat}}" ng-model="vm.incidenceSocialResp.incidenceReportDate"
+                                                           is-open="vm.datePickerOpenStatus.incidenceReportDate" required readonly/>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('incidenceReportDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                                </div>
+                                                <div ng-show="editForm.incidenceReportDate.$invalid">
+                                                    <p class="help-block"
+                                                       ng-show="editForm.incidenceReportDate.$error.required" translate="entity.validation.required">
+                                                        This field is required.
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" ng-if="vm.incidenceSocialResp.incidenceTypeId !== vm.incidenceTypeInformationId">
+                                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceRealDate" for="field_incidenceRealDate">Incidence Real Date</label>
+                                                <div class="input-group">
+                                                    <input id="field_incidenceRealDate" type="text" class="form-control" name="incidenceRealDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                                           ng-model="vm.incidenceSocialResp.incidenceRealDate" is-open="vm.datePickerOpenStatus.incidenceRealDate"
+                                                           datepicker-options="vm.realDateOption" required readonly/>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('incidenceRealDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                                </div>
+
+                                                <div ng-show="editForm.incidenceRealDate.$invalid">
+                                                    <p class="help-block"
+                                                       ng-show="editForm.incidenceRealDate.$error.required" translate="entity.validation.required">
+                                                        This field is required.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label translate="metroquitoApp.incidenceSocialResp.incidenceType" for="field_incidenceType">Incidence Type</label>
+                                        <select class="form-control" id="field_incidenceType" name="incidenceType" ng-model="vm.incidenceSocialResp.incidenceTypeId"
+                                                required ng-options="incidenceTypeNom.id as incidenceTypeNom.value for incidenceTypeNom in vm.incidencetypenoms" >
+                                            <option value="">{{vm.defaultOption}}</option>
+                                        </select>
+
+                                        <div ng-show="editForm.incidenceType.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.incidenceType.$error.required" translate="entity.validation.required">
+                                                This field is required.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label translate="metroquitoApp.incidenceSocialResp.socialPromoter" for="field_socialPromoter">Social Promoter</label>
+                                        <input type="text" class="form-control" name="field_socialPromoter" id="field_socialPromoter"
+                                               ng-model="vm.userLogged" readonly maxlength="50"
+                                               ng-minlength="1" ng-maxlength="50" ng-pattern="vm.pattern" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group col-md-6 col-md-offset-6 no-padding-right" ng-if="vm.incidenceSocialResp.incidenceTypeId !== vm.incidenceTypeInformationId">
+                                        <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceReportDate" for="field_incidenceReportDate">Incidence Report Date</label>
+                                        <div class="input-group">
+                                            <input id="field_incidenceReportDate" type="text" class="form-control" name="incidenceReportDate" uib-datepicker-popup="{{vm.dateformat}}" ng-model="vm.incidenceSocialResp.incidenceReportDate" is-open="vm.datePickerOpenStatus.incidenceReportDate"
+                                                   required readonly/>
+                                            <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('incidenceReportDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                        </div>
+                                        <div ng-show="editForm.incidenceReportDate.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.incidenceReportDate.$error.required" translate="entity.validation.required">
+                                                This field is required.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label" translate="metroquitoApp.incidenceSocialResp.subject" for="field_subject">Subject</label>
+                                        <input type="text" class="form-control" name="subject" id="field_subject"
+                                               ng-model="vm.incidenceSocialResp.subject" maxlength="100"
+                                               required ng-minlength="1" ng-maxlength="100" ng-pattern="vm.pattern" />
+                                        <div ng-show="editForm.subject.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.subject.$error.required" translate="entity.validation.required">
+                                                This field is required.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.subject.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                                This field is required to be at least 1 characters.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.subject.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                                                This field cannot be longer than 100 characters.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.subject.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                                This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" translate="metroquitoApp.incidenceSocialResp.description" for="field_description">Description</label>
+                                        <textarea class="form-control" name="description" id="field_description"
+                                                  ng-model="vm.incidenceSocialResp.description" maxlength="800"
+                                                  required ng-minlength="1" ng-maxlength="800" ng-pattern="vm.patternNewLine" />
+                                        <div ng-show="editForm.description.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.description.$error.required" translate="entity.validation.required">
+                                                This field is required.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.description.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                                This field is required to be at least 1 characters.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="800">
+                                                This field cannot be longer than 800 characters.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.description.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                                This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" translate="metroquitoApp.incidenceSocialResp.informant" for="field_informant">Informant</label>
+                                        <input type="text" class="form-control" name="informant" id="field_informant"
+                                               ng-model="vm.incidenceSocialResp.informant" maxlength="50"
+                                               required ng-minlength="1" ng-maxlength="50" ng-pattern="vm.patternWords" />
+                                        <div ng-show="editForm.informant.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.informant.$error.required" translate="entity.validation.required">
+                                                This field is required.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.informant.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                                This field is required to be at least 1 characters.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.informant.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                                                This field cannot be longer than 50 characters.
+                                            </p>
+                                            <p class="help-block"
+                                               ng-show="editForm.informant.$error.pattern" translate="entity.validation.letterSpacesPattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                                This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeComplainId || vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeClaimId">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.verificationPanel" ng-click="vm.showHidePanel(2)">Verification</div>
+                            <div class="panel-body" ng-show="vm.showVerification">
+                                <div ng-include="'app/incidences/verification/verification-dialog.html'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="vm.verification.informantId">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.informantDataPanel" ng-click="vm.showHidePanel(3)">Informant Data</div>
+                            <div class="panel-body" ng-show="vm.showInformantData">
+
+                                <div class="row">
+                                    <div class="col-xs-12 no-padding">
+                                        <div ng-include="'app/incidences/social-profile/social-profile-detail.html'"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8 form-group">
+                                        <label class="control-label" translate="metroquitoApp.socialProfile.map" for="informantMap">Map</label>
+                                        <div id="informantMap">
+                                            <ng-map zoom="11" center="-0.1936, -78.4899" map-type-id="HYBRID" on-click="vm.getMapPosition($event)">
+                                                <marker position="{{vm.pos.lat}}, {{vm.pos.lng}}"></marker>
+                                            </ng-map>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label" translate="metroquitoApp.socialProfile.coordinates" for="informantCoordinates">Coordinates</label>
+                                        <div id="informantCoordinates">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <label class="control-label" translate="metroquitoApp.socialProfile.locationLongitude">Location Longitude</label>
+                                                    <span>{{vm.mapLongitude}}</span>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label class="control-label" translate="metroquitoApp.socialProfile.locationLatitude">Location Latitude</label>
+                                                    <span>{{vm.mapLatitude}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <div ng-if="vm.incidenceSocialResp.incidenceTypeId == vm.incidenceTypeComplainId && vm.incidenceSocialResp.incidenceStateTempId == vm.incidenceStateAcceptedId">
+                                            <div class="form-group" ngf-drop ngf-change="vm.setCardCopy($file, vm.socialProfile)" ngf-pattern="'image/*'">
+                                                <label class="control-label" translate="metroquitoApp.socialProfile.cardCopy" for="field_cardCopy">Card Copy</label>
+                                                <div>
+                                                    <div ng-if="vm.socialProfile.cardCopy">
+                                                        <img data-ng-src="{{'data:' + vm.socialProfile.cardCopyContentType + ';base64,' + vm.socialProfile.cardCopy}}" style="max-height: 100px;"
+                                                             ng-if="vm.socialProfile.cardCopyContentType != 'application/pdf'"/>
+
+                                                        <img src="content/images/pdf2.png" class="img-responsive"
+                                                             ng-if="vm.socialProfile.cardCopyContentType == 'application/pdf'"/>
+                                                    </div>
+
+                                                    <div ng-if="vm.socialProfile.cardCopy" class="help-block clearfix">
+                                                        <span class="pull-left">{{vm.socialProfile.cardCopyContentType}}, {{vm.byteSize(vm.socialProfile.cardCopy)}}</span>
+                                                        <button ng-click="vm.socialProfile.cardCopy=null;vm.socialProfile.cardCopyContentType=null;"
+                                                                class="btn btn-default btn-xs pull-right">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </button>
+                                                    </div>
+                                                    <button type="file" ngf-select class="btn btn-default btn-block" ngf-max-size="5MB"
+                                                            ngf-change="vm.setCardCopy($file, vm.socialProfile)" accept="image/*,.pdf" ngf-pattern="'image/*,.pdf'"
+                                                            translate="entity.action.addimage">
+                                                        Add image
+                                                    </button>
+                                                </div>
+                                                <input type="hidden" class="form-control" name="cardCopy" id="field_cardCopy"
+                                                       ng-model="vm.socialProfile.cardCopy" required  />
+                                                <input type="hidden" class="form-control" name="cardCopyContentType" id="field_cardCopyContentType"
+                                                       ng-model="vm.socialProfile.cardCopyContentType" />
+
+                                                <div ng-show="editForm.cardCopy.$invalid">
+                                                    <p class="help-block"
+                                                       ng-show="editForm.cardCopy.$error.required" translate="entity.validation.required">
+                                                        This field is required.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceState" for="field_incidenceState">Incidence State</label>
+                                        <select class="form-control" id="field_incidenceState" name="incidenceType" ng-model="vm.incidenceSocialResp.incidenceStateTempId" required
+                                                ng-options="incidenceStateNom.id as incidenceStateNom.value for incidenceStateNom in vm.incidencestatenoms | filter : vm.filterStatusOpen ">
+                                            <option value="">{{vm.defaultOption}}</option>
+                                        </select>
+                                        <div ng-show="editForm.incidenceType.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.incidenceType.$error.required" translate="entity.validation.required">
+                                                This field is required.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="vm.incidenceSocialResp.incidenceStateTempId == vm.incidenceStateAcceptedId">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.complaintClaimData" ng-click="vm.showHidePanel(4)">Complaint / Claim Data</div>
+                            <div class="panel-body" ng-show="vm.showComplaintClaimData">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.complaintClaimRegistrationDate" for="field_complaintClaimRegistrationDate">Complaint Claim Registration Date</label>
+                                            <div class="input-group">
+                                                <input id="field_complaintClaimRegistrationDate" type="text" class="form-control"
+                                                       name="complaintClaimRegistrationDate"
+                                                       uib-datepicker-popup="{{vm.dateformat}}"
+                                                       ng-model="vm.incidenceSocialResp.complaintClaimRegistrationDate"
+                                                       is-open="vm.datePickerOpenStatus.complaintClaimRegistrationDate"
+                                                       datepicker-options="vm.complaintClaimRegistrationDateOption"
+                                                       required readonly />
+                                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.openCalendar('complaintClaimRegistrationDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                            </div>
+                                            <div ng-show="editForm.complaintClaimRegistrationDate.$invalid">
+                                                <p class="help-block"
+                                                   ng-show="editForm.complaintClaimRegistrationDate.$error.required" translate="entity.validation.required">
+                                                    This field is required.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label translate="metroquitoApp.incidenceSocialResp.category" for="field_category">Category</label>
+                                            <select class="form-control" required id="field_category" name="category" ng-model="vm.incidenceSocialResp.categoryId"
+                                                    ng-options="categoryNom.id as categoryNom.value for categoryNom in vm.categorynoms | filter : {incidenceTypeId: vm.incidenceSocialResp.incidenceTypeId}: true">
+                                                <option value="">{{vm.defaultOption}}</option>
+                                            </select>
+                                            <div ng-show="editForm.category.$invalid">
+                                                <p class="help-block"
+                                                   ng-show="editForm.category.$error.required" translate="entity.validation.required">
+                                                    This field is required.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" translate="metroquitoApp.incidenceSocialResp.complaintClaimDescription" for="field_complaintClaimDescription">Complaint Claim Description</label>
+                                            <textarea type="text" class="form-control" name="complaintClaimDescription" id="field_complaintClaimDescription"
+                                                      ng-model="vm.incidenceSocialResp.complaintClaimDescription" maxlength="800"
+                                                      required ng-minlength="1" ng-maxlength="800" ng-pattern="vm.patternNewLine" />
+                                            <div ng-show="editForm.complaintClaimDescription.$invalid">
+                                                <p class="help-block"
+                                                   ng-show="editForm.complaintClaimDescription.$error.required" translate="entity.validation.required">
+                                                    This field is required.
+                                                </p>
+                                                <p class="help-block"
+                                                   ng-show="editForm.complaintClaimDescription.$error.minlength" translate="entity.validation.minlength" translate-value-min="1">
+                                                    This field is required to be at least 1 characters.
+                                                </p>
+                                                <p class="help-block"
+                                                   ng-show="editForm.complaintClaimDescription.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="800">
+                                                    This field cannot be longer than 800 characters.
+                                                </p>
+                                                <p class="help-block"
+                                                   ng-show="editForm.complaintClaimDescription.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-zA-Z0-9 \\-()]+">
+                                                    This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!vm.incidenceInitial">
+            <div ng-include="'app/incidences/incidence-social-resp/incidence-social-resp-detail.html'"></div>
+        </div>
+
+        <div ng-if="vm.incidenceAssign || vm.incidenceInProcess || vm.incidenceReopen">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="pull-right">
+                                <button class="btn btn-danger" ng-click="vm.createObservations()">
+                                    <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                                    <span translate="metroquitoApp.incidenceSocialResp.home.createObsevation">
+                                        Add Observations
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.observationsList" ng-click="vm.showHidePanel(6)">Observations List</div>
+                        <div class="panel-body" ng-show="vm.showObservations">
+
+                            <div ng-include="'app/incidences/observation/observations.html'"></div>
+
+                            <div class="col-md-4 form-group" ng-if="vm.incidenceInProcess">
+                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceState" for="field_incidenceStateClaimProcess">Incidence State</label>
+                                <select class="form-control" id="field_incidenceStateClaimProcess" name="incidenceType" ng-model="vm.incidenceSocialResp.incidenceStateTempId" required
+                                        ng-options="incidenceStateNom.id as incidenceStateNom.value for incidenceStateNom in vm.incidencestatenoms | filter : vm.filterStatusClaimProcess ">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                                <div ng-show="editForm.incidenceType.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.incidenceType.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="vm.incidenceComplainAccepted || vm.incidenceResolved || vm.incidenceVerified">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" translate="metroquitoApp.incidenceSocialResp.verificationIncidenceResolve" ng-click="vm.showHidePanel(5)">Verification Data Incidences Resolved</div>
+                        <div class="panel-body" ng-show="vm.showResolvedVerification">
+
+                            <!--<div id="div-addVerification" ng-include="'app/incidences/verification/verification-resolved-dialog.html'"></div>-->
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="pull-right">
+                                        <button class="btn btn-danger" ng-click="vm.createVerifications()">
+                                            <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                                            <span translate="metroquitoApp.incidenceSocialResp.home.createVerification">
+                                        Create verifications
+                                    </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div ng-include="'app/incidences/verification/verifications.html'"></div>
+
+                            <div class="col-md-4 form-group" ng-if="vm.verifications.length">
+                                <label class="control-label" translate="metroquitoApp.incidenceSocialResp.incidenceState" for="field_incidenceStateComplainAccepted">Incidence State</label>
+                                <select class="form-control" id="field_incidenceStateComplainAccepted" name="incidenceType" ng-model="vm.incidenceSocialResp.incidenceStateTempId" required
+                                        ng-options="incidenceStateNom.id as incidenceStateNom.value for incidenceStateNom in vm.incidencestatenoms | filter : vm.filterStatusVerification">
+                                    <option value="">{{vm.defaultOption}}</option>
+                                </select>
+                                <div ng-show="editForm.incidenceType.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.incidenceType.$error.required" translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 from-group" ng-if="vm.incidenceVerified && vm.incidenceSocialResp.incidenceStateTempId === vm.incidenceStateCloseId">
+                                <br>
+                                <br>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="conforming" id="field_conforming" required
+                                               ng-model="vm.incidenceSocialResp.conformity" ng-value="true"/>
+                                        <span class="control-label" translate="metroquitoApp.incidenceSocialResp.conforming" for="field_conforming">Conforming</span>
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="withoutConformity" id="field_withoutConformity" required
+                                               ng-model="vm.incidenceSocialResp.conformity" ng-value="false"/>
+                                        <span class="control-label" translate="metroquitoApp.incidenceSocialResp.withoutConformity" for="field_withoutConformity">Without Conformity</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-if="vm.incidenceSocialResp.conformity == true && vm.incidenceVerified">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" translate="metroquitoApp.agreementAct.title" ng-click="vm.showHidePanel(7)">Agreement Act</div>
+                        <div class="panel-body" ng-show="vm.showAgreementAct">
+                            <div ng-include="'app/incidences/agreement-act/agreement-act-dialog.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button ng-if="vm.incidenceInitial && vm.incidenceSocialResp.incidenceTypeId !== vm.incidenceTypeInformationId"
+                type="submit" class="btn btn-danger" ng-click="vm.definitive(true)" ng-disabled="editForm.$invalid || !vm.verification.informantId">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+
+        <button ng-if="vm.incidenceComplainAccepted || vm.incidenceResolved" type="submit" class="btn btn-danger" ng-click="vm.definitive(true)" ng-disabled="editForm.incidenceType.$invalid || vm.verifications.length == 0">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+
+        <button ng-if="vm.incidenceAssign || vm.incidenceReopen" type="submit" class="btn btn-danger" ng-click="vm.definitive(true)" ng-disabled="vm.observations.length == 0">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+
+        <button ng-if="vm.incidenceInProcess || vm.incidenceVerified || vm.incidenceSocialResp.incidenceTypeId === vm.incidenceTypeInformationId"
+                type="submit" class="btn btn-danger" ng-click="vm.definitive(true)" ng-disabled="editForm.$invalid">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+
+        <button ng-if="vm.incidenceClaimClosed" type="submit" class="btn btn-danger" ng-click="vm.definitive(true)" ng-disabled="editForm.$invalid">
+            <span class="icon-button"><img src="content/images/aceptar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+
+        <button type="submit" ng-if="(!vm.incidenceComplainClosed && !vm.incidenceAssign && !vm.incidenceClaimClosed) ||
+            (vm.incidenceClaimClosed && vm.incidenceSocialResp.conformity == true)"
+                class="btn btn-danger" ng-click="vm.definitive(false)">
+            <span class="icon-button"><img src="content/images/guardar2.png" class="img-responsive"></span>&nbsp;<span translate="metroquitoApp.incidenceSocialResp.save">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

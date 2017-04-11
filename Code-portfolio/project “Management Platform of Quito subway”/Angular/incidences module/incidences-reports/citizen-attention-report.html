@@ -1,0 +1,122 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 translate="metroquitoApp.incidencesReports.citizenAttention.title">Citizen Attention Report</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.incidencesReports.home.parametersPanel">Parameters to conform the report</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidencesReports.citizenAttention.dateFrom"
+                                           for="field_fromDate">From</label>
+                                    <div class="input-group">
+                                        <input id="field_fromDate" readonly type="text" class="form-control"
+                                               name="fromDate" uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.fromDate" is-open="vm.datePickerOpenStatus.fromDate"
+                                               datepicker-options="vm.fromDateOption"/>
+                                        <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default"
+                                                       ng-click="vm.openCalendar('fromDate')"><i
+                                                   class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.incidencesReports.citizenAttention.dateTo"
+                                           for="field_toDate">To</label>
+                                    <div class="input-group">
+                                        <input id="field_toDate" readonly type="text" class="form-control" name="toDate"
+                                               uib-datepicker-popup="{{vm.dateformat}}"
+                                               ng-model="vm.toDate" is-open="vm.datePickerOpenStatus.toDate"
+                                               datepicker-options="vm.toDateOption"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="vm.openCalendar('toDate')"><i
+                                                class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.incidencesReports.reportSite" for="field_reportSite">Report
+                                        Site</label>
+                                    <select class="form-control" id="field_reportSite" name="reportSite"
+                                            ng-model="vm.reportSiteId"
+                                            ng-options="reportSiteNom.id as reportSiteNom.value for reportSiteNom in vm.reportsitenoms">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" ng-if="vm.reportSiteId">
+                                <div class="form-group" ng-if="vm.reportSiteId == vm.siteStationId || vm.reportSiteId == vm.reportSiteOperationsCenterId || vm.reportSiteId == vm.reportSiteVentilationShaftsId">
+                                    <label translate="metroquitoApp.incidencesReports.citizenAttention.station"
+                                           for="field_station">Station</label>
+                                    <select class="form-control" id="field_station" name="station"
+                                            ng-model="vm.stationId"
+                                            ng-options="stationNom.id as stationNom.name for stationNom in vm.sitesnoms | filter: vm.filterStation">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" ng-if="vm.reportSiteId == vm.reportSiteTunnelSectionId">
+                                    <label translate="metroquitoApp.incidencesReports.citizenAttention.betweenTunnel"
+                                           for="field_betweenTunnel">Between Tunnel</label>
+                                    <select class="form-control" id="field_betweenTunnel" name="betweenTunnel"
+                                            ng-model="vm.betweenTunnelId"
+                                            ng-options="betweenTunnelNom.id as betweenTunnelNom.name for betweenTunnelNom in vm.sitesnoms | filter: vm.filterBetweenTunnel">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger"  ng-click="vm.generateReport()" id="generateBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.generate">
+                                            Generate
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger"  ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+
+    </div>
+
+</div>

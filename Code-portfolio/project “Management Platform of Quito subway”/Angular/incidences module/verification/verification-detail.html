@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="row" ng-if="vm.showCompleteDetail">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.incidenceSocialResp.detail.title">Incidence Social Resp</span></h2>
+        </div>
+    </div>
+    <hr ng-if="vm.showCompleteDetail">
+
+    <div class="row">
+        <div class="col-md-4 no-padding">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label" translate="metroquitoApp.verification.verificationDate">Verification Date</label>
+                        <span>{{vm.verification.verificationDate | date: vm.dateformat}}</span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="control-label" translate="metroquitoApp.verification.hour">Hour</label>
+                        <span>{{vm.verification.verificationDate | date: vm.hourformat}}</span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label class="control-label" translate="metroquitoApp.verification.description">Description</label>-->
+                <!--<span>{{vm.verification.description}}</span>-->
+            <!--</div>-->
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label" translate="metroquitoApp.verification.reportSite">Report Site</label>
+                <span>{{vm.verificationReportSite}}</span>
+            </div>
+            <div class="form-group" ng-if="vm.verification.betweenTunnel.id">
+                <label class="control-label" translate="metroquitoApp.verification.betweenTunnel">Between Tunnel</label>
+                <span>{{vm.verificationBetweenTunnel}}</span>
+            </div>
+            <div class="form-group" ng-if="vm.verification.station.id">
+                <label class="control-label" translate="metroquitoApp.verification.station">Station</label>
+                <span>{{vm.verificationStation}}</span>
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="control-label" translate="metroquitoApp.verification.photographicRecord">Photographic Record</label>
+            <a ng-if="vm.verification.photographicRecord" ng-click="vm.openFile(vm.verification.photographicRecordContentType, vm.verification.photographicRecord)">
+                <img data-ng-src="{{'data:' + vm.verification.photographicRecordContentType + ';base64,' + vm.verification.photographicRecord}}" style="max-height: 30px;"
+                     ng-if="vm.verification.photographicRecordContentType != 'application/pdf' &&
+                                    vm.verification.photographicRecordContentType != 'application/x-zip-compressed'"/>
+                <img src="content/images/pdf2.png" style="max-height: 30px;"
+                     ng-if="vm.verification.photographicRecordContentType == 'application/pdf'"/>
+                <img src="content/images/zip2.png" style="max-height: 30px;"
+                     ng-if="vm.verification.photographicRecordContentType == 'application/x-zip-compressed'"/>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 no-padding">
+            <div class="form-group">
+                <label class="control-label" translate="metroquitoApp.verification.description">Description</label>
+                <span>{{vm.verification.description}}</span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" ng-if="vm.showCompleteDetail"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

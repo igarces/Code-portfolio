@@ -1,0 +1,14 @@
+<div>
+    <h2>Ejemplo de mapa</h2>
+    <jhi-alert></jhi-alert>
+
+    Position: {{vm.position}}
+
+    <button ng-click="vm.moveMapGeoId()"> geoid </button>
+
+    <ng-map zoom="11" center="-0.1936, -78.4899" map-type-id="HYBRID" on-click="vm.getpos($event)">
+        <kml-layer url="https://www.dropbox.com/s/xrjqovvrlik9a64/trazado.kml?dl=0">
+        </kml-layer>
+    </ng-map>
+
+</div>

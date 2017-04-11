@@ -1,0 +1,48 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2><span translate="metroquitoApp.observation.detail.title">Observation Detail</span></h2>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="control-label" translate="metroquitoApp.observation.subject">Subject</label>
+            <span>{{vm.observation.subject}}</span>
+        </div>
+        <div class="col-md-6 form-group">
+            <label class="control-label" translate="metroquitoApp.observation.author">Author</label>
+            {{vm.userAuthorName}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="control-label" translate="metroquitoApp.observation.description">Description</label>
+            <span>{{vm.observation.description}}</span>
+        </div>
+        <div class="col-md-6 form-group">
+            <label class="control-label" translate="metroquitoApp.observation.evidence">Evidence</label>
+            <a ng-if="vm.observation.evidence"
+               ng-click="vm.openFile(vm.observation.evidenceContentType, vm.observation.evidence)">
+                <img ng-if="vm.observation.evidenceContentType != 'application/pdf' &&
+                                    vm.observation.evidenceContentType != 'application/x-zip-compressed'"
+                    data-ng-src="{{'data:' + vm.observation.evidenceContentType + ';base64,' + vm.observation.evidence}}"
+                    style="max-height: 30px;"/>
+                <img src="content/images/pdf2.png" style="max-height: 30px;"
+                     ng-if="vm.observation.evidenceContentType == 'application/pdf'"/>
+                <img src="content/images/zip2.png" style="max-height: 30px;"
+                     ng-if="vm.observation.evidenceContentType == 'application/x-zip-compressed'"/>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <button ng-click="vm.back()" class="btn btn-danger pull-right">
+            <span class="icon-button"><img src="content/images/salir.png" class="img-responsive"></span>&nbsp;<span
+            translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+</div>

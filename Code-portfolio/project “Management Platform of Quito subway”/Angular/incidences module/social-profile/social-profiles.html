@@ -1,0 +1,218 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h2 ng-if="vm.isSelection != 1" translate="metroquitoApp.socialProfile.home.title">Social Profiles</h2>
+        <h2 ng-if="vm.isSelection == 1" translate="metroquitoApp.socialProfile.home.selectInformant">Select informant</h2>
+        <jhi-alert></jhi-alert>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.socialProfile.search.title">Search Criteria</div>
+            <div class="panel-body">
+                <form name="myForm" novalidate>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.name" for="field_name">Name</label>
+                                <input type="text" class="form-control" name="name" id="field_name" maxlength="50"
+                                       ng-model="vm.name" ng-maxlength="50" ng-pattern="vm.patternWords" />
+
+                                <div ng-show="myForm.name.$invalid">
+                                    <p class="help-block"
+                                       ng-show="myForm.name.$error.pattern" translate="entity.validation.letterSpacesPattern">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label" translate="metroquitoApp.socialProfile.lastName" for="field_lastName">Last Name</label>
+                                <input type="text" class="form-control" name="lastName" id="field_lastName" maxlength="50"
+                                       ng-model="vm.lastName" ng-maxlength="50" ng-pattern="vm.patternWords" />
+
+                                <div ng-show="myForm.lastName.$invalid">
+                                    <p class="help-block"
+                                       ng-show="myForm.lastName.$error.pattern" translate="entity.validation.letterSpacesPattern">
+                                        This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.socialProfile.sex" for="field_sex">Sex</label>
+                                    <select class="form-control" id="field_sex" name="sex" ng-model="vm.sexId"
+                                            ng-options="gender.id as gender.name for gender in vm.genders">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" translate="metroquitoApp.socialProfile.identityCard" for="field_identityCard">identityCard</label>
+                                    <input type="text" class="form-control" name="identityCard" id="field_identityCard"
+                                           ng-model="vm.identityCard" maxlength="10"
+                                           ng-minlength="10" ng-maxlength="10" ng-pattern="vm.patternOnlyNumbers" />
+                                    <div ng-show="myForm.identityCard.$invalid">
+                                        <p class="help-block"
+                                           ng-show="myForm.identityCard.$error.minlength" translate="entity.validation.requiredLength" translate-value-min="10">
+                                            This field requires 10 characters.
+                                        </p>
+                                        <p class="help-block"
+                                           ng-show="myForm.identityCard.$error.pattern" translate="entity.validation.numberPattern">
+                                            This field should follow pattern "[a-zA-Z0-9 \\-()]+".
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label translate="metroquitoApp.socialProfile.infrastructureType" for="field_infrastructureType">Infrastructure Type</label>
+                                    <select class="form-control" id="field_infrastructureType" name="infrastructureType" ng-model="vm.infrastructureTypeId"
+                                            ng-options="infrastructureTypeNom.id as infrastructureTypeNom.value for infrastructureTypeNom in vm.infrastructuretypenoms">
+                                        <option value="">{{vm.defaultOption}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 no-padding-left">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger" ng-disabled="myForm.$invalid" ng-click="vm.searchByFilters()" id="searchBtn">
+                                        <span class="icon-button"><img src="content/images/buscar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.search">
+                                            Search
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" ng-click="vm.clear()" id="clearBtn">
+                                        <span class="icon-button"><img src="content/images/limpiar2.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.clean">
+                                            Clear
+                                        </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger"  ng-click="vm.cancel()" id="cancelBtn">
+                                        <span class="icon-button"><img src="content/images/cancelar.png" class="img-responsive"></span>&nbsp;
+                                        <span translate="entity.action.cancel">
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 no-padding-right">
+            <div class="pull-right">
+                <!--<button class="btn btn-danger">-->
+                    <!--<span class="icon-button"><img src="content/images/importar.png" class="img-responsive"></span>&nbsp;-->
+                    <!--<span translate="metroquitoApp.socialProfile.home.importSocialProfile">-->
+                        <!--Import Social Profile-->
+                    <!--</span>-->
+                <!--</button>-->
+
+                <button class="btn btn-danger" ui-sref="social-profile.new">
+                    <span class="icon-button"><img src="content/images/adicionar.png" class="img-responsive"></span>&nbsp;
+                    <span translate="metroquitoApp.socialProfile.home.createLabel">
+                        Create new Social Profile
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading" translate="metroquitoApp.socialProfile.search.result.title">List of informants</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                            <th jh-sort-by="name"><span translate="metroquitoApp.socialProfile.name">Name</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="lastName"><span translate="metroquitoApp.socialProfile.lastName">Last Name</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="sexId"><span translate="metroquitoApp.socialProfile.sex">Sex</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="identityCard"><span translate="metroquitoApp.socialProfile.identityCard">Identity Card</span> <span
+                                class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="infrastructureTypeId"><span translate="metroquitoApp.socialProfile.infrastructureType">Infrastructure Type</span>
+                                <span class="glyphicon glyphicon-sort"></span></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="socialProfile in vm.socialProfiles track by socialProfile.id">
+                            <td>{{socialProfile.name}}</td>
+                            <td>{{socialProfile.lastName}}</td>
+                            <td>
+                                {{vm.findSexInList(socialProfile.sexId)}}
+                            </td>
+                            <td>{{socialProfile.identityCard}}</td>
+                            <td>
+                                <span ng-if="!socialProfile.otherInfrastructure">
+                                      {{vm.findInfrastructureInList(socialProfile.infrastructureTypeId)}}
+                                </span>
+
+                                <span ng-if="socialProfile.otherInfrastructure">
+                                    {{socialProfile.otherInfrastructure}}
+                                </span>
+                            </td>
+
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit" title="Ver detalles"
+                                            ui-sref="social-profile-detail({id:socialProfile.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/ver.png" class="img-responsive"></span>
+                                    </button>
+                                    <button type="submit" title="Modificar"
+                                            ui-sref="social-profile.edit({id:socialProfile.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/modificar.png" class="img-responsive"></span>
+                                    </button>
+
+                                    <button type="submit" title="Seleccionar" ng-if="vm.isSelection == 1"
+                                            ng-click="vm.goNewIncidence(socialProfile)"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="icon-button"><img src="content/images/seleccionar.png" class="img-responsive"></span>
+                                    </button>
+                                    <!--<button type="submit"-->
+                                            <!--ui-sref="social-profile.delete({id:socialProfile.id})"-->
+                                            <!--class="btn btn-danger btn-sm">-->
+                                        <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                                        <!--<span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>-->
+                                    <!--</button>-->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!vm.socialProfiles.length">
+                            <td colspan="5" class="text-center">
+                                <span translate="global.messages.search.noResult">
+                                   No Result
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center" ng-if="vm.socialProfiles.length">
+                    <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                                    ng-change="vm.transition()"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
