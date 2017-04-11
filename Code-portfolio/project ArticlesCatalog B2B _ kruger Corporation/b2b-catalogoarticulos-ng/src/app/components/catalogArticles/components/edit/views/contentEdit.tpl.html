@@ -1,0 +1,40 @@
+<div class="container-fluid" style="display:flex; flex-direction: column; margin: 0; padding: 0;">
+	<k-container-panel class="sizeNormalPanel">
+		<div ng-if="contentEdit.model.articleToEdit.articulo.tieneBloqueoFlux == contentEdit.appConstant.ESTADO_ACTVO ||
+			contentEdit.model.articleToEdit.estadoArticuloProveedor != contentEdit.appConstant.ESTADO_ACTVO">
+
+			<k-output-message type="warning" style="padding-top:10px;">
+				<p ng-if="contentEdit.model.articleToEdit.articulo.tieneBloqueoFlux == contentEdit.appConstant.ESTADO_ACTVO">
+					{{contentEdit.kMessageService.renderMessage('blockFluxMessage')}}
+				</p>
+
+				<p ng-if="contentEdit.model.articleToEdit.estadoArticuloProveedor != contentEdit.appConstant.ESTADO_ACTVO">
+					{{contentEdit.kMessageService.renderMessage('inactiveArticleMessage')}}
+				</p>
+			</k-output-message>
+		</div>
+
+		<div ng-include="contentEdit.pageArticleData"></div>
+
+		<br>
+
+		<div ng-include="contentEdit.pageOptionBasicData"
+			 ng-if="contentEdit.model.optionSelected.id == contentEdit.appConstant.ID_SECCION_DATOS_BASICOS"></div>
+
+		<div ng-include="contentEdit.pageOptionProvider"
+			 ng-if="contentEdit.model.optionSelected.id == contentEdit.appConstant.ID_SECCION_PROVEEDOR"></div>
+
+		<div ng-include="contentEdit.pageOptionComplementary"
+			 ng-if="contentEdit.model.optionSelected.id == contentEdit.appConstant.ID_SECCION_COMPLEMENTARIOS"></div>
+
+		<div ng-include="contentEdit.pageOptionImages"
+			 ng-if="contentEdit.model.optionSelected.id == contentEdit.appConstant.ID_SECCION_IMAGENES"></div>
+
+		<div ng-include="contentEdit.pageOptionSanitaryRegister"
+			 ng-if="contentEdit.model.optionSelected.id == contentEdit.appConstant.ID_SECCION_REG_SANITARIO"></div>
+
+		<div ng-include="contentEdit.pageOptionMerchandiseData"
+			 ng-if="contentEdit.model.optionSelected.id == contentEdit.appConstant.ID_SECCION_DATOS_MERCANCIAS"></div>
+
+	</k-container-panel>
+</div>

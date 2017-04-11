@@ -1,0 +1,47 @@
+<k-header-title module="Administraci&oacute;n art&iacute;culos"
+				logo="{{headerSearch.appConstant.IMG_LOGO_ADM_ARTICLES}}">
+</k-header-title>
+
+<k-header-module>
+	<div class="row header-buttons" style="position:absolute; right:0px;">
+		<div class="col-xs-1" style="width:50px">
+			<a ng-click="headerSearch.returnPageHome()">
+				<img class="center-block" style="height:23px;" ng-src="{{headerSearch.appConstant.IMG_BUTTON_HOME}}"
+					 title="Inicio"/>
+
+				<p class="text-center" title="Inicio">Inicio</p>
+			</a>
+		</div>
+
+		<div class="col-xs-1" style="width:50px"
+			ng-if="headerSearch.model.reportOptionRol == headerSearch.appConstant.ROL_USER_ADMIN_ARTICULOS &&
+			headerSearch.model.gridOptionsArticles.data.length > 0">
+			<a ng-click="headerSearch.searchAdmArticles()">
+				<img class="center-block" style="height:23px;" ng-src="{{headerSearch.appConstant.IMG_BUTTON_UPDATE}}"
+					 title="Actualizar"/>
+
+				<p class="text-center" title="Actualizar">Actualizar</p>
+			</a>
+		</div>
+
+		<div ng-if="headerSearch.model.reportOptionRol === headerSearch.appConstant.ROL_USER_COMPARACION_PRECIO &&
+			headerSearch.model.griOptionsComparisonPriceArticles.data.length > 0" class="col-xs-1" style="width:50px">
+			<a ng-click="headerSearch.saveNewComparisonPricesArticles()">
+				<img class="center-block" style="height:23px;" ng-src="{{headerSearch.appConstant.IMG_BUTTON_SAVE}}"
+					 title="Guardar"/>
+
+				<p class="text-center" title="Guardar">Guardar</p>
+			</a>
+		</div>
+		<div ng-if="headerSearch.model.reportOptionRol === headerSearch.appConstant.ROL_USER_COMPARACION_PRECIO &&
+			headerSearch.model.griOptionsComparisonPriceArticles.data.length > 0" class="col-xs-1" style="width:50px">
+			<a ng-click="headerSearch.showModalSendComparrissonPrices()">
+				<img class="center-block" style="height:23px;"
+					 ng-src="{{headerSearch.appConstant.IMG_BUTTON_SEND_SAVE}}"
+					 title="Guardar y enviar la diferencia de precios"/>
+
+				<p class="text-center" title="Enviar">Enviar</p>
+			</a>
+		</div>
+	</div>
+</k-header-module>

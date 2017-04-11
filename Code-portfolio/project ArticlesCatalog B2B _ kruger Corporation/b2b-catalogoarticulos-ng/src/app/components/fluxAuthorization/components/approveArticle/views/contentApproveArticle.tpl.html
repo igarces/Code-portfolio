@@ -1,0 +1,162 @@
+<div>
+	<div class="row" style="margin-bottom: 5px;">
+		<div class="col-xs-12 fluxTop">
+			<button	ng-click="contentApproveArticle.clickSaveButton()">
+				<span class="fa fa-floppy-o kh-icon"></span>
+				Guardar
+			</button>
+
+			<button ng-click="contentApproveArticle.clickBackButton()">
+				<span class="fa fa-arrow-left kh-icon"></span>
+				Atr&aacute;s
+			</button>
+		</div>
+	</div>
+
+	<k-container-panel>
+		<k-container-body>
+			<label class="labelTitle">Aprobaci&oacute;n de cambios - Art&iacute;culo: </label><span> &#160; {{contentApproveArticle.model.articleToApprove.descripcionArticulo}}
+		({{contentApproveArticle.model.articleToApprove.codigoBarras}})</span>
+
+			<div class="table-responsive">
+				<table class="table commonTable">
+					<thead>
+						<th style="min-width: 80px;">Campo</th>
+						<th>Valor actual</th>
+						<th>Valor solicitado</th>
+						<th style="width: 60px;">Estado</th>
+						<th style="width: 250px;">Aprobar</th>
+						<th style="width: 250px;">Observaci&oacute;n*</th>
+					</thead>
+					<tbody>
+					<tr ng-repeat="data in contentApproveArticle.model.articleToApprove.listaCamposArticulos"
+						ng-init="data.estadoSolicitudNuevo = contentApproveArticle.appConstant.ESTADO_SOLICITUD_PENDIENTE">
+						<td class="td-middle">
+							{{data.etiquetaCampo}}
+
+							<span ng-if="data.pathObject == contentApproveArticle.appConstant.TAG_OBSERVACION_REG_SAN ||
+								data.pathObject == contentApproveArticle.appConstant.TAG_FECHA_CADUCIDAD_REG_SAN ||
+								data.pathObject == contentApproveArticle.appConstant.TAG_MATERIAL_ENVASE ||
+								data.pathObject == contentApproveArticle.appConstant.TAG_FECHA_EMISION_REG_SAN ||
+								data.pathObject == contentApproveArticle.appConstant.TAG_PAIS_REG_SAN ||
+								data.pathObject == contentApproveArticle.appConstant.TAG_TAMANO_REG_SAN ||
+								data.pathObject == contentApproveArticle.appConstant.TAG_MARCA_REG_SAN  ">
+								(Registro sanitario)</span>
+
+							<span ng-if="data.observacionCampo" style="margin-left: 8px;"
+								uib-popover="{{data.observacionCampo}}" popover-title="Advertencia:"
+								popover-placement="bottom" popover-trigger="'mouseenter'">
+								<img ng-src="{{contentApproveArticle.appConstant.IMG_ICON_WARNING}}"/>
+							</span>
+						</td>
+						<td ng-class="data.pathObject == contentApproveArticle.appConstant.TAG_CARACTERISTICAS ? 'td-top' : 'td-middle'">
+							<div ng-if="data.pathObject != contentApproveArticle.appConstant.TAG_CARACTERISTICAS && !data.valorActual.nombreArchivo">
+								{{contentApproveArticle.searchValueLabelOnList(data, false)}}
+							</div>
+							<div ng-if="data.pathObject == contentApproveArticle.appConstant.TAG_CARACTERISTICAS">
+								<characteristic-table list="data.valorActual"></characteristic-table>
+							</div>
+							<div ng-if="data.valorActual.nombreArchivo">
+								{{data.valorActual.nombreArchivo}}
+								
+								<a style="margin-right: 5px;" title="Mostrar imagen"
+									ng-if="contentApproveArticle.checkImageExtension(data.valorNuevo)"
+									ng-click="contentApproveArticle.searchFileContent(data.valorActual, 'show')">
+									<img ng-src="{{contentApproveArticle.appConstant.IMG_ICON_DETAILS}}"/>
+								</a>
+								
+								<a title="Descargar archivo"
+								   ng-click="contentApproveArticle.searchFileContent(data.valorActual, 'download')" >
+									<img ng-src="{{contentApproveArticle.appConstant.IMG_ICON_DOWNLOAD}}"/>
+								</a>
+							</div>
+						</td>
+						<td ng-class="data.pathObject ==  contentApproveArticle.appConstant.TAG_CARACTERISTICAS ? 'td-top' : 'td-middle'">
+							<div ng-if="data.pathObject !=  contentApproveArticle.appConstant.TAG_CARACTERISTICAS && !data.valorNuevo.nombreArchivo">
+								{{contentApproveArticle.searchValueLabelOnList(data)}}
+							</div>
+							<div ng-if="data.pathObject ==  contentApproveArticle.appConstant.TAG_CARACTERISTICAS">
+								<characteristic-table list="data.valorNuevo"></characteristic-table>
+							</div>
+							<div ng-if="data.valorNuevo.nombreArchivo">
+								{{data.valorNuevo.nombreArchivo}}
+
+								<a style="margin-right: 5px;" title="Mostrar imagen"
+									ng-if="contentApproveArticle.checkImageExtension(data.valorNuevo)"
+									ng-click="contentApproveArticle.searchFileContent(data.valorNuevo, 'show')">
+									<img ng-src="{{contentApproveArticle.appConstant.IMG_ICON_DETAILS}}"/>
+								</a>
+
+								<a title="Descargar archivo"
+								   ng-click="contentApproveArticle.searchFileContent(data.valorNuevo, 'download')" >
+									<img ng-src="{{contentApproveArticle.appConstant.IMG_ICON_DOWNLOAD}}"/>
+								</a>
+							</div>
+						</td>
+						<td class="td-middle">
+							<span ng-if="data.estadoSolicitud == contentApproveArticle.appConstant.ESTADO_SOLICITUD_PENDIENTE &&
+								data.estadoSolicitudNuevo == contentApproveArticle.appConstant.ESTADO_SOLICITUD_PENDIENTE">
+								Pendiente</span>
+							<span ng-if="data.estadoSolicitudNuevo == contentApproveArticle.appConstant.ESTADO_SOLICITUD_APROBAR">Aprobado</span>
+							<span ng-if="data.estadoSolicitudNuevo == contentApproveArticle.appConstant.ESTADO_SOLICITUD_RECHAZAR">Rechazado</span>
+							<span ng-if="data.estadoSolicitudNuevo == contentApproveArticle.appConstant.ESTADO_SOLICITUD_NO_GESTIONAR">No gestionado</span>
+						</td>
+						<td class="td-middle">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="radio">
+										<label>
+											<input type="radio" ng-model="data.estadoSolicitudNuevo"
+												ng-change="contentApproveArticle.changeFieldState(data)"
+												ng-value="contentApproveArticle.appConstant.ESTADO_SOLICITUD_APROBAR" />
+											Si
+										</label>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="radio">
+										<label>
+											<input type="radio" ng-model="data.estadoSolicitudNuevo"
+												ng-change="contentApproveArticle.changeFieldState(data)"
+												ng-value="contentApproveArticle.appConstant.ESTADO_SOLICITUD_RECHAZAR" />
+											No
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="radio">
+										<label>
+											<input type="radio" ng-model="data.estadoSolicitudNuevo"
+												ng-change="contentApproveArticle.changeFieldState(data)"
+												ng-value="contentApproveArticle.appConstant.ESTADO_SOLICITUD_PENDIENTE"/>
+											Dejar pendiente
+										</label>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="radio">
+										<label>
+											<input type="radio" ng-model="data.estadoSolicitudNuevo"
+												ng-change="contentApproveArticle.changeFieldState(data)"
+												ng-value="contentApproveArticle.appConstant.ESTADO_SOLICITUD_NO_GESTIONAR"/>
+											No gestionar
+										</label>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td class="td-middle">
+							<div ng-init="data.observacionNueva = data.observacion">
+								<textarea class="textarea-table" ng-model="data.observacionNueva" maxlength="250"
+										  ng-required="data.estadoSolicitudNuevo != contentApproveArticle.appConstant.ESTADO_SOLICITUD_PENDIENTE ? true : false"/>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</k-container-body>
+	</k-container-panel>
+</div>

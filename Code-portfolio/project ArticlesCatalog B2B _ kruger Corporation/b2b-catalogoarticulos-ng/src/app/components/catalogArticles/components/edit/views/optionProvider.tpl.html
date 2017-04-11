@@ -1,0 +1,103 @@
+<k-container-fieldset label="Proveedor">
+
+	<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REFERENCIA_PROVEEDOR].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CONVENIOINDICADOR].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCRIPCION_PROVEEDOR].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableFieldsSection')}}</p>
+		</k-output-message>
+	</div>
+
+	<div class="row">
+		<!--referencia proveedor-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_REFERENCIA_PROVEEDOR" editable="true">
+			<td ng-if="contentEdit.model.editArticle">
+				<k-input-text maxlength="20" ng-required="true"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REFERENCIA_PROVEEDOR].valorNuevo"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_REFERENCIA_PROVEEDOR)">
+				</k-input-text>
+			</td>
+		</field-edit>
+
+		<!--convenio indicador-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_CONVENIOINDICADOR" editable="false">
+			<span class="span-edit" ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CONVENIOINDICADOR].valorActual">Si</span>
+			<span class="span-edit" ng-if="!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CONVENIOINDICADOR].valorActual">No</span>
+		</field-edit>
+
+		<!--descripcion del articulo del proveedor-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_DESCRIPCION_PROVEEDOR" editable="true">
+			<textarea class="form-control" maxlength="1000" style="max-width: 455px;"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCRIPCION_PROVEEDOR].valorNuevo"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_DESCRIPCION_PROVEEDOR)">
+			</textarea>
+		</field-edit>
+	</div>
+</k-container-fieldset>
+
+<k-container-fieldset label="Unidades de manejo"
+		ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+	<div class="col-md-6">
+
+		<div ng-if="contentEdit.model.editArticle &&
+			 	contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorActual.length > 0">
+			<k-output-message type="info">
+				<p>{{contentEdit.kMessageService.renderMessage('unidadManejoMessage')}}</p>
+			</k-output-message>
+		</div>
+
+		<table class="table commonTable">
+			<thead>
+			<tr>
+				<th colspan="5" class="text-center">
+					{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].etiquetaCampo}}
+				</th>
+			</tr>
+			<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorActual.length > 0">
+				<th>Nº</th>
+				<th>EAN13/EAN14</th>
+				<th>U. Manejo</th>
+				<th ng-if="contentEdit.model.editArticle">{{contentEdit.kMessageService.renderMessage('nameUniManProv')}} *</th>
+				<th>Empaque</th>
+				<!--<th ng-if="contentEdit.model.editArticle">Empaque Prov.</th>-->
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorActual == null">
+				<td colspan="4" class="text-center">
+					Este art&iacute;culo no posee unidades de manejo
+				</td>
+			</tr>
+			<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorActual.length > 0"
+				ng-repeat="unidadManejo in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorActual">
+				<td class="text-center">
+					{{$index + 1}}
+				</td>
+				<td>
+					{{unidadManejo.articuloUnidadManejoDTO.codigoBarrasUnidadManejo}}
+				</td>
+				<td class="text-center">
+					{{unidadManejo.articuloUnidadManejoDTO.valorUnidadManejo}}
+				</td>
+				<td ng-if="contentEdit.model.editArticle">
+					<k-input-numeric type="integer" ng-required="true" integer-places="4" 
+						ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorNuevo[0].articuloUnidadManejoDTO.valorUnidadManejo"
+						ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_UNIDAD_MANEJO)">
+					</k-input-numeric>
+				</td>
+				<td>
+					{{unidadManejo.articuloUnidadManejoDTO.tipoUnidadEmpaque.nombreCatalogoValor}}
+				</td>
+				<!--<td ng-if="contentEdit.model.editArticle">-->
+					<!--<select class="form-control"-->
+							<!--ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].valorNuevo[0].valorTipoUnidadEmpaque"-->
+							<!--ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_UNIDAD_MANEJO)"-->
+							<!--ng-options="option.label for option in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MANEJO].listSelectItemTrasient track by option.value">-->
+					<!--</select>-->
+				<!--</td>-->
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</k-container-fieldset>
+

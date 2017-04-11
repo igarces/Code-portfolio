@@ -1,0 +1,16 @@
+[
+  {
+    "parent": "fluxAuthorization",
+    "stateName": "fluxAuthorization.load",
+    "urlPrefix": "/fluxAuthorization",
+    "type": "load",
+    "src": "components/fluxAuthorization/components/loadArticles"
+  },
+ {
+	"parent": "fluxAuthorization.load",
+	"stateName": "fluxAuthorization.load.approve",
+	"urlPrefix": "/approve",
+	"type": "load",
+	"src": "components/fluxAuthorization/components/approveArticle"
+  }
+]

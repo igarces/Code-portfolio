@@ -1,0 +1,32 @@
+<div class="modal-header">
+	<span class="modal-title">Confirmación
+		<span ng-click="modalExcel.close();" class="glyphicon glyphicon-remove modal-close"></span></span>
+</div>
+
+<div class="modal-body">
+
+	<div class="row">
+		<div class="col-xs-1">
+			<span class="fa fa-warning" style="color: rgb(241, 196, 15); font-size: 24px;"></span>
+		</div>
+		<div class="col-xs-11">
+			<p>{{modalExcel.message}}</p>
+			
+			<ul>
+				<li><strong>Buscar:</strong> {{modalExcel.message4}}</li>
+
+				<div ng-if="modalExcel.message3">
+					<li><strong>Actualizar:</strong> {{modalExcel.message3}}</li>
+					<div ng-if="modalExcel.message2">
+						<p class="important">{{modalExcel.message2}}</p>
+					</div>
+				</div>
+			</ul>	
+		</div>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn" ng-click="modalExcel.actionButton1()">{{modalExcel.button1}}</button>
+	<button class="btn" ng-disabled="modalExcel.disabledButton" ng-click="modalExcel.actionButton2()">{{modalExcel.button2}}</button>
+</div>

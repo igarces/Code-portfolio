@@ -1,0 +1,67 @@
+<div class="col-md-6"
+	 ng-if="model.fieldsMap[tag].estadoCampo == '1'"
+	 ng-init="field = model.fieldsMap[tag]">
+
+	<div class="row div-edit">
+
+		<div class="col-lg-3 col-md-4 col-xs-5">
+			<label>{{field.etiquetaCampo}}:
+				<span ng-if="model.editArticle && (model.requiredSanReg ||
+					tag == appConstant.TAG_FECHA_CADUCIDAD_REG_SAN || tag == appConstant.TAG_NUM_REG_SAN)">
+						*
+				</span>
+			</label>
+		</div>
+
+		<div class="col-lg-9 col-md-8 col-xs-7">
+			<div ng-if="!model.editArticle || field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_LECTURA" class="text-edit">
+				<span ng-if="model.fieldsMap[tag].valorSolicitado[model.selectedSanitaryRegister]"
+					 uib-popover="{{function.searchLabelDemandValue(model.fieldsMap[tag], tag)}}"
+					  popover-title="Valor solicitado:"
+					  popover-placement="bottom" popover-trigger="'mouseenter'">
+					<img style="height: 16px;" ng-src="{{appConstant.IMG_ICON_FLUX}}" /></span>
+
+				<span class="span-edit"
+					  ng-if="(tag != appConstant.TAG_FECHA_CADUCIDAD_REG_SAN && tag != appConstant.TAG_FECHA_EMISION_REG_SAN) ||
+					  model.fieldsMap[tag].valorActual[model.selectedSanitaryRegister] == null">
+					{{function.searchFieldLabel(model.fieldsMap[tag])}}</span>
+
+				<span class="span-edit"
+					  ng-if="(tag == appConstant.TAG_FECHA_CADUCIDAD_REG_SAN || tag == appConstant.TAG_FECHA_EMISION_REG_SAN) &&
+					   model.fieldsMap[tag].valorActual[model.selectedSanitaryRegister]">
+					{{model.fieldsMap[tag].valorActual[model.selectedSanitaryRegister] | date:("yyyy-MM-dd")}}
+				</span>
+			</div>
+
+			<div class="form-group" ng-if="model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA"
+				 ng-class="{'has-warning': field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION}">
+
+				<div class="input-group">
+					<div class="col-xs-11">
+						<div class="input-group">
+							<span class="input-group-addon" title="Requiere autorizaci&oacute;n"
+								ng-if="field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION &&
+						  		!model.fieldsMap[tag].valorSolicitado[model.selectedSanitaryRegister]">
+							<img ng-src="{{appConstant.IMG_ICON_FLUX}}" /></span>
+
+							<span class="input-group-addon"
+								  ng-if="field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION &&
+								  model.fieldsMap[tag].valorSolicitado[model.selectedSanitaryRegister]"
+								  uib-popover="{{function.searchLabelDemandValue(model.fieldsMap[tag], tag)}}"
+								  popover-title="Valor solicitado:"
+								  popover-placement="bottom" popover-trigger="'mouseenter'">
+								<img ng-src="{{appConstant.IMG_ICON_FLUX}}" /></span>
+
+							<!--Todas las directivas que contengan editable true debe tener el campo a editar-->
+							<div ng-transclude></div>
+						</div>
+					</div>
+				
+					<span ng-if="model.fieldsMap[tag].observacion" class="span-info"
+						  uib-popover="{{model.fieldsMap[tag].observacion}}" popover-title="Advertencia:"
+						  popover-placement="bottom" popover-trigger="'mouseenter'"><img style="margin-left: 2px;" ng-src="{{appConstant.IMG_ICON_WARNING}}"/></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

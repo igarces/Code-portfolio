@@ -1,0 +1,36 @@
+<table class="table commonTable" style="margin-top: 5px; margin-bottom: 5px;">
+	<thead>
+		<th>Orden</th>
+		<th>Descripción</th>
+		<th>Estado</th>
+	</thead>
+
+	<tbody>
+	<tr ng-if="list.length == 0">
+		<td colspan="3"> No existen características</td>
+	</tr>
+	<tr ng-if="list.length > 0" ng-repeat="characteristic in list"
+		ng-class="characteristic.status == appConstant.ESTADO_INACT_LITERAL ? 'danger' :
+			characteristic.secuencialCaracteristica == null ? 'success': 'white'">
+		<td class="text-center">
+			{{characteristic.orden}}
+		</td>
+		<td>
+			{{characteristic.description}}
+		</td>
+		<td>
+			<span ng-if="characteristic.secuencialCaracteristica == null">
+				NUEVO
+			</span>
+			<span ng-if="characteristic.secuencialCaracteristica != null && characteristic.status == appConstant.ESTADO_INACT_LITERAL">
+				ELIMINADO
+			</span>
+			<span ng-if="characteristic.secuencialCaracteristica != null &&
+				(characteristic.status == appConstant.ESTADO_ACT_LITERAL || characteristic.status == 'MOD')">
+				ACTIVO
+			</span>
+		</td>
+	</tr>
+	</tbody>
+</table>
+

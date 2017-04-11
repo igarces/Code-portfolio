@@ -1,0 +1,185 @@
+<div ng-if="sidebarSearch.model.userRols.length > 1" class="bg-success k-container-body"
+	 style="padding:7px !important;">
+	<form ng-enter="sidebarSearch.searchArticles(true)">
+		<label>Reporte:</label>
+		<select ng-model="sidebarSearch.model.reportOptionRol" ng-change="sidebarSearch.reportChange()"
+				style="float:right">
+			<option value="{{sidebarSearch.appConstant.ROL_USER_ADMIN_ARTICULOS}}">Administraci&oacute;n de art&iacute;culos</option>
+			<option value="{{sidebarSearch.appConstant.ROL_USER_COMPARACION_PRECIO}}">Comparaci&oacute;n de precios
+			</option>
+		</select>
+	</form>
+</div>
+
+<k-container-panel ng-class="sidebarSearch.model.userRols.length > 1 ? 'sizePanelSideBarSearch' : 'sizeNormalPanel'">
+	<k-container-header label="Criterios de B&uacute;squeda" col-title="10">
+		<a ng-click="sidebarSearch.cleanFilters()" style="float: right;" title="Borrar datos de b&uacute;squeda">
+			<img ng-src="{{sidebarSearch.appConstant.IMG_ICON_CLEAN}}"/>
+		</a>
+	</k-container-header>
+
+	<k-container-body>
+		<k-container-panel>
+			<form ng-enter="sidebarSearch.searchArticles(true)">
+				<k-container-fieldset label="Art&iacute;culo" class="filterSection">
+					<k-input-text ng-model="sidebarSearch.model.filtersSearch.codigoBarras" label="C&oacute;digo barras"
+								  placeholder="C&oacute;digo barras" mask="99999999999999999999">
+					</k-input-text>
+
+					<k-input-text ng-model="sidebarSearch.model.filtersSearch.descripcionArticulo"
+								  label="Descripci&oacute;n art&iacute;culo"
+								  placeholder="Descripci&oacute;n">
+					</k-input-text>
+
+					<div class="k-input"
+						 ng-if="sidebarSearch.model.reportOptionRol === sidebarSearch.appConstant.ROL_USER_ADMIN_ARTICULOS">
+						<label>Estado:</label>
+						<br>
+						<select name="repeatSelect" id="repeatSelect"
+								ng-model="sidebarSearch.model.filtersSearch.estado">
+							<option value="" selected="selected">Todos</option>
+							<option value="1">Activo</option>
+							<option value="0">Inactivo</option>
+						</select>
+					</div>
+
+					<div class="k-input"
+						 ng-if="sidebarSearch.model.reportOptionRol === sidebarSearch.appConstant.ROL_USER_ADMIN_ARTICULOS">
+						<label>Aplica registro sanitario:</label>
+						<br>
+						<select name="repeatSelect" id="repeatSelectR"
+								ng-change="sidebarSearch.changeAplicaRegSan()"
+								ng-model="sidebarSearch.model.filtersSearch.exigeRegSanitario">
+							<option value="" selected="selected">Todos</option>
+							<option value="{{sidebarSearch.appConstant.VALOR_APLICA_REGISTRO_SANITARIO}}">Si</option>
+							<option value="{{sidebarSearch.appConstant.VALOR_NO_APLICA_REGISTRO_SANITARIO}}">No</option>
+							<option value="{{sidebarSearch.appConstant.VALOR_NUNCA_APLICA_REGISTRO_SANITARIO}}">Nunca
+							</option>
+						</select>
+					</div>
+
+					<div class="k-input"
+						 ng-if="sidebarSearch.model.reportOptionRol === sidebarSearch.appConstant.ROL_USER_ADMIN_ARTICULOS">
+						<label>Tiene bloqueo FLUX:</label>
+						<br>
+						<select name="repeatSelect" id="repeatSelectBloqueo"
+								ng-model="sidebarSearch.model.filtersSearch.tieneBloqueoFlux">
+							<option value="" selected="selected">Todos</option>
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+				</k-container-fieldset>
+
+				<k-container-fieldset label="Proveedor" class="filterSection">
+					<k-input-text ng-model="sidebarSearch.model.filtersSearch.codigoReferencia"
+								  label="C&oacute;digo referencia"
+								  placeholder="C&oacute;digo referencia">
+					</k-input-text>
+				</k-container-fieldset>
+
+				<k-container-fieldset label="Clasificaci&oacute;n" class="filterSection"
+									  ng-if="sidebarSearch.searchGridFactory.gridOptionsClasificaciones.data.length > 0">
+
+					<div class="input-group" style="padding: 2px;">
+						<input type="text" class="form-control filter-input" ng-model='sidebarSearch.model.filterValue'
+							   placeholder="Filtro Clasificaci&oacute;n" ng-change="sidebarSearch.filter()"/>
+
+						<a class="input-group-addon"
+						   ng-click="sidebarSearch.cleanClassificationFilter()" aria-hidden="true">
+							<span class="glyphicon glyphicon-remove" id="glyphicon-filter" aria-hidden="true"></span>
+						</a>
+
+						<span class="input-group-addon" ng-click='sidebarSearch.filter()' style="display: none;"></span>
+					</div>
+
+					<div ui-grid="sidebarSearch.searchGridFactory.gridOptionsClasificaciones" id="clasificationsGrid"
+						 ui-grid-resize-columns ui-grid-move-columns ui-grid-auto-resize ui-grid-grouping
+						 ui-grid-selection
+						 style="overflow:auto; overflow-x:hidden !important; flex-basis:100%; display:block; height:200px;"></div>
+				</k-container-fieldset>
+
+				<k-container-fieldset label="Registro Sanitario" class="filterSection"
+									  ng-if="sidebarSearch.model.filtersSearch.exigeRegSanitario !== null &&
+									  sidebarSearch.model.filtersSearch.exigeRegSanitario == sidebarSearch.appConstant.VALOR_APLICA_REGISTRO_SANITARIO">
+					<k-input-text ng-model="sidebarSearch.model.filtersSearch.codigoRegSanitario"
+								  label="C&oacute;digo registro sanitario" placeholder="C&oacute;digo reg.sanitario">
+					</k-input-text>
+					<div class="k-input">
+						<label>Fecha caducidad:</label>
+						<br>
+						<label>Hasta:(yyyy-mm-dd)</label>
+					</div>
+					<k-input-date ng-model="sidebarSearch.model.filtersSearch.fechaCaducidad"></k-input-date>
+					<div class="k-input">
+						<label>
+							Caducados:
+							<input type="checkbox" ng-model="sidebarSearch.model.filtersSearch.mostrarCaducados">
+						</label>
+					</div>
+				</k-container-fieldset>
+
+				<k-container-fieldset label="Informaci&oacute;n" class="filterSection" id="informationCP"
+									  ng-if="sidebarSearch.model.reportOptionRol === sidebarSearch.appConstant.ROL_USER_COMPARACION_PRECIO">
+					<div class="row">
+						<div class="col-xs-1">
+							<img style="background-color: #FFCCCC">
+						</div>
+						<div class="col-xs-11">
+							<label>Precio proveedor mayor que el de Corporaci&oacute;n Favorita.</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<img style="background-color: #99FFFF">
+						</div>
+						<div class="col-xs-11">
+							<label>Precio proveedor menor que el de Corporaci&oacute;n Favorita.</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<img style="background-color: white">
+						</div>
+						<div class="col-xs-11">
+							<label>Precio proveedor igual que el de Corporaci&oacute;n Favorita.</label>
+						</div>
+					</div>
+				</k-container-fieldset>
+				<k-container-fieldset label="Informaci&oacute;n" class="filterSection" id="information"
+									  ng-if="sidebarSearch.model.reportOptionRol === sidebarSearch.appConstant.ROL_USER_ADMIN_ARTICULOS">
+					<div class="row">
+						<div class="col-xs-1">
+							<img style="background-color: #FFCCCC">
+						</div>
+						<div class="col-xs-11">
+							<label>Art&iacute;culo pendiente autorización.</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<img style="background-color: #99FFFF">
+						</div>
+						<div class="col-xs-11">
+							<label>M&uacute;ltiple registro sanitario.</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<img style="background-color: #FFF2D4">
+						</div>
+						<div class="col-xs-11">
+							<label>Registro sanitario repetido.</label>
+						</div>
+					</div>
+				</k-container-fieldset>
+
+			</form>
+			<div class="k-container-footer">
+				<button ng-click="sidebarSearch.searchArticles(true)">
+						<img ng-src="{{sidebarSearch.appConstant.IMG_ICON_SEARCH}}"/>
+					Buscar</button>
+			</div>
+		</k-container-panel>
+	</k-container-body>
+</k-container-panel>

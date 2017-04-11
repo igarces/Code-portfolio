@@ -1,0 +1,173 @@
+/*html, body {*/
+	/*font-family: Verdana, Arial, Helvetica !important;*/
+	/*font-size: 11px !important;*/
+/*}*/
+
+a{
+	cursor: pointer;
+}
+
+.k-header {
+	background-color: #f1f3f5;
+	border-bottom: 2px solid #c72d1d;
+	box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.2);
+	font-size: 10px;
+	padding: 0.3em;
+	border-bottom-width: 2px !important;
+}
+
+.k-header a p {
+	color: red;
+	margin-bottom: 0px;
+	font-weight: 600;
+	font-family: arial;
+}
+
+.header-tittle {
+	font-family: Verdana;
+	/*font-size: 20px;*/
+	font-size: 1.5em;
+	color: #3b4a53;
+	font-weight: bolder !important;
+}
+
+.header-buttons div{
+	float:right !important;
+	width: 70px;
+}
+
+.kh-navigation{
+	display: none !important;
+}
+
+/*Css para el ui-grid*/
+.ui-grid-cell{
+	border-bottom: 1px solid #cccccc !important;
+	border-right: 1px solid #cccccc !important;
+	background-color: white;
+}
+
+.ui-grid-cell-contents{
+	padding: 2px !important;
+
+}
+
+.ui-grid-header{
+	border: none !important;
+}
+
+.ui-grid-header-cell{
+	border: 1px solid #777 !important;
+	background-color: #D5D5D5 !important;
+	background: -webkit-linear-gradient(rgb(236, 236, 236), rgb(204, 204, 204)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgb(236, 236, 236), rgb(204, 204, 204)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgb(236, 236, 236), rgb(204, 204, 204)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgb(236, 236, 236), rgb(204, 204, 204)); /* Standard syntax */
+}
+
+#articlesGrid .ui-grid-header-cell .ui-grid-cell-contents,
+#comPriArtGrid .ui-grid-header-cell .ui-grid-cell-contents,
+#histComPriGrid .ui-grid-header-cell .ui-grid-cell-contents{
+	height: 34px;
+	white-space: normal;
+	-ms-text-overflow: clip;
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	overflow: visible;
+	text-align: center;
+}
+
+.ui-grid-invisible{
+	display:none;
+}
+
+.ui-grid-render-container-body .ui-grid-viewport{
+	border-left: 1px solid #777;
+}
+
+.ui-grid-render-container-left .ui-grid-viewport,
+.ui-grid-render-container-left .ui-grid-scrollbar-placeholder {
+	border-right: 1px solid #777;
+}
+
+.ui-grid-selection-row-header-buttons{
+	opacity: 1 !important;
+	border: solid 1px black;
+	height: 15px;
+}
+
+.ui-grid-icon-ok:before {
+	opacity: .1 ;
+}
+
+.ui-grid-row-selected .ui-grid-icon-ok:before {
+	opacity: 1;
+}
+
+.k-container-footer button{
+	float: right;
+}
+
+.k-container-footer{
+	margin-top: 7px;
+}
+
+.commonTable th{
+	color: inherit !important;
+	text-align: center !important;
+	padding: 2px !important;
+}
+
+.commonTable td{
+	/*border: 1px solid #ddd !important;*/
+	border: 1px solid #999 !important;
+}
+
+.k-container-panel .k-container-header h5 {
+	color: #3b4a53 !important;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+@media (max-width: 800px){
+	.header-tittle {
+		display: none;
+	}
+}
+
+.alert-info {
+	color: #31708f !important;
+	background-color: #d9edf7 !important;
+	border-color: #69a1bd !important;
+	font-size: 11px;
+	margin-top: 10px;
+}
+
+.ng-invalid-required .form-control,
+textarea.ng-invalid-required,
+select.ng-invalid-required{
+	border: 1px solid;
+	border-color: red !important;
+	background-color: #ffffdd !important;
+}
+
+input[type=radio] {
+	margin-top: 1px !important;
+}
+
+.redCell {
+	background-color: #f2dede;
+}
+
+.table, .table-bordered{
+	border-top-width: 1px !important;
+}
+
+textarea, .filter-input{
+	text-transform: uppercase;
+}
+
+.alert-warning {
+	background-color: #fcf8e3 !important;
+	color: #8a6d3b !important;
+}

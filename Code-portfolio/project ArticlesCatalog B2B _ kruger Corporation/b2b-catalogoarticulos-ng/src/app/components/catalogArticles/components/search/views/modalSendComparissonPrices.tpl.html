@@ -1,0 +1,26 @@
+<div class="modal-header">
+	<span class="modal-title">Confirmación
+		<span ng-click="modalSendComArt.close();" class="glyphicon glyphicon-remove modal-close"></span></span>
+</div>
+
+<div class="modal-body">
+
+	<k-output-message type="warning" ng-if="modalSendComArt.model.griComparisonPrice.data.length <= 0">
+		<p>{{modalSendComArt.kMessageService.renderMessage('noPriceDifferenceToSend')}}</p>
+	</k-output-message>
+
+
+	<k-output-message type="info" ng-if="modalSendComArt.model.griComparisonPrice.data.length > 0">
+		<p>{{modalSendComArt.kMessageService.renderMessage('sendPriceDifference')}}</p>
+	</k-output-message>
+
+	<div ui-grid="modalSendComArt.model.griComparisonPrice" id="sendComPriGrid"
+		 ng-if="modalSendComArt.model.griComparisonPrice.data.length > 0"
+		 ui-grid-resize-columns ui-grid-auto-resize
+		 style="overflow: auto; flex-basis: 100%; display: block; height: 96%;"></div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-danger" ng-click="modalSendComArt.okAction()">Aceptar</button>
+	<button class="btn" ng-click="modalSendComArt.cancelAction()">Cancelar</button>
+</div>

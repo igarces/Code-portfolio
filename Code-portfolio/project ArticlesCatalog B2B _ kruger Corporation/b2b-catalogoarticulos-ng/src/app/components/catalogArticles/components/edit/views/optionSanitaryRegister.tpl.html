@@ -1,0 +1,231 @@
+<k-container-fieldset label="Registro sanitario">
+
+	<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_APLICA_REG_SAN].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		  contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_OBSERVACION_REG_SAN].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REG_SAN].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableFieldsSection')}}</p>
+		</k-output-message>
+	</div>
+
+	<div class="row">
+		<!--Aplica registro sanitario-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_APLICA_REG_SAN" editable="false">
+			<span class="span-edit" >
+					{{contentEdit.searchFieldLabelOnList(contentEdit.appConstant.TAG_APLICA_REG_SAN)}}</span>
+		</field-edit>
+	</div>
+
+	<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_APLICA_REG_SAN].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO &&
+		contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_APLICA_REG_SAN].valorActual != contentEdit.appConstant.VALOR_APLICA_REGISTRO_SANITARIO">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableSection')}}</p>
+		</k-output-message>
+	</div>
+
+	<div class="row"
+		 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_APLICA_REG_SAN].valorActual == contentEdit.appConstant.VALOR_APLICA_REGISTRO_SANITARIO">
+
+		<!--Tiene registro sanitario-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_TIENE_REG_SAN" editable="true">
+			<div class="row">
+				<div class="col-md-1"
+					 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION">
+						
+						<span class="span-img-autorizacion" title="Requiere autorizaci&oacute;n"
+							  ng-if="!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorSolicitado">
+								<img ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>
+
+						<span class="span-img-autorizacion"
+								  ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorSolicitado"
+								  uib-popover="{{contentEdit.searchLabelDemandValue(contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN])}}" 
+								  popover-title="Valor solicitado:"
+								  popover-placement="bottom" popover-trigger="'mouseenter'">
+								<img ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>				
+				</div>
+				<div class="col-md-5">
+					<div class="radio">
+						<label>
+							<input type="radio" name="tieneRegSan" ng-value="true"
+								   ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorNuevo"
+								   ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_TIENE_REG_SAN)">
+							Si
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="radio">
+						<label>
+							<input type="radio" name="tieneRegSan" ng-value="false"
+								   ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorNuevo"
+								   ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_TIENE_REG_SAN)">
+							No
+						</label>
+					</div>
+				</div>
+			</div>
+		</field-edit>
+
+		<!--Observacion registro sanitario-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_OBSERVACION_REG_SAN" editable="true">
+			<textarea class="form-control" maxlength="500" style="max-width: 455px;"
+				ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_OBSERVACION_REG_SAN].valorNuevo"
+				ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_OBSERVACION_REG_SAN)"
+				ng-required="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorNuevo ? false : true">
+			</textarea>
+		</field-edit>
+
+		<!--Lista de Registros sanitarios-->
+		<div class="col-md-6"
+			 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REG_SAN].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO &&
+			 ((!contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorActual) ||
+			 (contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorNuevo))">
+			<div class="row div-edit">
+				<div class="col-lg-3 col-md-4 col-xs-5">
+					<label>{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REG_SAN].etiquetaCampo}}:</label>
+				</div>
+
+				<div class="col-lg-9 col-md-8 col-xs-7" ng-if="!contentEdit.model.editArticle">
+					<select ng-model="contentEdit.model.selectedSanitaryRegister" class="form-control"
+						ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REG_SAN].valorActual.length">
+						<option ng-repeat="sanitaryRegisterId in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REG_SAN].valorActual"
+								value="{{sanitaryRegisterId}}"
+								ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_NUM_REG_SAN].valorActual[sanitaryRegisterId]">
+							{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_NUM_REG_SAN].valorActual[sanitaryRegisterId]}}</option>
+					</select>
+				</div>
+				<div class="col-lg-9 col-md-8 col-xs-7" ng-if="contentEdit.model.editArticle">
+					<span>
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_NUM_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]}}</option>
+					</span>
+					<!--<span>-->
+						<!--<img ng-src="{{contentEdit.appConstant.IMG_ICON_ADD}}"/>-->
+					<!--</span>-->
+				</div>
+			</div>
+		</div>
+	</div>
+</k-container-fieldset>
+
+<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_APLICA_REG_SAN].valorActual == contentEdit.appConstant.VALOR_APLICA_REGISTRO_SANITARIO &&
+	((!contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorActual) ||
+	(contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TIENE_REG_SAN].valorNuevo))">
+
+	<k-container-fieldset label="Datos principales" ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_REG_SAN].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+		<div class="row">
+			<!--Numero de registro sanitario-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_NUM_REG_SAN">
+				<k-input-text ng-required="true" maxlength="64"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_NUM_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_NUM_REG_SAN)"></k-input-text>
+			</field-sanitary-register>
+
+			<!--Marca comercial-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_MARCA_REG_SAN">
+				<k-input-text ng-required="contentEdit.model.requiredSanReg" maxlength="64"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_MARCA_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_MARCA_REG_SAN)"></k-input-text>
+			</field-sanitary-register>
+	
+			<!--Fecha emision-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_FECHA_EMISION_REG_SAN">
+				<k-input-date ng-required="contentEdit.model.requiredSanReg"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_FECHA_EMISION_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					max="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_FECHA_CADUCIDAD_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_FECHA_EMISION_REG_SAN)"></k-input-date>
+			</field-sanitary-register>
+
+			<!--Fecha de caducidad-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_FECHA_CADUCIDAD_REG_SAN">
+				<k-input-date ng-required="true"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_FECHA_CADUCIDAD_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					min="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_FECHA_EMISION_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_FECHA_CADUCIDAD_REG_SAN)"></k-input-date>
+			</field-sanitary-register>
+
+			<!--Ciudad/Pa&iacute;s origen-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_PAIS_REG_SAN">
+				<k-input-text ng-required="contentEdit.model.requiredSanReg" maxlength="40"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PAIS_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_PAIS_REG_SAN)"></k-input-text>
+			</field-sanitary-register>
+
+			<!--tamano-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_TAMANO_REG_SAN">
+				<k-input-text ng-required="contentEdit.model.requiredSanReg" maxlength="100"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TAMANO_REG_SAN].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_TAMANO_REG_SAN)"></k-input-text>
+			</field-sanitary-register>
+
+			<!--Material envase-->
+			<field-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_MATERIAL_ENVASE">
+				<k-input-text ng-required="contentEdit.model.requiredSanReg" maxlength="1000"
+					ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_MATERIAL_ENVASE].valorNuevo[contentEdit.model.selectedSanitaryRegister]"
+					ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_MATERIAL_ENVASE)"></k-input-text>
+			</field-sanitary-register>
+		</div>
+
+		<div class="row" id="img-edit">
+			<field-file-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_DOC_REG_SAN"></field-file-sanitary-register>
+
+			<field-file-sanitary-register model="contentEdit.model" tag="contentEdit.appConstant.TAG_IMAGEN_REG_SAN"></field-file-sanitary-register>
+		</div>
+	</k-container-fieldset>
+
+	<!--<k-container-fieldset label="Informaci&oacute;n nutricional">-->
+		<!--<div class="row">-->
+			<!--<div class="col-md-6" style="padding-left:6px;">-->
+				<!--<div>-->
+					<!--<label class="control-label" style="width:130px">Tama&ntilde;o de la porci&oacute;n:</label>-->
+					<!--<span>240.0 ml</span>-->
+				<!--</div>-->
+
+				<!--<div>-->
+					<!--<label class="control-label" style="width:130px">Energ&iacute;a (cal):</label>-->
+					<!--<span>110.0</span>-->
+				<!--</div>-->
+
+				<!--<div>-->
+					<!--<label class="control-label" style="width:130px">Energ&iacute;a grasa (cal):</label>-->
+					<!--<span>0.0</span>-->
+				<!--</div>-->
+			<!--</div>-->
+
+			<!--<div class="col-md-6">-->
+				<!--<div>-->
+					<!--<label class="control-label" style="width:130px">Porciones de envase:</label>-->
+					<!--<span>N/D</span>-->
+				<!--</div>-->
+
+				<!--<div>-->
+					<!--<label class="control-label" style="width:130px">Energ&iacute;a (kJ):</label>-->
+					<!--<span>461</span>-->
+				<!--</div>-->
+
+				<!--<div>-->
+					<!--<label class="control-label" style="width:130px">Energ&iacute;a grasa (kJ):</label>-->
+					<!--<span>0</span>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+
+		<!--<table class="table table-bordered">-->
+			<!--<thead>-->
+			<!--<tr>-->
+				<!--<th>Elemento</th>-->
+				<!--<th>Cantidad por porci&oacute;n</th>-->
+				<!--<th>Porcentaje del valor diario (%)</th>-->
+			<!--</tr>-->
+			<!--</thead>-->
+			<!--<tbody>-->
+			<!--<tr ng-repeat="item in [1,2,3,4,5,6,7,8,9,10]">-->
+				<!--<td>Elemento[item]</td>-->
+				<!--<td>0.00</td>-->
+				<!--<td></td>-->
+			<!--</tr>-->
+			<!--</tbody>-->
+		<!--</table>-->
+	<!--</k-container-fieldset>-->
+</div>
+

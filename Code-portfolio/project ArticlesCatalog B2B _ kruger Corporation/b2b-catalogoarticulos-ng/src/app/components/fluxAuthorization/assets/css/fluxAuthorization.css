@@ -1,0 +1,77 @@
+.grayCell {
+	background-color: #EEEEEE !important;
+	/*background-color: #d5d5d5;*/
+}
+
+.whiteCell{
+	background-color: white !important;
+}
+
+.fluxTop{
+	background-color: rgb(236,236,236);
+	box-shadow: 1px -1px 2px rgba(0,0,0,0.2);
+	height: 2.4em;
+	padding-top: 3px;
+	padding-left: 5px;
+}
+
+.fluxTop button{
+	margin-right: 2px;
+	margin-left: 2px;
+}
+
+.labelTitle {
+	font-size: 12px !important;
+}
+
+.td-middle {
+	vertical-align: middle !important;
+}
+
+.textarea-table {
+	width: 99%;
+	margin: 2px;
+	text-transform: none;
+	max-width: 239px;
+    max-height: 50px;
+}
+
+.bg-success, .table>tbody>tr.success>td{
+	background-color: #dff0d8 !important;
+}
+
+.table>tbody>tr.danger>td{
+	background-color: #f2dede !important;
+}
+
+.td-top{
+	vertical-align: top !important;
+}
+
+textarea{
+	height: 50px;
+}
+
+/*.popover-inner{
+	max-width: 180px;
+}*/
+
+.popover-content{
+	text-align: justify;
+}
+
+.arrow{
+	display: none !important;
+}
+
+.popover{
+	left: 0px !important;
+}
+
+.popover.bottom {
+    margin-top: 5px !important;
+}
+
+.fluxTop span{
+	font-size: 15px;
+}

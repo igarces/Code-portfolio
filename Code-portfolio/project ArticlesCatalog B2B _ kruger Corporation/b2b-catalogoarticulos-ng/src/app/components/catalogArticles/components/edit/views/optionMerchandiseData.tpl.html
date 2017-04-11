@@ -1,0 +1,202 @@
+<k-container-fieldset label="Datos mercanc&iacute;as">
+
+	<div ng-if="contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_TIENE_GARANTIA]">
+		<div class="row">
+			<div class="col-md-6" ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+				<!--DATOS GARANTIAS-->
+				<k-container-fieldset label="{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].etiquetaCampo}}">
+					<table class="table commonTable" id="tabla-warranty">
+						<thead>
+						<tr>
+							<th colspan="3" class="text-center">
+
+								<span title="Requiere autorizaci&oacute;n" 
+									ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION &&
+									!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorSolicitado && contentEdit.model.editArticle">
+
+									<img style="height: 16px;" ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" />
+								</span>
+
+								<span
+										ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorSolicitado"
+										uib-popover="{{contentEdit.requestedValueWarrantyData()}}" popover-title="Valor solicitado:"
+										popover-placement="bottom" popover-trigger="'mouseenter'">
+								<img style="height: 16px;" ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>
+								Garant&iacute;a
+							</th>
+						</tr>
+						<tr>
+							<th>Garant&iacute;a</th>
+							<th>Estado</th>
+							<th>Tiempo máximo (meses)</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Normal</td>
+							<td class="text-center">
+
+								<div ng-if="!contentEdit.model.editArticle ||
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+
+									<img ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorActual.estadoGarantia == contentEdit.appConstant.ESTADO_ACTVO"
+										 ng-src="{{contentEdit.appConstant.IMG_ICON_ACTIVE}}"/>
+									<img ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorActual.estadoGarantia != contentEdit.appConstant.ESTADO_ACTVO"
+										 ng-src="{{contentEdit.appConstant.IMG_ICON_INACTIVE}}"/>
+								</div>
+
+								<div ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+
+									<select class="form-control"
+											ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorNuevo.estadoGarantia"
+											ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_DATOS_GARANTIA)">
+										<option value="{{contentEdit.appConstant.ESTADO_ACTVO}}">Activo</option>
+										<option value="{{contentEdit.appConstant.ESTADO_INACTIVO}}">Inactivo</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div ng-if="(!contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorActual.estadoGarantia == contentEdit.appConstant.ESTADO_ACTVO) ||
+									(contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorNuevo.estadoGarantia == contentEdit.appConstant.ESTADO_ACTVO)">
+
+									<div class="text-right" ng-if="!contentEdit.model.editArticle ||
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+
+										{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorActual.tieMaxGarNor}}
+									</div>
+
+									<div ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+
+										<k-input-numeric style="margin: 0px !important;" type="integer" integer-places="4" ng-required="true"
+														 ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_DATOS_GARANTIA)"
+														 ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].valorNuevo.tieMaxGarNor">
+										</k-input-numeric>
+									</div>
+								</div>
+
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</k-container-fieldset>
+			</div>
+		</div>
+
+		<!--CARACTERISTICAS-->
+		<div class="row" ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+			<div class="col-md-6">
+				<k-container-fieldset label="{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].etiquetaCampo}}">
+
+					<div class="row">
+						<div class="col-xs-6">
+							<label class="control-label" style="width:130px">Tipo caracter&iacute;stica:</label>
+							<span>T&Eacute;CNICAS</span>
+						</div>
+						<div class="col-xs-6" ng-if="contentEdit.model.editArticle &&
+						contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA &&
+						(!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length || contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length < 7)">
+							<button class="pull-right" ng-click="contentEdit.addCharacteristics()">
+								<img ng-src="{{contentEdit.appConstant.IMG_ICON_ADD}}"/>
+								Adicionar</button>
+						</div>
+					</div>
+
+					<table class="table commonTable">
+						<thead>
+						<tr>
+							<th colspan="4" class="text-center">
+									<span ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION &&
+										(!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorSolicitado &&
+										contentEdit.model.editArticle || contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorSolicitado )"
+									ng-click="contentEdit.showCharacteristicModal()" title="Ver caracter&iacute;sticas solicitadas">
+
+										<img style="height: 16px;" ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" />
+									</span>
+								Caracter&iacute;sticas T&eacute;cnicas
+							</th>
+						</tr>
+						<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length > 0">
+							<th style="width: 60px;" ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+								Posici&oacute;n
+							</th>
+							<th>Orden</th>
+							<th>Descripci&oacute;n*</th>
+							<th ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+								Eliminar
+							</th>
+						</tr>
+						</thead>
+						<tbody ng-if="!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length">
+						<tr>
+							<td colspan="2" class="text-center">
+								Este art&iacute;culo no posee caracter&iacute;sticas
+							</td>
+						</tr>
+						</tbody>
+						<tbody ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length > 0"
+							   ng-repeat="caract in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo">
+						<tr>
+							<td ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+
+								<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length > 1">
+									<div class="col-xs-6 text-center">
+										<a ng-if="$index > 0" ng-click="contentEdit.changeOrderUp(caract, $index)" title="subir">
+											<img ng-src="{{contentEdit.appConstant.IMG_ICON_UP_ARROW}}"/>
+										</a>
+									</div>
+
+									<div class="col-xs-6 text-center">
+										<a ng-if="$index < contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].valorNuevo.length - 1"
+										   ng-click="contentEdit.changeOrderDown(caract, $index)" title="bajar">
+											<img ng-src="{{contentEdit.appConstant.IMG_ICON_DOWN_ARROW}}"/>
+										</a>
+									</div>
+								</div>
+
+							</td>
+							<td class="text-center">{{caract.orden}}</td>
+							<td>
+								<div ng-if="!contentEdit.model.editArticle ||
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+									{{caract.description}}
+								</div>
+
+								<div ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+									<k-input-text ng-model="caract.description" ng-required="true" maxlength="40"></k-input-text>
+								</div>
+							</td>
+							<td class="text-center" ng-if="contentEdit.model.editArticle &&
+									contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+								<a ng-click="contentEdit.removeCharacteristic(caract, $index)" title="eliminar">
+									<img ng-src="{{contentEdit.appConstant.IMG_ICON_REMOVE}}"/>
+								</a>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</k-container-fieldset>
+				<br>
+			</div>
+		</div>
+	</div>
+
+	<div ng-if="!contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_TIENE_GARANTIA]">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableSection')}}</p>
+		</k-output-message>
+	</div>
+
+	<div ng-if="contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_TIENE_GARANTIA] &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DATOS_GARANTIA].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CARACTERISTICAS].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableFieldsSection')}}</p>
+		</k-output-message>
+	</div>
+</k-container-fieldset>

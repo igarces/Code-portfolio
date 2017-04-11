@@ -1,0 +1,75 @@
+<div ng-class="tag == appConstant.TAG_COMPUESTO_TRANSG ? 'col-md-12' : 'col-md-6'"
+	 ng-if="model.fieldsMap[tag].estadoCampo == appConstant.ESTADO_ACTVO"
+	 ng-init="field = model.fieldsMap[tag]">
+
+	<div class="row div-edit">
+
+		<div class="col-lg-3 col-md-4 col-xs-5">
+			<label>{{field.etiquetaCampo}}:
+			<span ng-if="model.editArticle && ((tag == appConstant.TAG_OBSERVACION_REG_SAN &&
+				model.fieldsMap[appConstant.TAG_TIENE_REG_SAN].valorNuevo != true) ||
+				tag == appConstant.TAG_CANTIDAD_MEDIDA || tag == appConstant.TAG_TAMANO ||
+				tag == appConstant.TAG_UNIDAD_MEDIDA || tag == appConstant.TAG_PRESENTACION ||
+				tag == appConstant.TAG_PAISES || tag == appConstant.TAG_REFERENCIA_PROVEEDOR)">
+						*
+				</span>
+			</label>
+		</div>
+
+		<div class="col-lg-9 col-md-8 col-xs-7" ng-if="editable == 'false'">
+			<div class="kch-options" ng-transclude>
+				<span class="span-edit">{{model.fieldsMap[tag].valorActual}}</span>
+			</div>
+		</div>
+
+		<div class="col-lg-9 col-md-8 col-xs-7" ng-if="editable == 'true'">
+			<div ng-if="!model.editArticle || field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_LECTURA" class="text-edit">
+				<span ng-if="model.fieldsMap[tag].valorSolicitado" class="span-info"
+					  uib-popover="{{function.searchLabelDemandValue(model.fieldsMap[tag])}}" popover-title="Valor solicitado:"
+					  popover-placement="bottom" popover-trigger="'mouseenter'">
+					<img style="height: 16px;" ng-src="{{appConstant.IMG_ICON_FLUX}}" /></span>
+
+				<span class="span-edit" ng-if="tag != appConstant.TAG_TIENE_REG_SAN">
+					{{function.searchFieldLabel(model.fieldsMap[tag], tag)}}</span>
+
+				<span ng-if="tag == appConstant.TAG_TIENE_REG_SAN">
+					<img ng-if="model.fieldsMap[tag].valorActual"
+						 ng-src="{{appConstant.IMG_ICON_ACTIVE}}"/>
+					<img ng-if="!model.fieldsMap[tag].valorActual"
+						 ng-src="{{appConstant.IMG_ICON_INACTIVE}}"/>
+				</span>
+			</div>
+
+			<div class="form-group" ng-if="model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA"
+				 ng-class="{'has-warning': field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION}">
+
+				<div class="input-group">
+					<div class="col-xs-11">
+						<div class="input-group">
+							<span class="input-group-addon" title="Requiere autorizaci&oacute;n"
+								  ng-if="tag != appConstant.TAG_TIENE_REG_SAN && 
+								  	field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION && !model.fieldsMap[tag].valorSolicitado">
+							<img ng-src="{{appConstant.IMG_ICON_FLUX}}" /></span>
+
+							<span class="input-group-addon"
+								  ng-if="tag != appConstant.TAG_TIENE_REG_SAN && 
+								  	field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION && model.fieldsMap[tag].valorSolicitado"
+								  uib-popover="{{function.searchLabelDemandValue(model.fieldsMap[tag])}}" popover-title="Valor solicitado:"
+								  popover-placement="bottom" popover-trigger="'mouseenter'">
+								<img ng-src="{{appConstant.IMG_ICON_FLUX}}" /></span>
+
+							<!--Todas las directivas que contengan editable true debe tener el campo a editar-->
+							<div ng-transclude></div>
+						</div>
+					</div>
+					
+					<span ng-if="model.fieldsMap[tag].observacion" class="span-info"
+						  uib-popover="{{model.fieldsMap[tag].observacion}}" popover-title="Advertencia:"
+						  popover-placement="bottom" popover-trigger="'mouseenter'">
+						  <img style="margin-left: 2px;" ng-src="{{appConstant.IMG_ICON_WARNING}}"/></span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,20 @@
+[
+  {
+    "stateName": "catalogArticles",
+    "urlPrefix": "/catalogArticles",
+    "type": "load",
+    "src": "components/catalogArticles"
+  },
+  {
+	"stateName": "fluxAuthorization",
+	"urlPrefix": "/fluxAuthorization",
+	"type": "load",
+	"src": "components/fluxAuthorization"
+  },
+  {
+	"stateName": "maxAdministration",
+	"urlPrefix": "/maxAdministration",
+	"type": "load",
+	"src": "components/maxAdministration"
+  }
+]

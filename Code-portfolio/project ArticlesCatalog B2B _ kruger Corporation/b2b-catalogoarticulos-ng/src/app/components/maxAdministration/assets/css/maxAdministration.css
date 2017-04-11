@@ -1,0 +1,69 @@
+.menu-wizard .k-container-header {
+	margin-bottom: 5px !important;
+}
+
+.k-container-header a {
+	padding: 0px !important;
+}
+
+a{
+	cursor: pointer;
+}
+
+.label-disabled {
+	font-weight: normal;
+}
+
+.important{
+	color: #e74c3c;
+}
+
+.red-row{
+	background-color: #f2dede;
+}
+
+.table, .table-bordered{
+	border-top-width: 1px !important;
+}
+
+input[type=radio] {
+	margin-top: 1px !important;
+	position: absolute;
+	margin-left: -20px !important;
+
+}
+
+#table-admin .radio-div{
+	position: relative;
+	display: block;
+}
+
+#table-admin .radio-div label{
+	min-height: 14px;
+	padding-left: 20px;
+	margin-bottom: 0;
+	cursor: pointer;
+}
+
+#table-admin>tbody>tr>td,
+#table-admin>tbody>tr>th,
+#table-admin>tbody>tr>td>table>tbody>tr>td {
+	vertical-align: middle !important;
+}
+
+.textarea-table {
+	width: 99%;
+	margin: 2px;
+	height: 34px;
+	max-width: 250px;
+	max-height: 34px;
+}
+
+#adm-campos a{
+	height: 18px;
+}
+
+.ui-grid-icon-plus-squared,
+.ui-grid-icon-minus-squared{
+	cursor: pointer;
+}

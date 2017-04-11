@@ -1,0 +1,30 @@
+<!--<script src="ng-file-upload-shim.min.js"></script>-->
+<!--<script src="ng-file-upload.min.js"></script>-->
+
+<div class="modal-header">
+	<span class="modal-title">Archivo justificativo transg&eacute;nico
+		<span ng-click="modalTransgenic.closeJustifyTransgenicPopUp();" class="glyphicon glyphicon-remove modal-close"></span></span>
+</div>
+
+<div class="modal-body">
+	<span>Contenido</span>
+	<div class="preview">
+		<div>Preview image/audio/video:</div>
+		<img ngf-src="contentEdit.model.articleToEdit.imgTransgenic">
+	</div>
+
+	<input type="file" ng-model="contentEdit.model.articleToEdit.imgTransgenic" name="file" ngf-accept="'image/*'" required="">
+
+	<div class="preview">
+		<div>Preview image/audio/video:</div>
+		<img ngf-src="!files[0].$error && files[0]">
+	</div>
+	<button>Click</button>
+</div>
+
+<div class="modal-footer">
+	<button type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-ok"></span>
+		Aceptar
+	</button>
+</div>

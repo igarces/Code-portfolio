@@ -1,0 +1,52 @@
+<div class="modal-header">
+	<span class="modal-title">Historial registro sanitario
+		<span ng-click="modalSanRegRecord.close();" class="glyphicon glyphicon-remove modal-close"></span></span>
+</div>
+
+<div class="modal-body">
+	<div>
+		<label>C&#243;digo de barras:</label> <span>{{modalSanRegRecord.articuloObj.articulo.codigoBarras}}</span>
+		<br>
+		<label>Descripci&#243;n:</label> <span>{{modalSanRegRecord.articuloObj.articulo.descripcionArticulo}}</span>
+	</div>
+
+	<div class="table-responsive" style="max-height: 300px;">
+		<table class="table commonTable" ng-if="modalSanRegRecord.sanitaryRegisterList.length > 0">
+			<thead>
+			<tr>
+				<th>Estado</th>
+				<th>N&#176; Reg San</th>
+				<th>Fecha caducidad</th>
+				<th>Fecha registro</th>
+				<th>Fecha modificaci&#243;n</th>
+				<th>Usuario modificaci&#243;n</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr	ng-repeat="regSan in modalSanRegRecord.sanitaryRegisterList">
+				<td class="text-center">
+					<img ng-if="regSan.estado == modalSanRegRecord.appConstant.ESTADO_ACTVO"
+						 ng-src="{{modalSanRegRecord.appConstant.IMG_ICON_ACTIVE}}"/>
+					<img ng-if="regSan.estado != modalSanRegRecord.appConstant.ESTADO_ACTVO"
+						 ng-src="{{modalSanRegRecord.appConstant.IMG_ICON_INACTIVE}}"/>
+				</td>
+				<td>
+					{{regSan.registroSanitario.registroSanitario}}
+				</td>
+				<td>
+					{{regSan.registroSanitario.fechaCaducidadRegistroSanitario | date:"yyyy-MM-dd"}}
+				</td>
+				<td>
+					{{regSan.registroSanitario.fechaRegistro | date:"yyyy-MM-dd"}}
+				</td>
+				<td>
+					{{regSan.registroSanitario.fechaModificacion | date:"yyyy-MM-dd"}}
+				</td>
+				<td>
+					{{regSan.registroSanitario.usuarioModificacionDTO.userCompleteName}}
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

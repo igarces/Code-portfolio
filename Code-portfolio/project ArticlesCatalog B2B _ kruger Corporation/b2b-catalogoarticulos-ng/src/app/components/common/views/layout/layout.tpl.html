@@ -1,0 +1,20 @@
+<div class="k-layout">
+	<k-header action-navigation="api.actionNavigation">
+		<!--<k-header-app>-->
+			<!--<k-header-button name="salir" icon="fa fa-th-large"></k-header-button>-->
+			<!--<k-header-button name="salir" icon="fa fa-close"></k-header-button>-->
+		<!--</k-header-app>-->
+		<div ui-view="header">
+		</div>
+	</k-header>
+	<div class="kl-content">
+		<aside ng-if="api.isRenderLeft" class="kl-left">
+			<div ui-view="left" class="kl-left-content"></div>
+			<div class="kl-splitter">
+				<span class="glyphicon" ng-class="api.isExpandedLeft?'glyphicon-chevron-left':'glyphicon-chevron-right'" ng-click="api.toogleLeft()"></span>
+			</div>
+		</aside>
+		<div ui-view="center" class="kl-center"></div>
+
+	</div>
+</div>

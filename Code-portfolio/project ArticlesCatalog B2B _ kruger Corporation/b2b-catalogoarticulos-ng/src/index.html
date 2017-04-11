@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" data-framework="angularjs">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+    <title></title>
+  </head>
+
+  <body ng-cloak>
+    <noscript>
+      <div class="deprecation-warning">
+        <h1>Por favor habilite Javascript en su navegador.</h1>
+      </div>
+    </noscript>
+
+
+    <div ui-view></div>
+
+    <script src="jspm_packages/system.src.js"></script>
+    <script src="system.config.js"></script>
+    <script>
+      System.config({
+        paths: {
+          "components/*": "app/components/*.js"
+        }
+      });
+      System.import('app/app');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+/*Apply Icon Fonts*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(/assets/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/assets/fonts/MaterialIcons-Regular.woff) format('woff'),
+       url(/assets/fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+// Rules for sizing the icon.
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+// Rules for using icons as black on a light background.
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+// Rules for using icons as white on a dark background.
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/*End Icon fonts definition*/
+
+* {
+  font-family: arial;
+  font-size: 12px;
+}
+
+a, p, span {
+  margin: 0;
+  padding: 0;
+}
+
+a.md-button.md-primary.md-raised, a.md-button.md-primary.md-fab, .md-button.md-primary.md-raised, .md-button.md-primary.md-fab {
+  color: #000000;
+}
+
+.md-button {
+  text-transform: capitalize;
+}
+
+.md-shadow-bottom-z-1, .md-button.md-raised:not([disabled]), .md-button.md-fab, .md-button.md-raised.md-focused:not([disabled]), .md-button.md-fab.md-focused:not([disabled]) {
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.26);
+}
+
+.md-shadow-bottom-z-2, .md-button.md-raised:not([disabled]):active, .md-button.md-fab:not([disabled]):active {
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.4); }
+
+.md-primary .md-ripple-container {
+  border: 1px solid #BED6F8;
+}
+
+[layout-padding], [layout-padding] > [flex], [layout-padding] > [flex-gt-sm], [layout-padding] > [flex-md], [layout-padding] > [flex-lt-lg] {
+  padding: 0.15em !important;
+}
+
+/*Rompiendo tema angular*/
+md-toolbar {
+  color: #000000;
+  background: -webkit-linear-gradient(top, rgba(236,243,254,1) 0%, rgba(190,214,248,1) 100%);
+  background: -o-linear-gradient(top, rgba(236,243,254,1) 0%, rgba(190,214,248,1) 100%);
+  background: -ms-linear-gradient(top, rgba(236,243,254,1) 0%, rgba(190,214,248,1) 100%);
+  background: linear-gradient(to button, rgba(236,243,254,1) 0%, rgba(190,214,248,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EFF5FE', endColorstr='#BED6F8', GradientType=1 );
+  margin: 0.02em;
+
+  h3 {
+    padding-left: 1em;
+  }
+}
+
+/*Detalles MaxTheme*/
+input {
+  padding: 0.3em;
+}

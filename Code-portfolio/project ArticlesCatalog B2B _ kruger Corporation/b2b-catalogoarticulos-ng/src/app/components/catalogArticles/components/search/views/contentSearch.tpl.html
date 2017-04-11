@@ -1,0 +1,70 @@
+<div class="container-fluid" style="display:flex; flex-direction: column; margin: 0; padding: 0;" id="content-search">
+
+	<k-container-panel class="sizeNormalPanel">
+		<k-container-header label="Lista de Art&iacute;culos" col-title="4">
+			<button ng-if="contentSearch.model.reportOptionRol === contentSearch.appConstant.ROL_USER_ADMIN_ARTICULOS &&
+				contentSearch.model.gridOptionsArticles.data.length > 0 ||
+				contentSearch.model.reportOptionRol == contentSearch.appConstant.ROL_USER_COMPARACION_PRECIO &&
+				contentSearch.model.griOptionsComparisonPriceArticles.data.length > 0"
+					ng-click="contentSearch.downloadExcel(false)"
+					title="Descargar excel datos">
+				<img ng-src="{{contentSearch.appConstant.IMG_ICON_DOWNLOAD_EXCEL}}"/>
+				<span class="hidden-xs">Descargar datos</span>
+			</button>
+
+			<button ng-click="contentSearch.downloadExcel()" title="Descargar excel plantilla">
+				<img ng-src="{{contentSearch.appConstant.IMG_ICON_DOWNLOAD_EXCEL}}"/>
+				<span class="hidden-xs">Descargar plantilla</span>
+			</button>
+
+			<button ng-if="contentSearch.model.showUploadButton" ngf-select="contentSearch.uploadExcel($files, $newFiles)"
+				ngf-max-size="{{contentSearch.appConstant.FILE_SIZE}}" accept=".xls,.xlsx"  ngf-pattern="'.xls,.xlsx'"
+				ngf-reset-on-click="false" ngf-reset-model-on-click="false"
+				title="Cargar excel">
+				<img ng-src="{{contentSearch.appConstant.IMG_ICON_UPLOAD_EXCEL}}"/>
+					<span class="hidden-xs">Subir</span>
+			</button>
+
+			<span style="float: right; margin-right: 15px;" 
+				ng-if="!contentSearch.model.showUploadButton" title="Actualización masiva en progreso">
+				<i class="fa fa-spinner fa-pulse fa-2x fa-fw" aria-hidden="true"></i>
+			</span>		
+		</k-container-header>
+
+		<k-container-body>
+			<p class="text-center" ng-if="contentSearch.model.reportOptionRol == contentSearch.appConstant.ROL_USER_ADMIN_ARTICULOS &&
+				contentSearch.model.gridOptionsArticles.data.length == 0 ||
+				contentSearch.model.reportOptionRol == contentSearch.appConstant.ROL_USER_COMPARACION_PRECIO &&
+				contentSearch.model.griOptionsComparisonPriceArticles.data.length == 0">
+				{{contentSearch.kMessageService.renderMessage('noDataToShow')}}</p>
+
+			<div ng-if="contentSearch.model.reportOptionRol === contentSearch.appConstant.ROL_USER_ADMIN_ARTICULOS &&
+						contentSearch.model.gridOptionsArticles.data.length > 0">
+
+				<div ui-grid="contentSearch.model.gridOptionsArticles" id="articlesGrid" class="k-ui-grid-content-full-rigth"
+					 ui-grid-resize-columns ui-grid-move-columns ui-grid-auto-resize ui-grid-pinning ui-grid-pagination
+					 style="overflow: auto; flex-basis: 100%; display: block; height: 96%;"></div>
+
+				<k-pagination
+						items-per-page="contentSearch.model.gridOptionsArticles.paginationPageSize"
+						current-page="contentSearch.model.gridOptionsArticles.paginationCurrentPage"
+						total-items="contentSearch.model.gridOptionsArticles.totalItems"></k-pagination>
+			</div>
+
+			<div ng-if="contentSearch.model.reportOptionRol === contentSearch.appConstant.ROL_USER_COMPARACION_PRECIO &&
+						contentSearch.model.griOptionsComparisonPriceArticles.data.length > 0">
+
+				<div ui-grid="contentSearch.model.griOptionsComparisonPriceArticles" id="comPriArtGrid" class="k-ui-grid-content-full-rigth"
+					 ui-grid-resize-columns ui-grid-move-columns ui-grid-auto-resize ui-grid-pinning ui-grid-pagination
+					 style="overflow: auto; flex-basis: 100%; display: block; height: 96%;"></div>
+
+				<k-pagination ng-if="contentSearch.model.griOptionsComparisonPriceArticles.totalItems >= contentSearch.model.griOptionsComparisonPriceArticles.paginationPageSize"
+							  items-per-page="contentSearch.model.griOptionsComparisonPriceArticles.paginationPageSize"
+							  current-page="contentSearch.model.griOptionsComparisonPriceArticles.paginationCurrentPage"
+							  total-items="contentSearch.model.griOptionsComparisonPriceArticles.totalItems"></k-pagination>
+			</div>
+		</k-container-body>
+	</k-container-panel>
+</div>
+
+

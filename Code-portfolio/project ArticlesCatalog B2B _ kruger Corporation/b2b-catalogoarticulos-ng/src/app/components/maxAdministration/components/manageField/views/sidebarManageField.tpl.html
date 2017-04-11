@@ -1,0 +1,18 @@
+<k-container-panel>
+
+	<k-container-header label="Opciones">
+	</k-container-header>
+
+	<k-container-body >
+		<ul class="nav nav-pills nav-stacked menu-wizard" id="adm-campos">
+			<li ng-repeat="option in sidebarManageField.model.sidebarOptions" class="k-container-header"
+				ng-class="{'active' : option.id == sidebarManageField.model.selectedOption.id }">
+				<a ng-click="sidebarManageField.changeSection(option)">
+					<img ng-src="{{option.icon}}" />
+					{{option.title}}
+				</a>
+			</li>
+		</ul>
+	</k-container-body>
+
+</k-container-panel>

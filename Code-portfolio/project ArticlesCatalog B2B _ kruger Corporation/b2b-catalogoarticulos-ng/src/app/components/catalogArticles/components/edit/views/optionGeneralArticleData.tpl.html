@@ -1,0 +1,86 @@
+
+<k-container-panel ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COD_BARRAS].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCRICION_ART].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_ESTADO_ART].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_ESTADO_COD].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_FECHA_CREACION_ART].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SUBBODEGA].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CLASIFICACION].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SUBCLASIFICACION].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CLASE_ARTICULO].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CAUSAL].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ">
+	<k-container-body>
+		<k-container-fieldset label="Datos generales">
+			<div class="row">
+				<!--Codigo de Barras-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_COD_BARRAS" editable="false"></field-edit>
+
+				<!--Descripcion Articulo-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_DESCRICION_ART" editable="false"></field-edit>
+
+				<!--Estado-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_ESTADO_ART" editable="false">
+					<div ng-init="field = contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_ESTADO_ART]">
+						<img ng-if="field.valorActual == contentEdit.appConstant.ESTADO_ACTVO"
+							 ng-src="{{contentEdit.appConstant.IMG_ICON_ACTIVE}}"/>
+						<img ng-if="field.valorActual != contentEdit.appConstant.ESTADO_ACTVO"
+							 ng-src="{{contentEdit.appConstant.IMG_ICON_INACTIVE}}"/>
+					</div>
+				</field-edit>
+
+				<!--Estado Codificacion-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_ESTADO_COD" editable="false"></field-edit>
+
+				<!--Fecha creación-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_FECHA_CREACION_ART" editable="false">
+					<span class="span-edit">
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_FECHA_CREACION_ART].valorActual | date:"yyyy-MM-dd"}}
+					</span>
+				</field-edit>
+
+				<!--Subbodega-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_SUBBODEGA" editable="false"></field-edit>
+
+				<!--Clasificacion-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_CLASIFICACION" editable="false">
+					<span class="span-edit">
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CLASIFICACION].valorActual['@id'].codigoClasificacion}}
+						-
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CLASIFICACION].valorActual.descripcionClasificacion}}
+					</span>
+				</field-edit>
+
+				<!--Sub clasificacion-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_SUBCLASIFICACION" editable="false">
+					<span class="span-edit">
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SUBCLASIFICACION].valorActual['@id'].codigoSubClasificacion}}
+						-
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SUBCLASIFICACION].valorActual.descripcionSubClasificacion}}
+					</span>
+				</field-edit>
+
+				<!--Clase-->
+				<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_CLASE_ARTICULO" editable="false">
+					<span class="span-edit">
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CLASE_ARTICULO].valorActual['@id'].codigoClaseArticulo}}
+						-
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CLASE_ARTICULO].valorActual.name}}
+					</span>
+				</field-edit>
+
+				<!--Causal-->
+				<field-edit ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CAUSAL].valorActual"
+							model="contentEdit.model" tag="contentEdit.appConstant.TAG_CAUSAL" editable="false">
+					<span class="span-edit">
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CAUSAL].valorActual.valorTipoCausal}}
+						-
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CAUSAL].valorActual.tipoCausal.nombreCatalogoValor}}
+					</span>
+				</field-edit>
+
+			</div>
+		</k-container-fieldset>
+	</k-container-body>
+</k-container-panel>
+
+

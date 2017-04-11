@@ -1,0 +1,48 @@
+<k-header-title module="Administraci&oacute;n art&iacute;culos" logo="{{headerEdit.appConstant.IMG_LOGO_ADM_ARTICLES}}">
+</k-header-title>
+
+<k-header-module>
+	<div class="row header-buttons" style="position: absolute; right: 0px;">
+		<div class="col-xs-1">
+			<a ng-click="headerEdit.returnPageHome()">
+				<img class="center-block" style="height:23px;"
+				ng-src="{{headerEdit.appConstant.IMG_BUTTON_HOME}}" title="Inicio"/>
+				<p class="text-center" title="Inicio">Inicio</p>
+			</a>
+		</div>
+
+		<div class="col-xs-1">
+			<a ng-click="headerEdit.returnBack()">
+				<img class="center-block" style="height:23px;"
+				ng-src="{{headerEdit.appConstant.IMG_BUTTON_BACK}}" title="Atrás"/>
+				<p class="text-center" title="Inicio">Atr&aacute;s</p>
+			</a>
+		</div>
+
+		<div class="col-xs-1" ng-if="!headerEdit.model.editArticle &&
+			headerEdit.model.articleToEdit.articulo.tieneBloqueoFlux != headerEdit.appConstant.ESTADO_ACTVO &&
+			headerEdit.model.articleToEdit.estadoArticuloProveedor == headerEdit.appConstant.ESTADO_ACTVO">
+			<a ng-click="headerEdit.editArticle()">
+				<img class="center-block" style="height:23px;"
+				ng-src="{{headerEdit.appConstant.IMG_BUTTON_EDIT}}" title="Editar"/>
+				<p class="text-center" title="Editar">Editar</p>
+			</a>
+		</div>
+
+		<div class="col-xs-1" ng-show="headerEdit.model.editArticle">
+			<a ng-click="headerEdit.cancelEditArticle()">
+				<img class="center-block" style="height:23px;"
+				ng-src="{{headerEdit.appConstant.IMG_BUTTON_CANCEL}}" title="Cancelar"/>
+				<p class="text-center" title="Cancelar">Cancelar</p>
+			</a>
+		</div>
+
+		<div class="col-xs-1" ng-show="headerEdit.model.editArticle">
+			<a ng-click="headerEdit.saveArticleEdited()">
+				<img class="center-block" style="height:23px;"
+				ng-src="{{headerEdit.appConstant.IMG_BUTTON_SAVE}}" title="Guardar"/>
+				<p class="text-center" title="Guardar">Guardar</p>
+			</a>
+		</div>
+	</div>
+</k-header-module>

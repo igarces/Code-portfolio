@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<span class="modal-title">Hist&oacute;rico de precios
+		<span ng-click="modalHisPri.close();" class="glyphicon glyphicon-remove modal-close"></span></span>
+</div>
+
+<div class="modal-body">
+	<div ng-if="modalHisPri.model.comparissonPricesToChange.length <= 0">
+		<!--<img ng-src="{{modalHisPri.appConstant.IMG_ICON_WARNING}}"/>-->
+	</div>
+	<div ng-if="modalHisPri.model.comparissonPricesToChange.length > 0">
+		<!--<img ng-src="{{modalHisPri.appConstant.IMG_ICON_INFORMATION}}"/>-->
+	</div>
+
+	<div ui-grid="modalHisPri.model.griComparisonPrice" id="histComPriGrid"
+		 ui-grid-resize-columns ui-grid-auto-resize
+		 style="overflow: auto; flex-basis: 100%; display: block; height: 96%;"></div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn" ng-click="modalHisPri.close()">
+		<img ng-src="{{modalHisPri.appConstant.IMG_ICON_ACTIVE}}"/> Aceptar</button>
+</div>
+

@@ -1,0 +1,103 @@
+<div class="container-fluid padding5Top">
+	<div class="row centerText" ng-if="appModule.planificar">
+		<div ng-class="value.classPanelPrincipal[0]" ng-if="value.cantidadAndenes !== undefined">
+			<div class="col-xs-12" ng-if=" value.cantidadAndenes >0">
+				<div class="col-xs-12" ng-if="!(value.automaticos > 0) && (value.cantidadUsadaAndenAdicional === undefined || value.cantidadUsadaAndenAdicional === 0 ||
+			 value.cargado )" title="AA: {{value.cantidadAndenes}}
+						{{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA')?' AS:':''}}
+						 {{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' && value.cantidadTotalSolicitada > 0)?
+						 value.cantidadTotalSolicitada:''}}
+					">
+					{{value.cantidadAndenes  +
+					(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' ? (
+					value.cantidadTotalSolicitada === undefined ? 0 :value.cantidadTotalSolicitada):0)}}
+				</div>
+
+				<div class="col-xs-12 fontBold centerText" ng-if="(value.automaticos > 0) && value.enable" title="AA: {{value.cantidadAndenes}}
+					{{value.cantidadDisponibleAndenAdicional === undefined ? '':' AU: '}}{{value.automaticos - value.cantidadAndenes}}
+					{{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA')?' AS:':''}}
+						 {{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' && value.cantidadTotalSolicitada > 0)?
+						 value.cantidadTotalSolicitada:''}}
+							">{{value.automaticos + (value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud ===
+					'AUTORIZADA' ? (
+					value.cantidadTotalSolicitada === undefined ? 0 :value.cantidadTotalSolicitada):0)}}
+				</div>
+				<div class="col-xs-12 fontBold centerText" ng-if="value.cantidadUsadaAndenAdicional !== undefined &&
+					 value.cantidadUsadaAndenAdicional > 0 && !value.enable && !value.cargado"
+					 title="AA: {{value.cantidadAndenes}} {{(value.cantidadUsadaAndenAdicional === undefined || value.cantidadUsadaAndenAdicional === undefined) ? '':' AU: '}}
+						{{(value.cantidadUsadaAndenAdicional === undefined ? 0 : value.cantidadUsadaAndenAdicional) +
+						(value.cantidadUsadaAndenComodin === undefined ? 0 : value.cantidadUsadaAndenComodin)}}
+						{{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA')?' AS:':''}}
+						 {{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' && value.cantidadTotalSolicitada > 0)?
+						 value.cantidadTotalSolicitada:''}}
+					">
+					{{value.cantidadAndenes + value.cantidadUsadaAndenAdicional +
+					(value.cantidadUsadaAndenComodin === undefined ? 0 : value.cantidadUsadaAndenComodin) +
+					(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' ? (
+					value.cantidadTotalSolicitada === undefined ? 0 :value.cantidadTotalSolicitada):0)}}
+				</div>
+
+			</div>
+			<div class="col-xs-12" ng-if="value.cantidadAndenes === 0">
+
+				<div class="col-xs-12 fontBold centerText" ng-if="value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' && value.cantidadTotalSolicitada > 0"
+					title="{{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA')?' AS:':''}}
+						{{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud === 'AUTORIZADA' && value.cantidadTotalSolicitada > 0)?
+						 value.cantidadTotalSolicitada:''}}
+						">
+					{{(value.tipoEstadoSolicitud !== undefined && value.tipoEstadoSolicitud ===
+					'AUTORIZADA' ? (
+					value.cantidadTotalSolicitada === undefined ? 0 :value.cantidadTotalSolicitada):0)}}
+				</div>
+
+			</div>
+		</div>
+
+
+		<div ng-class="value.classPanelPrincipal[1]" ng-if="value.turnEditingOnRequest ">
+			<div class="row" >
+				<div class="col-xs-9">
+					<k-input-numeric ng-model="value.solicitadoAnden" on-change="validar()" ng-show="value.disableEditingOnRequest"></k-input-numeric>
+					<div class="col-xs-12" ng-if="!value.disableEditingOnRequest">
+						{{value.solicitadoAnden}}
+					</div>
+				</div>
+				<div class="col-xs-3" ng-if="(value.solicitadoAnden >0) " >
+					<img ng-if="(value.solicitadoAnden >0)" ng-src="{{iconTemplate.solicitada}}"  title="Anden solicitado"/>
+
+				</div>
+			</div>
+		</div>
+		<div ng-class="value.classPanelPrincipal[1]" class="displayRequest" ng-if="value.datosSolicitud !== undefined &&  !value.turnEditingOnRequest">
+			<div class="row" ng-repeat = "authorization in value.datosSolicitud">
+				<div class="row col-xs-8 " ng-if="(authorization.estadoSolicitud !== 'AUTORIZADA')  && !value.enable && !value.cargado" >
+					<div class="col-xs-12 alignRigth">{{authorization.cantidadSolicitada}}</div>
+				</div>
+				<div class="row col-xs-8 " ng-if="(authorization.estadoSolicitud !== 'AUTORIZADA')  && value.enable && value.cargado" >
+					<div class="col-xs-12 alignRigth">{{authorization.cantidadSolicitada}}</div>
+				</div>
+				<div class="col-xs-4"  ng-if="authorization.cantidadSolicitada !== undefined && authorization.cantidadSolicitada > 0 ">
+					<div class="col-xs-12"  ng-if="authorization.cantidadSolicitada !== undefined && authorization.cantidadSolicitada > 0 " ng-src="{{iconTemplate.solicitada}}">
+						<img ng-if="(authorization.estadoSolicitud === 'AUTORIZADA')" ng-src="{{iconTemplate.autorizada}}"
+							 title="{{authorization.cantidadSolicitada}} Anden autorizado: {{authorization.processCode}}" class="clearPaddingLeft"/>
+						<img ng-if="(authorization.estadoSolicitud === 'CADUCADA')" ng-src="{{iconTemplate.caducada}}"
+							 title="{{authorization.cantidadSolicitada}} Anden caducado: {{authorization.processCode}}" class="clearPaddingLeft"/>
+						<img ng-if="(authorization.estadoSolicitud === 'PENDIENTE') && !value.enable && !value.cargado" ng-src="{{iconTemplate.solicitada}}"
+							 title="Anden solicitado: {{authorization.processCode}}" class="clearPaddingLeft"/>
+						<img ng-if="(authorization.estadoSolicitud === 'RECHAZADA')" ng-src="{{iconTemplate.rechazada}}"
+							 title="{{authorization.cantidadSolicitada}} Anden rechazada: {{authorization.processCode}}" class="clearPaddingLeft"/>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!--<div ng-class="value.classPanelPrincipal[1]" ng-if="value.cantidadSolicitada !== undefined && value.cantidadSolicitada > 0 && (value.tipoEstadoSolicitud === 'AUTORIZADA')  && !value.enable && !value.cargado">-->
+
+		<!--</div>-->
+		<!--<div ng-class="value.classPanelPrincipal[2]" ng-if="value.turnEditingOnRequest || value.cantidadSolicitada !== undefined && value.cantidadSolicitada > 0"-->
+				<!-->-->
+			<!---->
+		<!--</div>-->
+
+	</div>
+</div>

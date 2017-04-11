@@ -1,0 +1,270 @@
+.grayCell {
+	background-color: #EEEEEE !important;
+	/*background-color: #d5d5d5;*/
+}
+
+.whiteCell, .none{
+	background-color: white !important;
+}
+
+.bloqueo {
+	background-color: #f2dede !important;
+}
+
+.highPrice, .multipleRS {
+	background-color:#99FFFF !important;
+}
+
+.repetido{
+	background-color:#FFF2D4 !important;
+}
+
+.lowPrice {
+	background-color: #FFCCCC !important;
+}
+
+.white {
+	background-color: white;
+}
+
+.menu-wizard .k-container-header {
+	margin-bottom: 5px !important;
+}
+
+.menu-wizard .k-container-header a {
+	padding: 0px !important;
+}
+
+.filterSection fieldset,
+.filterSection .container-fluid{
+	padding: 0px !important;
+}
+
+.filterSection fieldset {
+	margin-bottom: 5px;
+}
+
+.filterSection label {
+	margin-bottom: 0px !important;
+}
+
+.span-edit,
+#radio-estado{
+	margin: 0em 0.2em 0.2em 0.3em !important;
+}
+
+@media (min-width: 800px){
+	.div-edit .col-lg-3{
+		max-width: 130px !important;
+	}
+}
+
+.sk-circle{
+	display: none !important;
+}
+
+.k-loading figure img,.div-edit .input-group  {
+	width: 100% !important;
+}
+
+/*.div-edit .form-control, */
+#img-edit .k-input{
+	width: 50% !important;
+}
+
+.input-group-addon, .span-info, .span-img-autorizacion {
+	cursor: pointer;
+}
+
+.has-warning .form-control {
+	border-color: #EDC35E !important;
+	height: 18px;
+}
+
+.has-warning .input-group-addon{
+	background-color: inherit !important;
+	border-color: #EDC35E !important;
+}
+
+.div-edit .k-input, #img-edit .k-input{
+	margin-left: 0px !important;
+	margin-bottom: 0px !important;
+	margin-right: 0px !important;
+	height: 16px;
+}
+
+.div-edit{
+	margin-bottom: 2px;
+	min-height: 20px;
+}
+
+.text-edit{
+	text-align: justify;
+}
+
+.div-edit .form-group {
+	margin-bottom: 0px !important;
+}
+
+.div-edit .checkbox {
+	margin-top: 0px !important;
+	margin-bottom: 5px !important;
+}
+
+.div-edit .radio {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.div-edit textarea{
+	height: 50px !important;
+}
+
+.div-edit input[type=checkbox],
+.div-edit input[type=radio] {
+	margin-top: 1px !important;
+}
+
+.div-edit .k-input-date .ki-input .ki-btnpicker{
+	float:left !important;
+	margin-left: 3px;
+}
+
+.span-img-autorizacion{
+	border: 1px solid #EDC35E !important;
+	padding: .4px 3px;
+}
+
+.span-img-autorizacion img{
+	height: 15px;
+	vertical-align: top;
+}
+
+#img-edit .container-fluid{
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+}
+
+#img-edit .k-container-panel{
+	border: 1px solid #ececec !important;
+}
+
+#img-edit .k-container-body{
+	padding: 5px !important;
+}
+
+.k-header .kh-body .kh-resume h4{
+	margin-top: 7px !important;
+	margin-bottom: 7px !important;
+	color: #333 !important;
+	font-weight: bold;
+}
+
+.popover-inner h3{
+	padding-bottom: 5px !important;
+	padding-top: 5px !important;
+}
+
+.popover-content {
+    word-wrap: break-word;
+	text-align: justify;
+	color: #333;
+}
+
+.bg-success, .table>tbody>tr.success>td{
+	background-color: #dff0d8 !important;
+}
+
+.table>tbody>tr.danger>td{
+	background-color: #f2dede !important;
+}
+
+#tabla-warranty th{
+	width: 33.3%;
+}
+
+.k-container-header button{
+	float: right;
+	margin-right: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#content-search .k-container-header{
+	height: 2.6em !important;
+}
+
+div.ui-grid-cell input[type="checkbox"] {
+	margin: 2px 0 0 6px !important;
+	width: auto;
+}
+
+#sendComPriGrid .ui-grid-viewport,
+#histComPriGrid .ui-grid-viewport{
+	overflow-y: auto !important;
+}
+
+#sendComPriGrid .ui-grid-header-cell .ui-grid-cell-contents {
+	text-align: center;
+}
+
+#glyphicon-filter{
+	height: 15px;
+	top: 3px;
+}
+
+.codBarrasPadding{
+	padding-left: 21px;
+}
+
+.k-container-fieldset fieldset {
+	border-top: 1px solid #ccc !important;
+}
+
+.commonTable td{
+	padding: 2px !important;
+}
+
+#information .col-xs-1 img,
+#informationCP img{
+	height: 12px;
+	width: 12px;
+}
+
+#information .row{
+	margin-bottom: 5px;
+}
+
+.no-padding-left{
+	padding-left: 0px !important;
+}
+
+.no-padding-right{
+	padding-right: 0px !important;
+}
+
+.discountSize{
+	font-size: 8.5px !important;
+	line-height: 1.40;
+}
+
+.discountSize p{
+	color: #2C88F9;
+	margin: 0px;
+}
+
+.sizePanelSideBarSearch {
+	height: calc(100vh - 46px - 40px);
+}
+
+.sizeNormalPanel {
+	height: 100%;
+}
+
+.important{
+	color: #e74c3c;
+}
+
+.has-warning .radio{
+	color: #333 !important;
+}

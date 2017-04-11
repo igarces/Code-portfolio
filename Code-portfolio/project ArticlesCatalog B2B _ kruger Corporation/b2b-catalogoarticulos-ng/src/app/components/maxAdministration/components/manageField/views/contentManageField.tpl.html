@@ -1,0 +1,248 @@
+<div class="container-fluid" style="width: 99%; display:flex; flex-direction: column; margin: 0; padding: 0;">
+
+	<k-container-panel>
+		<k-container-header label="Lista de Campos - {{contentManageField.model.selectedOption.title}}">
+		</k-container-header>
+
+		<k-container-body>
+			<p class="text-center" ng-if="contentManageField.model.fieldsList.length == 0">No existen datos
+				para mostrar.</p>
+
+			<div class="table-responsive" ng-if="contentManageField.model.fieldsList.length > 0" >
+				<p class="important">
+					Los campos marcados (*) no pueden ser modificados por el proveedor.
+				</p>
+				<table class="table table-bordered" id="table-admin">
+					<thead>
+						<th style="width: 23px;" ng-if="contentManageField.model.selectedOption.id == contentManageField.appConstant.ID_SECCION_REG_SANITARIO || 
+							contentManageField.model.selectedOption.id == contentManageField.appConstant.ID_SECCION_COMPLEMENTARIOS"></th>
+						<th>Nombre campo</th>
+						<th style="width: 20%; min-width: 85px;">Visualizar</th>
+						<th style="width: 20%; min-width: 85px;">Editable</th>
+						<th style="width: 20%; min-width: 85px;">Autorizaci&oacute;n</th>
+						<th style="width: 20%; min-width: 85px;">Observaci&oacute;n</th>
+					</thead>
+					<tbody ng-repeat="field in contentManageField.model.fieldsList" 
+						ng-if="field.atributoFrom != contentManageField.appConstant.TAG_IMGAGEN_TANSG"
+						ng-class="{'red-row' : field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO }">
+						<td class="text-center"
+							ng-if="contentManageField.model.selectedOption.id == contentManageField.appConstant.ID_SECCION_REG_SANITARIO || 
+							contentManageField.model.selectedOption.id == contentManageField.appConstant.ID_SECCION_COMPLEMENTARIOS">
+
+							<div ng-if="field.catalogoCampoArticuloHijosCol.length"
+								 ng-click="contentManageField.showChildrenField(field)"
+								 ng-class="{'ui-grid-icon-plus-squared' : !field.desplegar,
+											'ui-grid-icon-minus-squared' : field.desplegar}">
+							</div>
+						</td>
+						<td>
+							{{field.etiquetaCampoArticulo}}
+							<span ng-if="field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO">*</span>
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-xs-6 text-center">
+									<div class="radio-div">
+										<label>
+											<input type="radio" ng-model="field.estado"
+												   ng-change="contentManageField.changeRadioPadre(field)"
+												   ng-value="contentManageField.appConstant.ESTADO_ACTVO" />
+											Si
+										</label>
+									</div>
+								</div>
+								<div class="col-xs-6 text-center">
+									<div class="radio-div">
+										<label>
+											<input type="radio" ng-model="field.estado"
+												   ng-change="contentManageField.changeRadioPadre(field)"
+												   ng-value="contentManageField.appConstant.ESTADO_INACTIVO" />
+											No
+										</label>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-xs-6 text-center">
+									<div class="radio-div">
+										<label ng-class="{'label-disabled' : field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+										 	field.estado == contentManageField.appConstant.ESTADO_INACTIVO }">
+											<input type="radio" ng-model="field.valorTipoModificacionCampo"
+												   ng-change="contentManageField.changeEditableRadio(field)"
+												   ng-disabled="field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											   		field.estado == contentManageField.appConstant.ESTADO_INACTIVO"
+												   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_EDITABLE" />
+											Si
+										</label>
+									</div>
+								</div>
+								<div class="col-xs-6 text-center">
+									<div class="radio-div">
+										<label ng-class="{'label-disabled' : field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											field.estado == contentManageField.appConstant.ESTADO_INACTIVO }">
+											<input type="radio" ng-model="field.valorTipoModificacionCampo"
+												   ng-change="contentManageField.changeEditableRadio(field)"
+												   ng-disabled="field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											   		field.estado == contentManageField.appConstant.ESTADO_INACTIVO"
+												   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA" />
+											No
+										</label>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-xs-6 text-center">
+									<div class="radio-div">
+										<label ng-class="{'label-disabled' : field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											field.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+											field.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA }">
+											<input type="radio" ng-model="field.npValorModificacionAutorizacion"
+												   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION"
+												   ng-change="contentManageField.changeRadioPadre(field)"
+												   ng-disabled="field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											   		field.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+											   		field.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA"/>
+											Si
+										</label>
+									</div>
+								</div>
+								<div class="col-xs-6 text-center">
+									<div class="radio-div">
+										<label ng-class="{'label-disabled' : field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											field.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+										   	field.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA }">
+											<input type="radio" ng-model="field.npValorModificacionAutorizacion"
+												   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_SIN_AUTORIZACION"
+												   ng-change="contentManageField.changeRadioPadre(field)"
+												   ng-disabled="field.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+											   		field.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+											   		field.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA"/>
+											No
+										</label>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>
+							<textarea ng-if="field.soloInformativo != contentManageField.appConstant.ESTADO_ACTVO"
+								maxlength="500" class="textarea-table" ng-model="field.observacion"></textarea>
+						</td>
+
+						<tr ng-if="field.catalogoCampoArticuloHijosCol.length && field.desplegar">
+							<td colspan="6">
+								<table class="table table-bordered">
+									<tr ng-repeat="childrenField in field.catalogoCampoArticuloHijosCol"
+										ng-class="{'red-row' : childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO }">
+
+										<td>
+											{{childrenField.etiquetaCampoArticulo}}
+											<span ng-if="childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO">*</span>
+										</td>
+										<td width="20%">
+											<div class="row">
+												<div class="col-xs-6 text-center">
+													<div class="radio-div">
+														<label>
+															<input type="radio" ng-model="childrenField.estado"
+																   ng-value="contentManageField.appConstant.ESTADO_ACTVO"
+																   ng-change="contentManageField.changeRadioChild(field)" />
+															Si
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-6 text-center">
+													<div class="radio-div">
+														<label>
+															<input type="radio" ng-model="childrenField.estado"
+																   ng-value="contentManageField.appConstant.ESTADO_INACTIVO"
+																   ng-change="contentManageField.changeRadioChild(field)" />
+															No
+														</label>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td width="20%">
+											<div class="row">
+												<div class="col-xs-6 text-center">
+													<div class="radio-div">
+														<label ng-class="{'label-disabled' : childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+															childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO }">
+															<input type="radio" ng-model="childrenField.valorTipoModificacionCampo"
+																   ng-change="contentManageField.changeEditableRadio(childrenField, field)"
+																   ng-disabled="childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+																childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO"
+																   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_EDITABLE" />
+															Si
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-6 text-center">
+													<div class="radio-div">
+														<label ng-class="{'label-disabled' : childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+															childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO}">
+															<input type="radio" ng-model="childrenField.valorTipoModificacionCampo"
+																   ng-change="contentManageField.changeEditableRadio(childrenField, field)"
+																   ng-disabled="childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+																childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO"
+																   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA" />
+															No
+														</label>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td width="20%">
+											<div class="row">
+												<div class="col-xs-6 text-center">
+													<div class="radio-div">
+														<label ng-class="{'label-disabled' : childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+															childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+															childrenField.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA}">
+															<input type="radio" ng-model="childrenField.npValorModificacionAutorizacion"
+																   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION"
+																   ng-change="contentManageField.changeAutorizacionChild(childrenField, field)"
+																   ng-disabled="childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+																childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+																childrenField.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA "/>
+															Si
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-6 text-center">
+													<div class="radio-div">
+														<label ng-class="{'label-disabled' : childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+															childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+															childrenField.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA }">
+															<input type="radio" ng-model="childrenField.npValorModificacionAutorizacion"
+																   ng-value="contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_SIN_AUTORIZACION"
+																   ng-change="contentManageField.changeAutorizacionChild(childrenField, field)"
+																   ng-disabled="childrenField.soloInformativo == contentManageField.appConstant.ESTADO_ACTVO ||
+																childrenField.estado == contentManageField.appConstant.ESTADO_INACTIVO ||
+																childrenField.valorTipoModificacionCampo == contentManageField.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA "/>
+															No
+														</label>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td style="width: 20%; min-width: 85px;">
+											<textarea ng-if="childrenField.soloInformativo != contentManageField.appConstant.ESTADO_ACTVO"
+													  maxlength="500" class="textarea-table" ng-model="childrenField.observacion"></textarea>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</k-container-body>
+	</k-container-panel>
+</div>
+
+

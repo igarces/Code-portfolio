@@ -1,0 +1,9 @@
+[
+  {
+    "parent": "maxAdministration",
+    "stateName": "maxAdministration.manageField",
+    "urlPrefix": "/maxAdministration",
+    "type": "load",
+    "src": "components/maxAdministration/components/manageField"
+  }
+]

@@ -1,0 +1,159 @@
+<k-container-fieldset label="Complementarios">
+
+	<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DEDUCIBLE].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableFieldsSection')}}</p>
+		</k-output-message>
+	</div>
+
+	<div class="row">
+		<!--deducible-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_DEDUCIBLE" editable="true">
+			<select class="form-control"
+				ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DEDUCIBLE].valorNuevo"
+				ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_DEDUCIBLE)"
+				ng-options="option.label for option in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DEDUCIBLE].listSelectItemTrasient track by option.value">
+				<option value="" selected="selected">Ninguno</option>
+			</select>
+		</field-edit>
+
+		<!--verifica transgenico-->
+		<div class="col-md-6"
+			 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO"
+			 ng-init="field = contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG]">
+
+			<div class="row div-edit" ng-if="!contentEdit.model.editArticle || field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+				<div class="col-lg-3 col-md-4 col-xs-5">
+					<label>{{field.etiquetaCampo}}:</label>
+				</div>
+				<div class="col-lg-9 col-md-8 col-xs-7">
+					<span ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].valorSolicitado"
+						  uib-popover="{{contentEdit.searchLabelDemandValue(contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG])}}"
+						  popover-title="Valor solicitado:"
+						  popover-placement="bottom" popover-trigger="'mouseenter'">
+					<img style="height: 16px;" ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>
+
+					<img ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].valorActual"
+						 ng-src="{{contentEdit.appConstant.IMG_ICON_ACTIVE}}"/>
+					<img ng-if="!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].valorActual"
+						 ng-src="{{contentEdit.appConstant.IMG_ICON_INACTIVE}}"/>
+				</div>
+			</div>
+
+			<div class="row div-edit" ng-if="contentEdit.model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+				<div class="col-xs-12">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].valorNuevo"
+								   ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_VERIFICA_TRANSG)">
+							<span class="span-img-autorizacion" title="Requiere autorizaci&oacute;n"
+									ng-if="field.nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION">
+								<img ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span> {{field.etiquetaCampo}}
+
+							<span ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].observacion"
+									uib-popover="{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].observacion}}" popover-title="Advertencia:"
+								  popover-placement="bottom" popover-trigger="'mouseenter'"><img style="margin-left: 2px;" ng-src="{{contentEdit.appConstant.IMG_ICON_WARNING}}"/></span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<!--compuesto transgenico-->
+			<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COMPUESTO_TRANSG].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO &&
+			((!contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].valorActual) ||
+				(contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_VERIFICA_TRANSG].valorNuevo))">
+				
+				<field-edit	model="contentEdit.model" tag="contentEdit.appConstant.TAG_COMPUESTO_TRANSG" editable="true">
+					<select class="form-control"
+							ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COMPUESTO_TRANSG].valorNuevo"
+							ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_COMPUESTO_TRANSG)"
+							ng-options="option.label for option in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COMPUESTO_TRANSG].listSelectItemTrasient track by option.value">
+						<option value="" selected="selected">No aplica</option>
+					</select>
+				</field-edit>
+
+				<div id="img-edit"
+					  ng-if="(!contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COMPUESTO_TRANSG].valorActual == contentEdit.appConstant.ESTADO_INACTIVO) ||
+						(contentEdit.model.editArticle && contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COMPUESTO_TRANSG].valorNuevo.value == contentEdit.appConstant.ESTADO_INACTIVO)">
+					<field-image model="contentEdit.model" tag="contentEdit.appConstant.TAG_IMGAGEN_TANSG"></field-image>
+				</div>
+			</div>
+		</div>
+	</div>
+</k-container-fieldset>
+
+<k-container-fieldset label="Etiquetas"
+	 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO &&
+	 	contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_ETIQUETAS]">
+	<div class="row div-edit">
+		<div class="col-md-6">
+
+			<div ng-if="contentEdit.model.editArticle &&
+				contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA &&
+				contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].campoPermiteEdicionTrasient.sePermiteEdicion === false">
+					<k-output-message type="info">
+						<p>{{contentEdit.kMessageService.renderMessage('noEditField')}}</p>
+					</k-output-message>
+			</div>
+
+			<div class="col-lg-3 col-md-4 col-xs-5">
+				<label>{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].etiquetaCampo}}:</label>
+			</div>
+
+			<div class="col-lg-9 col-md-8 col-xs-7" ng-if="!contentEdit.model.editArticle ||
+				contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA || 
+				contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].campoPermiteEdicionTrasient.sePermiteEdicion === false">	
+
+				<span ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorSolicitado"
+						  uib-popover="{{contentEdit.searchLabelDemandValueSemaforo(contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO])}}"
+						  popover-title="Valor solicitado:"
+						  popover-placement="bottom" popover-trigger="'mouseenter'">
+					<img style="height: 16px;" ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>
+
+				<img ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorActual == contentEdit.appConstant.ESTADO_ACTVO"
+					 ng-src="{{contentEdit.appConstant.IMG_ICON_ACTIVE}}"/>
+				<img ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorActual != contentEdit.appConstant.ESTADO_ACTVO"
+					 ng-src="{{contentEdit.appConstant.IMG_ICON_INACTIVE}}"/>
+			</div>
+			<div class="col-lg-9 col-md-8 col-xs-7" ng-if="contentEdit.model.editArticle &&
+				contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].nivelAcceso != contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_LECTURA && 
+				contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].campoPermiteEdicionTrasient.sePermiteEdicion !== false">
+				<div class="row">
+					<div class="col-md-1"
+						 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].nivelAcceso == contentEdit.appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION">
+						<span class="span-img-autorizacion" title="Requiere autorizaci&oacute;n"
+							ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorSolicitado == undefined">
+								<img ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>
+
+						<span class="span-img-autorizacion" ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorSolicitado"
+						  uib-popover="{{contentEdit.searchLabelDemandValueSemaforo(contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO])}}"
+						  popover-title="Valor solicitado:"
+						  popover-placement="bottom" popover-trigger="'mouseenter'">
+								<img style="height: 16px;" ng-src="{{contentEdit.appConstant.IMG_ICON_FLUX}}" /></span>	
+					</div>
+					<div class="col-md-5">
+						<div class="radio">
+							<label>
+								<input type="radio" name="semaforo" ng-value="contentEdit.appConstant.ESTADO_ACTVO"
+									   ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorNuevo"
+									   ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_SEMAFORO)">
+								Si
+							</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="radio">
+							<label>
+								<input type="radio" name="semaforo" ng-value="contentEdit.appConstant.ESTADO_INACTIVO"
+									   ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_SEMAFORO].valorNuevo"
+									   ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_SEMAFORO)">
+								No
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</k-container-fieldset>

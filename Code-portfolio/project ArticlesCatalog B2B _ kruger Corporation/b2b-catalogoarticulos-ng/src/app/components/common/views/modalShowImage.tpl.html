@@ -1,0 +1,37 @@
+<div class="modal-header">
+	<span class="modal-title">Imagen
+		<span ng-click="modalShowImg.close();" class="glyphicon glyphicon-remove modal-close"></span></span>
+</div>
+
+<div class="modal-body">
+
+	<div ng-if="!modalShowImg.imageToShow">
+		<div ng-if="!modalShowImg.newImage && !modalShowImg.sanitaryRegisterSelected">
+			<img class="center-block" ng-if="modalShowImg.fieldImage.valorActual.image64" style="max-width: 500px; max-height: 500px;"
+				 ng-src="data:image/jpeg;base64,{{modalShowImg.fieldImage.valorActual.image64}}">
+		</div>
+
+		<div ng-if="!modalShowImg.newImage && modalShowImg.sanitaryRegisterSelected">
+			<img class="center-block" ng-if="modalShowImg.fieldImage.valorActual[modalShowImg.sanitaryRegisterSelected].image64" style="max-width: 500px; max-height: 500px;"
+				 ng-src="data:image/jpeg;base64,{{modalShowImg.fieldImage.valorActual[modalShowImg.sanitaryRegisterSelected].image64}}">
+		</div>
+
+		<div ng-if="modalShowImg.newImage && !modalShowImg.sanitaryRegisterSelected">
+			<img class="center-block" ngf-src="modalShowImg.fieldImage.valorNuevo" style="max-width: 500px; max-height: 500px;"
+				 ngf-background="modalShowImg.fieldImage.valorNuevo"
+				 ngf-resize="{quality: 0.9}">
+		</div>
+
+		<div ng-if="modalShowImg.newImage && modalShowImg.sanitaryRegisterSelected">
+			<img class="center-block" ngf-src="modalShowImg.fieldImage.valorNuevo[modalShowImg.sanitaryRegisterSelected]" style="max-width: 500px; max-height: 500px;"
+				 ngf-background="modalShowImg.fieldImage.valorNuevo[modalShowImg.sanitaryRegisterSelected]"
+				 ngf-resize="{quality: 0.9}">
+		</div>
+	</div>
+
+	<div ng-if="modalShowImg.imageToShow">
+		<img class="center-block" style="max-width: 500px; max-height: 500px;"
+			 ng-src="data:image/jpeg;base64,{{modalShowImg.imageToShow}}">
+	</div>
+
+</div>

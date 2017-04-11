@@ -1,0 +1,199 @@
+<k-container-fieldset label="Datos b&aacute;sicos">
+
+	<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_MARCACOMERCIAL].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PAISES].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 (!contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_TIENE_PRESENTACIONES] ||
+		 (contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_TIENE_PRESENTACIONES] &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CANTIDAD_MEDIDA].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MEDIDA].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TAMANO].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PRESENTACION].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO ))">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableFieldsSection')}}</p>
+		</k-output-message>
+	</div>
+
+	<div class="row">
+		<div ng-if="contentEdit.model.dinamicFeatures[contentEdit.appConstant.CARACT_VALIDACION_TIENE_PRESENTACIONES]">
+			<!--Cantidad medida-->
+			<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_CANTIDAD_MEDIDA" editable="true">
+				<k-input-numeric type="float" ng-required="true" integer-places="6"
+								 ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_CANTIDAD_MEDIDA].valorNuevo"
+								 ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_CANTIDAD_MEDIDA)">
+				</k-input-numeric>
+			</field-edit>
+
+			<!--Unidad medida-->
+			<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_UNIDAD_MEDIDA" editable="true">
+				<select class="form-control" ng-required="true"
+						ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MEDIDA].valorNuevo"
+						ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_UNIDAD_MEDIDA)"
+						ng-options="option.label for option in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MEDIDA].listSelectItemTrasient track by option.value">
+					<option value="" selected="selected"
+							ng-if="!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_UNIDAD_MEDIDA].valorNuevo">
+						Seleccione
+					</option>
+				</select>
+			</field-edit>
+
+			<!--Tamano-->
+			<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_TAMANO" editable="true">
+				<k-input-text maxlength="50" ng-required="true"
+							  ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_TAMANO].valorNuevo"
+							  ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_TAMANO)">
+				</k-input-text>
+			</field-edit>
+
+			<!--Presentacion-->
+			<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_PRESENTACION" editable="true">
+				<k-input-numeric type="integer" ng-required="true" integer-places="2"
+								 ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PRESENTACION].valorNuevo"
+								 ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_PRESENTACION)">
+				</k-input-numeric>
+			</field-edit>
+		</div>
+
+		<!--Marca Comercial-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_MARCACOMERCIAL" editable="false"></field-edit>
+
+		<!--Pais Fabricacion-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_PAISES" editable="true">
+			<select class="form-control" ng-required="true"
+				ng-model="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PAISES].valorNuevo"
+				ng-change="contentEdit.changeValueEvent(contentEdit.appConstant.TAG_PAISES)"
+				ng-options="option.label for option in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PAISES].listSelectItemTrasient track by option.value">
+				<option value="" selected="selected"
+				ng-if="!contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_PAISES].valorNuevo">
+					Seleccione</option>
+			</select>
+		</field-edit>
+	</div>
+</k-container-fieldset>
+
+<k-container-fieldset label="Costos"
+		ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COSTO_BRUTO].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO ||
+		contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCUESTOS].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+	<div class="row">
+		<!--costo bruto-->
+		<field-edit model="contentEdit.model" tag="contentEdit.appConstant.TAG_COSTO_BRUTO" editable="false">
+			<span class="span-edit">
+				{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_COSTO_BRUTO].valorActual | currency}}
+			</span>
+		</field-edit>
+	</div>
+
+	<div class="row">
+		<!--Impuestos-->
+		<div class="col-md-6" ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+			<div class="table-responsive">
+				<table class="table commonTable" style="width: 95%;">
+					<thead>
+					<tr>
+						<th colspan="4" class="text-center">
+							{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].etiquetaCampo}}
+						</th>
+					</tr>
+					<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].valorActual.length > 0">
+						<th>Tipo</th>
+						<th>Valor</th>
+						<th>Venta</th>
+						<th>Compra</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].valorActual == null">
+						<td colspan="4" class="text-center">
+							Este art&iacute;culo no posee impuestos
+						</td>
+					</tr>
+					<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].valorActual.length > 0"
+						ng-repeat="impuesto in contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMPUESTOS].valorActual">
+						<td>{{impuesto.tipoImpuestoArticulo.nombreTipoImpuesto}}</td>
+						<td class="text-right">
+							<span ng-if="impuesto.tipoImpuestoArticulo.valorImpuesto == null">{{impuesto.tipoImpuestoArticulo.porcentajeImpuesto}}%</span>
+							<span ng-if="impuesto.tipoImpuestoArticulo.valorImpuesto != null">{{impuesto.tipoImpuestoArticulo.valorImpuesto | currency }}</span>
+						</td>
+						<td class="text-center">
+							<img ng-if="impuesto.esParaVenta" ng-src="{{contentEdit.appConstant.IMG_ICON_TICK}}"/>
+						</td>
+						<td class="text-center">
+							<img ng-if="impuesto.esParaCompra" ng-src="{{contentEdit.appConstant.IMG_ICON_TICK}}"/>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!--Descuentos-->
+		<div class="col-md-6"
+			 ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCUESTOS].estadoCampo == contentEdit.appConstant.ESTADO_ACTVO">
+
+			<div class="table-responsive">
+				<table class="table commonTable" style="width: 95%; margin-bottom: 0px;">
+				<thead>
+				<tr>
+					<th colspan="4" class="text-center" ng-if="contentEdit.model.discountList.length > 0 || contentEdit.model.discountUMList.length == 0">
+						{{contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCUESTOS].etiquetaCampo}}
+					</th>
+				</tr>
+				<tr ng-if="contentEdit.model.discountList.length > 0">
+					<th width="75px">No</th>
+					<th width="190px">Nombre</th>
+					<th width="110px">Tipo</th>
+					<th width="240px">Porcentaje</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_DESCUESTOS].valorActual == null">
+					<td colspan="4" class="text-center">
+						Este art&iacute;culo no posee descuentos
+					</td>
+				</tr>
+				<tr ng-if="contentEdit.model.discountList.length > 0"
+					ng-repeat="descuento in contentEdit.model.discountList">
+					<td class="text-center">{{$index + 1}}</td>
+					<td>{{descuento.asignacionTipoDescuento.tipoDescuento.nombre}}</td>
+					<td>{{descuento.asignacionTipoDescuento.valorAplicacionTipoDescuento}}</td>
+					<td class="text-right">
+						<span ng-if="descuento.codigoEquivalenciaDescuento == null">{{descuento.porcentajeDescuento | currency:""}}%</span>
+							<span ng-if="descuento.codigoEquivalenciaDescuento != null">
+								{{descuento.equivalenciaPorcentajeDescuento.valorPorcentaje}}
+								({{descuento.equivalenciaPorcentajeDescuento.descuento | currency:""}}%)</span>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+				<table class="table commonTable" style="width: 95%;" ng-if="contentEdit.model.discountUMList.length > 0">
+					<thead>
+						<tr>
+							<th colspan="4" class="text-center">
+								Descuentos por unidad de manejo
+							</th>
+						</tr>
+						<tr ng-if="contentEdit.model.discountList.length > 0">
+							<th width="75px">No</th>
+							<th width="190px">Empaque</th>
+							<th width="110px">Valor</th>
+							<th width="240px">Descuento</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="descuentoUM in contentEdit.model.discountUMList">
+						<td class="text-center">{{$index + 1}}</td>
+						<td>{{descuentoUM.articuloUnidadManejoProveedor.articuloUnidadManejoDTO.tipoUnidadEmpaque.nombreCatalogoValor}}</td>
+						<td class="text-center">{{descuentoUM.articuloUnidadManejoProveedor.articuloUnidadManejoDTO.valorUnidadManejo}}</td>
+						<td class="text-right">
+								({{descuentoUM.asignacionTipoDescuento.tipoDescuento.nombre}} -
+								 {{descuentoUM.equivalenciaPorcentajeDescuento.valorCantidad}})
+								{{descuentoUM.equivalenciaPorcentajeDescuento.descuento | currency:""}}%
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</k-container-fieldset>

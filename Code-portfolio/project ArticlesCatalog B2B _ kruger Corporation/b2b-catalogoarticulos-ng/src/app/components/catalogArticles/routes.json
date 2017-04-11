@@ -1,0 +1,16 @@
+[
+  {
+    "parent": "catalogArticles",
+    "stateName": "catalogArticles.search",
+    "urlPrefix": "/catalogArticles",
+    "type": "load",
+    "src": "components/catalogArticles/components/search"
+  },
+  {
+	"parent": "catalogArticles.search",
+	"stateName": "catalogArticles.search.edit",
+	"urlPrefix": "/edit",
+	"type": "load",
+	"src": "components/catalogArticles/components/edit"
+  }
+]

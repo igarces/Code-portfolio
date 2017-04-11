@@ -1,0 +1,37 @@
+<div>
+	<div class="row" style="margin-bottom: 5px;">
+
+	</div>
+	<k-container-panel>
+
+		<k-container-body>
+			<div ng-if="contentLoadArticles.model.articlesList.length > 0">
+				<label class="labelTitle">
+					Lista de Art&iacute;culos - Proveedor: </label>
+				<span> &#160; {{contentLoadArticles.model.articlesList[0].nombreProveedor}} ({{contentLoadArticles.model.articlesList.length}} Art&iacute;culos)</span>
+			</div>
+
+			<div ng-if="contentLoadArticles.model.articlesList.length == 0">
+				<p class="text-center">El caso se ha gestionado exitosamente.</p>
+			</div>
+
+			<div class="table-responsive" ng-if="contentLoadArticles.model.articlesList.length > 0">
+				<table class="table commonTable">
+					<thead>
+						<th>C&oacute;digo barras</th>
+						<th>Descripci&oacute;n art&iacute;culo</th>
+						<th>Cantidad cambios pendientes</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="article in contentLoadArticles.model.articlesList">
+							<td><a ng-click="contentLoadArticles.approveArticle(article)">{{article.codigoBarras}}</a></td>
+							<td>{{article.descripcionArticulo}}</td>
+							<td class="text-center">{{article.listaCamposArticulos.length}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</k-container-body>
+
+	</k-container-panel>
+</div>

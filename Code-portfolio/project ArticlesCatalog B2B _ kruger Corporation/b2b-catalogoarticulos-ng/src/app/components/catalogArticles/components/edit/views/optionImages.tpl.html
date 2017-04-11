@@ -1,0 +1,18 @@
+<k-container-fieldset label="Im&aacute;genes art&iacute;culos" >
+
+	<div ng-if="contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMAGEN_GENERAL].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO &&
+		 contentEdit.model.fieldsMap[contentEdit.appConstant.TAG_IMAGEN_COD_BARRAS].estadoCampo != contentEdit.appConstant.ESTADO_ACTVO">
+		<k-output-message type="info">
+			<p>{{contentEdit.kMessageService.renderMessage('unavailableFieldsSection')}}</p>
+		</k-output-message>
+	</div>
+
+
+	<div class="row" id="img-edit">
+
+		<field-image model="contentEdit.model" tag="contentEdit.appConstant.TAG_IMAGEN_GENERAL"></field-image>
+
+		<field-image model="contentEdit.model" tag="contentEdit.appConstant.TAG_IMAGEN_COD_BARRAS"></field-image>
+
+	</div>
+</k-container-fieldset>

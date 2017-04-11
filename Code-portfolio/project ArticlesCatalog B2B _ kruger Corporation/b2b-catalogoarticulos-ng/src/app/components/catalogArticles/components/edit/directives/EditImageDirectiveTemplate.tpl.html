@@ -1,0 +1,111 @@
+<div ng-class="tag == appConstant.TAG_IMGAGEN_TANSG ? 'col-md-12' : 'col-md-6'"
+	 ng-if="model.fieldsMap[tag].estadoCampo == '1'"
+	 ng-init="field = model.fieldsMap[tag]">
+	<k-container-panel>
+		<k-container-header label="{{field.etiquetaCampo}}" col-title="9">	
+			
+			<div class="text-right">	
+				<a ng-if="field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_CON_AUTORIZACION &&
+				(model.editArticle || (!model.editArticle && model.fieldsMap[tag].valorSolicitado))"
+			   	title="{{ model.fieldsMap[tag].valorSolicitado ? 'Ver o descargar archivo solicitado' : 'Requiere autorizaci&oacute;n' }}"
+				ng-click="editImageDirective.getDemandFile(model.fieldsMap[tag])">
+						<img ng-src="{{appConstant.IMG_ICON_FLUX}}" /></a>	
+
+				<a ng-if="model.editArticle && model.fieldsMap[tag].observacion" class="span-info" style="margin-right: 5px;"
+						  uib-popover="{{model.fieldsMap[tag].observacion}}" popover-title="Advertencia:"
+						  popover-placement="bottom" popover-trigger="'mouseenter'">
+						  <img style="margin-left: 2px;" ng-src="{{appConstant.IMG_ICON_WARNING}}"/></a>
+			
+				<span class="text-right" ng-if="!model.editArticle &&
+							model.fieldsMap[tag].valorActual.codigoArchivo && 
+							model.fieldsMap[tag].valorActual.estadoArchivo == appConstant.ESTADO_ACTVO">								
+
+					<a style="margin-right: 5px;" title="Mostrar imagen"
+					ng-if="tag == appConstant.TAG_IMGAGEN_TANSG ? editImageDirective.checkImageExtension(model.fieldsMap[tag]): true"
+					ng-click="editImageDirective.searchImageById(model.fieldsMap[tag], 'show')">
+						<img ng-src="{{appConstant.IMG_ICON_DETAILS}}"/>
+					</a>
+					<a style="margin-right: 5px;" title="Descargar imagen"
+					ng-click="editImageDirective.searchImageById(model.fieldsMap[tag], 'download')" >
+						<img ng-src="{{appConstant.IMG_ICON_DOWNLOAD}}"/>
+					</a>
+				</span>	
+		
+				<span class="text-right" ng-if="model.editArticle &&
+							(model.fieldsMap[tag].valorNuevo.nombreArchivo ||
+							model.fieldsMap[tag].valorNuevo.name)">			
+
+					<a style="margin-right: 5px;" title="Mostrar imagen"
+					ng-if="tag == appConstant.TAG_IMGAGEN_TANSG ? editImageDirective.checkImageExtension(model.fieldsMap[tag], true): true"
+					ng-click="editImageDirective.searchImageById(model.fieldsMap[tag], 'showDifferent')">
+						<img ng-src="{{appConstant.IMG_ICON_DETAILS}}"/>
+					</a>
+					<a ng-click="editImageDirective.searchImageById(model.fieldsMap[tag], 'downloadDifferent')"
+					title="Descargar imagen" style="margin-right: 5px;">
+						<img ng-src="{{appConstant.IMG_ICON_DOWNLOAD}}"/>
+					</a>
+					<a ng-if="model.fieldsMap[tag].valorActual.codigoArchivo == null"
+							ng-click="editImageDirective.removeImage(model.fieldsMap[tag])" title="Eliminar imagen">
+						<img ng-src="{{appConstant.IMG_ICON_REMOVE}}"/>
+					</a>
+				</span>		
+			</div>
+		</k-container-header>
+		<k-container-body>
+			<div ng-if="!model.editArticle && 
+				(!model.fieldsMap[tag].valorActual.codigoArchivo || model.fieldsMap[tag].valorActual.estadoArchivo != appConstant.ESTADO_ACTVO)">
+				<p class="text-center">No existen datos para mostrar</p>
+			</div>
+			<div ng-if="(!model.editArticle && model.fieldsMap[tag].valorActual.codigoArchivo && model.fieldsMap[tag].valorActual.estadoArchivo == appConstant.ESTADO_ACTVO)
+			 	|| model.editArticle">
+				<div class="row">
+					<div class="col-md-2">
+						<label ng-if="tag != appConstant.TAG_IMGAGEN_TANSG">Nombre:</label>
+						<label ng-if="tag == appConstant.TAG_IMGAGEN_TANSG">Descripci&oacute;n:</label>
+					</div>
+					<div class="col-md-10">
+					<span ng-if="!model.editArticle || field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+						{{model.fieldsMap[tag].valorActual.nombreArchivo}}</span>
+					<span ng-if="model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+						{{model.fieldsMap[tag].valorNuevo.name}}</span>
+					</div>
+
+				</div>
+				<div class="row" ng-if="tag != appConstant.TAG_IMGAGEN_TANSG">
+					<div class="col-md-2">
+						<label>Descripci&oacute;n:</label>
+					</div>
+					<div class="col-md-10">
+							<span ng-if="!model.editArticle || field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+								{{model.fieldsMap[tag].valorActual.descripcionArchivo}}</span>
+						<div ng-if="model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+							<k-input-text ng-model="model.fieldsMap[tag].valorNuevo.descripcionArchivo"></k-input-text></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<label>Tama&ntilde;o:</label>
+					</div>
+					<div class="col-md-6">
+							<span ng-if="!model.editArticle || field.nivelAcceso == appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+								{{model.fieldsMap[tag].valorActual.tamanioArchivo | kbytes}}</span>
+							<span ng-if="model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+								{{model.fieldsMap[tag].valorNuevo.size | kbytes}}</span>
+					</div>
+					<div class="col-md-4 text-right"
+						 ng-if="model.editArticle && field.nivelAcceso != appConstant.TIPO_MODIFICACION_CAMPO_LECTURA">
+						<button id="{{tag}}" class="ocultarButton" ngf-select="editImageDirective.uploadImage($files, $newFiles, tag)"
+								ng-model="model.fieldsMap[tag].valorNuevo"
+								accept="{{editImageDirective.extensionAllowed(tag)}}" ngf-pattern="{{editImageDirective.extensionAllowed(tag)}}"
+								ngf-max-size="{{appConstant.FILE_SIZE}}"
+								ngf-reset-on-click="false" ngf-reset-model-on-click="false"
+								title="Cargar imagen">
+							Examinar
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</k-container-body>
+	</k-container-panel>
+</div>
